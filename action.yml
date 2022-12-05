@@ -1,0 +1,13 @@
+name: "Dependency"
+author: "DigitalEngineering"
+description: "NuGet Dependencies are able to be used"
+
+inputs:
+	name: 
+		description: "Name to greet"
+		required: false
+		default: "Adrian"
+
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

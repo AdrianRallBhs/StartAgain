@@ -1,0 +1,51 @@
+name: Test
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  
+jobs:
+  build:
+    name: Run Action
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+      # npm ci == npm install but gives feedback if not up-to-date
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+      
+      # - name: update packages
+      #   uses: ./
+      #   id: update
+      #   with:
+      #     version-limit: 'minor'
+      #     comment-updated: true
+      #     ignore: |
+      #       StackExchange.Redis.Extensions.Newtonsoft
+      
+#Runs the action that is in this directory
+      - name: Run my action
+        uses: ./
+        with:
+          name: "Adrianoboy"
