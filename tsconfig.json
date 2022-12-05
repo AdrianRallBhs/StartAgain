@@ -7,11 +7,10 @@
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "outDir": "dist",
+        "rootDir": "./src",
         "lib": [
             "ESNext"
         ]
     },
-    "exclude": [
-        "node_modules"
-    ]
+    "exclude": ["test", "lib", "node_modules"]
 }
