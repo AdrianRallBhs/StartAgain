@@ -41,14 +41,16 @@ async function execute(): Promise<void> {
                 // await dotnet.addUpdatedPackage(filteredPackages)
                 // core.endGroup()
 
+                core.startGroup(`dotnet list ${project} package`)
+                await dotnet.listPackages()
+                core.endGroup()
+
                 core.startGroup(`append to PR body  ${project}`)
                 const prBodyHelper = new PrBodyHelper(project, commentUpdated)
                 // body += `${await prBodyHelper.buildPRBody(filteredPackages)}\n`
                 core.endGroup()
 
-                core.startGroup(`dotnet list ${project} package`)
-                await dotnet.listPackages()
-                core.endGroup()
+
 
 
             }
