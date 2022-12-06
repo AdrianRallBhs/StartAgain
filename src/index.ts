@@ -27,14 +27,15 @@ async function execute(): Promise<void> {
                 // await dotnet.restore()
                 // core.endGroup()
 
-                // core.startGroup(`dotnet list ${project}`)
-                // const outdatedPackages = await dotnet.listOutdated(versionLimit)
-                // core.endGroup()
+                core.startGroup(`dotnet list ${project}`)
+                const outdatedPackages = await dotnet.listOutdated(versionLimit)
+                core.endGroup()
 
-                // core.startGroup(`removing nugets present in ignore list ${project}`)
-                // const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
-                // core.info(`list of dependencies that will be updated: ${filteredPackages}`)
-                // core.endGroup()
+                core.startGroup(`removing nugets present in ignore list ${project}`)
+                //const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
+                const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
+                core.info(`list of dependencies that will be updated: ${filteredPackages}`)
+                core.endGroup()
 
                 // core.startGroup(`dotnet install new version ${project}`)
                 // await dotnet.addUpdatedPackage(filteredPackages)
@@ -42,7 +43,7 @@ async function execute(): Promise<void> {
 
                 core.startGroup(`append to PR body  ${project}`)
                 const prBodyHelper = new PrBodyHelper(project, commentUpdated)
-                // body += `${await prBodyHelper.buildPRBody(filteredPackages)}\n`
+                body += `${await prBodyHelper.buildPRBody(filteredPackages)}\n`
             }
         }
         core.setOutput("body", body)
