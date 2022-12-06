@@ -8,8 +8,7 @@ inputs:
   root-folder:
     description: 'relative path from repository root where the action should look for `package.json` files'
     required: true
-    #default: '.'
-    default: "./BlazorDotNet_Dependency/BlazorDotNet_Dependency.csproj"
+    default: '.'
   recursive:
     description: 'wether or not the action should look for package.json in sub-folders and update all of them'
     required: true
