@@ -26,7 +26,7 @@ export class DotnetCommandManager {
     }
 
     async listPackages(): Promise<void> {
-        const result = await this.exec(['list ', this.projectfile, 'package'])
+        const result = await this.exec(['list ', 'package', this.projectfile,])
         if (result.exitCode !== 0) {
             error(`dotnet list package returned non-zero exitcode: ${result.exitCode}`)
             throw new Error(`dotnet list package returned non-zero exitcode: ${result.exitCode}`)
