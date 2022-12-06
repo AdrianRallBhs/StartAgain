@@ -1,13 +1,38 @@
 name: "Dependency"
 author: "DigitalEngineering"
 description: "NuGet Dependencies are able to be used"
-
+branding:
+  icon: arrow-up-circle
+  color: gray-dark
 inputs:
-	name: 
-		description: "Name to greet"
-		required: false
-		default: "Adrian"
+  root-folder:
+    description: 'relative path from repository root where the action should look for `package.json` files'
+    required: true
+    default: '.'
+  recursive:
+    description: 'wether or not the action should look for package.json in sub-folders and update all of them'
+    required: true
+    default: 'true'
+  comment-updated:
+    description: 'wheter or not the dependencies that are update should be included in the body output'
+    required: true
+    default: 'false'
+  version-limit:
+    description: 'Limit if update should update to latest major, minor or patch version. [latest,minor,patch] default: latest'
+    required: true
+    default: 'latest'
+  ignore:
+    description: 'Dependencies to ignore during update. Multiple nugets separated by newline'
+    required: true
+    default: ''
+  ignore-project:
+    description: 'If recursive mode is enabled you can specify paths for projects to ignore. Multiple projects separated by newline'
+    required: true
+    default: ''
 
+outputs:
+  body:
+    description: 'Body reprecenting updates made'
 runs:
   using: 'node16'
   main: 'dist/index.js'
