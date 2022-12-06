@@ -23,10 +23,56 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Core = __importStar(require("@actions/core"));
-const inputName = Core.getInput("name");
-greet(inputName);
-function greet(name) {
-    console.log(`'Hello ${name}!'`);
+const core = __importStar(require("@actions/core"));
+const fs_1 = require("fs");
+const dotnet_command_manager_1 = require("./dotnet-command-manager");
+const dotnet_project_locator_1 = require("./dotnet-project-locator");
+const pr_body_1 = require("./pr-body");
+async function execute() {
+    try {
+        const recursive = core.getBooleanInput("recursive");
+        const commentUpdated = core.getBooleanInput("comment-updated");
+        const rootFolder = core.getInput("root-folder");
+        const versionLimit = core.getInput("version-limit");
+        const ignoreList = core.getMultilineInput("ignore").filter(s => s.trim() !== "");
+        const projectIgnoreList = core.getMultilineInput("ignore-project").filter(s => s.trim() !== "");
+        core.startGroup("Find modules");
+        const projects = await (0, dotnet_project_locator_1.getAllProjects)(rootFolder, recursive, projectIgnoreList);
+        core.endGroup();
+        let body = "";
+        for (const project of projects) {
+            if ((0, fs_1.statSync)(project).isFile()) {
+                const dotnet = await dotnet_command_manager_1.DotnetCommandManager.create(project);
+                // core.startGroup(`dotnet restore ${project}`)
+                // await dotnet.restore()
+                // core.endGroup()
+                // core.startGroup(`dotnet list ${project}`)
+                // const outdatedPackages = await dotnet.listOutdated(versionLimit)
+                // core.endGroup()
+                // core.startGroup(`removing nugets present in ignore list ${project}`)
+                // const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
+                // core.info(`list of dependencies that will be updated: ${filteredPackages}`)
+                // core.endGroup()
+                // core.startGroup(`dotnet install new version ${project}`)
+                // await dotnet.addUpdatedPackage(filteredPackages)
+                // core.endGroup()
+                core.startGroup(`append to PR body  ${project}`);
+                const prBodyHelper = new pr_body_1.PrBodyHelper(project, commentUpdated);
+                // body += `${await prBodyHelper.buildPRBody(filteredPackages)}\n`
+            }
+        }
+        core.setOutput("body", body);
+    }
+    catch (e) {
+        if (e instanceof Error) {
+            core.setFailed(e.message);
+        }
+        else if (typeof e === 'string') {
+            core.setFailed(e);
+        }
+        else {
+            core.setFailed("Some unknown error occured, please see logs");
+        }
+    }
 }
-console.log('Hello World!');
+execute();
