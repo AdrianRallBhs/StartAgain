@@ -35,11 +35,11 @@ jobs:
         with:
           dotnet-version: 6.0.x
       
-      # - name: update packages
-      #   uses: ./
-      #   id: update
-      #   with:
-      #     version-limit: 'minor'
-      #     comment-updated: true
-      #     ignore: |
-      #       StackExchange.Redis.Extensions.Newtonsoft
+      - name: update packages
+        uses: ./
+        id: update
+        with:
+          version-limit: 'minor'
+          comment-updated: true
+          ignore: |
+            StackExchange.Redis.Extensions.Newtonsoft
