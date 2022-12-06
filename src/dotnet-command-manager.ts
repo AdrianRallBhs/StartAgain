@@ -72,10 +72,10 @@ export class DotnetCommandManager {
 
     async exec(args: string[]): Promise<DotnetOutput> {
         args = args.filter(x => x !== "")
-        const env = {}
-        // for (const key of Object.keys(process.env)) {
-        //     env[key] = process.env[key]
-        // }
+        const env: any = ""
+        for (const key of Object.keys(process.env)) {
+            env[key] = process.env[key]
+        }
         const stdout: string[] = []
         const stderr: string[] = []
 
