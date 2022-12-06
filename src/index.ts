@@ -13,17 +13,19 @@ async function execute(): Promise<void> {
         const versionLimit = core.getInput("version-limit")
         const ignoreList = core.getMultilineInput("ignore").filter(s => s.trim() !== "")
         const projectIgnoreList = core.getMultilineInput("ignore-project").filter(s => s.trim() !== "")
+        
         core.startGroup("Find modules")
         const projects: string[] = await getAllProjects(rootFolder, recursive, projectIgnoreList)
         core.endGroup()
+
         let body = ""
         for (const project of projects) {
             if (statSync(project).isFile()) {
                 const dotnet = await DotnetCommandManager.create(project)
 
-                core.startGroup(`dotnet restore ${project}`)
-                await dotnet.restore()
-                core.endGroup()
+                // core.startGroup(`dotnet restore ${project}`)
+                // await dotnet.restore()
+                // core.endGroup()
 
                 core.startGroup(`dotnet list ${project}`)
                 const outdatedPackages = await dotnet.listOutdated(versionLimit)
