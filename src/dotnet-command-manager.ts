@@ -25,6 +25,14 @@ export class DotnetCommandManager {
         }
     }
 
+    async listPackages(): Promise<void> {
+        const result = await this.exec(['list', this.projectfile, 'package'])
+        if (result.exitCode !== 0) {
+            error(`dotnet restore returned non-zero exitcode: ${result.exitCode}`)
+            throw new Error(`dotnet restore returned non-zero exitcode: ${result.exitCode}`)
+        }
+    }
+
     async listOutdated(versionLimit: string): Promise<OutdatedPackage[]> {
         let versionFlag = ""
         switch (versionLimit) {

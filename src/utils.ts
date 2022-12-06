@@ -35,9 +35,7 @@ export const removeIgnoredDependencies = async (
     dependencies: OutdatedPackage[],
     ignore: string[]
 ): Promise<OutdatedPackage[]> => {
-    return dependencies.filter(
-        (dependency) => {
-            return ignore.indexOf(dependency.name) === -1
+    return dependencies.filter((dependency) => { return ignore.indexOf(dependency.name) === -1
         }
     )
 }
