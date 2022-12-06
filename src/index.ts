@@ -23,9 +23,9 @@ async function execute(): Promise<void> {
             if (statSync(project).isFile()) {
                 const dotnet = await DotnetCommandManager.create(project)
 
-                core.startGroup(`dotnet restore ${project}`)
-                await dotnet.restore()
-                core.endGroup()
+                // core.startGroup(`dotnet restore ${project}`)
+                // await dotnet.restore()
+                // core.endGroup()
 
                 // core.startGroup(`dotnet list ${project}`)
                 // const outdatedPackages = await dotnet.listOutdated(versionLimit)
