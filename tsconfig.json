@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "es2019",
+        "target": "ES2019",
         "module": "commonjs",
         "strict": true,
         "esModuleInterop": true,
@@ -12,5 +12,9 @@
             "ESNext"
         ]
     },
-    "exclude": ["test", "lib", "node_modules"]
+    "exclude": [
+        "test",
+        "lib",
+        "node_modules"
+    ]
 }
