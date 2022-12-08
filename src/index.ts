@@ -27,9 +27,9 @@ async function execute(): Promise<void> {
                 await dotnet.restore()
                 core.endGroup()
 
-                core.startGroup(`dotnet list ${project}`)
-                const outdatedPackages = await dotnet.listOutdated(versionLimit)
-                core.endGroup()
+                // core.startGroup(`dotnet list ${project}`)
+                // const outdatedPackages = await dotnet.listOutdated(versionLimit)
+                // core.endGroup()
 
                 // core.startGroup(`removing nugets present in ignore list ${project}`)
                 // //const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
