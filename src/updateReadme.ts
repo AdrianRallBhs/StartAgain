@@ -12,7 +12,7 @@ const statAsync = promisify(stat);
 
 //updateReadme().catch((error) => setFailed(error.message));
 
-export async function updateReadme(contents: string) {
+export async function updateReadme(contents: any) {
   try {
     const path = getInput("path", { required: true });
     //const contents = getInput("contents", { required: true });
