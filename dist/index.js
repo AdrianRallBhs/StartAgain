@@ -28,7 +28,8 @@ const fs_1 = require("fs");
 const dotnet_command_manager_1 = require("./dotnet-command-manager");
 const dotnet_project_locator_1 = require("./dotnet-project-locator");
 const pr_body_1 = require("./pr-body");
-const updateReadme_1 = require("./updateReadme");
+const utils_1 = require("./utils");
+let inhalt;
 async function execute() {
     try {
         const recursive = core.getBooleanInput("recursive");
@@ -48,22 +49,23 @@ async function execute() {
                 core.startGroup(`dotnet restore ${project}`);
                 await dotnet.restore();
                 core.endGroup();
-                // core.startGroup(`dotnet list ${project}`)
-                // const outdatedPackages = await dotnet.listOutdated(versionLimit)
-                // core.endGroup()
-                // core.startGroup(`removing nugets present in ignore list ${project}`)
-                // //const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
-                // const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
-                // core.info(`list of dependencies that will be updated: ${filteredPackages}`)
-                // core.endGroup()
-                // core.startGroup(`dotnet install new version ${project}`)
-                // await dotnet.addUpdatedPackage(filteredPackages)
-                // core.endGroup()
+                core.startGroup(`dotnet list ${project}`);
+                const outdatedPackages = await dotnet.listOutdated(versionLimit);
+                core.endGroup();
+                core.startGroup(`removing nugets present in ignore list ${project}`);
+                //const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
+                const filteredPackages = await (0, utils_1.removeIgnoredDependencies)(outdatedPackages, ignoreList);
+                core.info(`list of dependencies that will be updated: ${filteredPackages}`);
+                core.endGroup();
+                core.startGroup(`dotnet install new version ${project}`);
+                await dotnet.addUpdatedPackage(filteredPackages);
+                core.endGroup();
                 core.startGroup(`dotnet list ${project} package`);
                 await dotnet.listPackages();
                 core.endGroup();
                 core.startGroup(`add to README`);
-                await (0, updateReadme_1.updateReadme)(dotnet.listOutdated.toString());
+                // inhalt = await dotnet.listPackages()
+                // await updateReadme(inhalt)
                 core.endGroup();
                 core.startGroup(`append to PR body  ${project}`);
                 const prBodyHelper = new pr_body_1.PrBodyHelper(project, commentUpdated);
