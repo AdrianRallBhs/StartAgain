@@ -44,13 +44,6 @@ jobs:
       #     # contents: |
       #     #   ### Hello world
             
-      - name: Commit & Push
-        uses: Andro999b/push@v1.3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
-          force: true
-          message: 'Overwritten by Github Actions - ${date}'
 
       - name: update packages
         uses: ./
@@ -62,3 +55,11 @@ jobs:
           write-mode: overwrite
           ignore: |
             StackExchange.Redis.Extensions.Newtonsoft
+
+      - name: Commit & Push
+        uses: Andro999b/push@v1.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+          force: true
+          message: 'Overwritten by Github Actions - ${date}'

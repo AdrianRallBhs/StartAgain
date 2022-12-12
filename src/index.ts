@@ -14,6 +14,9 @@ async function execute(): Promise<void> {
         const versionLimit = core.getInput("version-limit")
         const ignoreList = core.getMultilineInput("ignore").filter(s => s.trim() !== "")
         const projectIgnoreList = core.getMultilineInput("ignore-project").filter(s => s.trim() !== "")
+        const contents = core.getInput("contents", { required: true });
+        const mode = (core.getInput("write-mode") || "append").toLocaleLowerCase();
+    
 
         core.startGroup("Find modules")
         const projects: string[] = await getAllProjects(rootFolder, recursive, projectIgnoreList)
