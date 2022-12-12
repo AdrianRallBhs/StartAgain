@@ -95,7 +95,7 @@ export class DotnetCommandManager {
         return result
     }
 
-    private async parseListOutput(output: string): Promise<OutdatedPackage[]> {
+    async parseListOutput(output: string): Promise<OutdatedPackage[]> {
         const lines = output.split('\n')
         const packages: OutdatedPackage[] = []
         const regex = /^\s+>\s(.*?)\s+(\d+\.\d+\.\d+)\s+(\d+\.\d+\.\d+)\s+(\d+\.\d+\.\d+)\s*$/

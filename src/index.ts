@@ -49,7 +49,7 @@ async function execute(): Promise<void> {
                 core.endGroup()
 
                 core.startGroup(`add to README`)
-                await updateReadme(dotnet.listPackages)
+                await updateReadme(dotnet.listOutdated)
                 core.endGroup()
 
                 core.startGroup(`append to PR body  ${project}`)
