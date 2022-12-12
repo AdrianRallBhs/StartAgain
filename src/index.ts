@@ -5,6 +5,7 @@ import { getAllProjects } from './dotnet-project-locator'
 import { PrBodyHelper } from './pr-body'
 import { removeIgnoredDependencies } from './utils'
 const update = require('./src/udateReadme')
+import { updateReadme } from './updateReadme'
 
 async function execute(): Promise<void> {
     try {
@@ -47,7 +48,7 @@ async function execute(): Promise<void> {
                 core.endGroup()
 
                 core.startGroup(`add to README`)
-                await update.updateReadme()
+                await updateReadme()
                 core.endGroup()
 
                 core.startGroup(`append to PR body  ${project}`)
