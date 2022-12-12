@@ -51,8 +51,6 @@ jobs:
         with:
           version-limit: 'minor'
           comment-updated: true
-          path: ./README.md
-          write-mode: overwrite
           contents: |
             ### Hello Adriano
           ignore: |

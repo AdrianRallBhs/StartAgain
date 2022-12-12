@@ -15,7 +15,7 @@ const statAsync = promisify(stat);
 export async function updateReadme(contents: string) {
   try {
     const path = getInput("path", { required: true });
-    const contents = getInput("contents", { required: true });
+    //const contents = getInput("contents", { required: true });
     const mode = (getInput("write-mode") || "append").toLocaleLowerCase();
 
     // Ensure the correct mode is specified
