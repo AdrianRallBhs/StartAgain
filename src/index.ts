@@ -46,9 +46,9 @@ async function execute(): Promise<void> {
                 await dotnet.listPackages()
                 core.endGroup()
 
-                core.startGroup(`add to README`)
-                await updateReadme()
-                core.endGroup()
+                // core.startGroup(`add to README`)
+                // await updateReadme()
+                // core.endGroup()
 
                 core.startGroup(`append to PR body  ${project}`)
                 const prBodyHelper = new PrBodyHelper(project, commentUpdated)

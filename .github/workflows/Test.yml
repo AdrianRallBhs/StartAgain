@@ -38,7 +38,7 @@ jobs:
       - name: Overwrite file
         uses: "DamianReeves/write-file-action@master"
         with:
-          path: ./README.md
+          path: ./file.js
           write-mode: overwrite
           contents: |
             ###Hello world
