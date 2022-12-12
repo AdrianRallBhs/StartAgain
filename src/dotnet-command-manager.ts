@@ -45,8 +45,8 @@ export class DotnetCommandManager {
         }
         const result = await this.exec(['list', this.projectfile, 'package', versionFlag, '--outdated'])
         if (result.exitCode !== 0) {
-            error(`dotnet restore returned non-zero exitcode: ${result.exitCode}`)
-            throw new Error(`dotnet restore returned non-zero exitcode: ${result.exitCode}`)
+            error(`dotnet list package (outdated) returned non-zero exitcode: ${result.exitCode}`)
+            throw new Error(`dotnet list package (outdated) returned non-zero exitcode: ${result.exitCode}`)
         }
         const outdated = this.parseListOutput(result.stdout)
         if (versionFlag !== "") {
