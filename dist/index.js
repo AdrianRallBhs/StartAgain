@@ -66,7 +66,7 @@ async function execute() {
                 core.startGroup(`add to README`);
                 // inhalt = await dotnet.listPackages()
                 for (const pack of outdatedPackages)
-                    await (0, updateReadme_1.updateReadme)(`\n \n ${project} \n -Name: ${pack.name} \n -Current: ${pack.current} \n -Latest: ${pack.latest}`);
+                    await (0, updateReadme_1.updateReadme)(`\n \n ${project} \n - Name: ${pack.name} \n - Current: ${pack.current} \n - Latest: ${pack.latest}`);
                 core.endGroup();
                 core.startGroup(`append to PR body  ${project}`);
                 const prBodyHelper = new pr_body_1.PrBodyHelper(project, commentUpdated);
