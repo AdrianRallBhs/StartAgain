@@ -38,10 +38,10 @@ jobs:
       - name: Overwrite file
         uses: "DamianReeves/write-file-action@master"
         with:
-          path: ./file.js
+          path: ./README.md
           write-mode: overwrite
           contents: |
-            console.log('some contents')
+            'some contents'
             
       - name: Commit & Push
         uses: Andro999b/push@v1.3
