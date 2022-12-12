@@ -38,8 +38,6 @@ async function execute() {
         const ignoreList = core.getMultilineInput("ignore").filter(s => s.trim() !== "");
         const projectIgnoreList = core.getMultilineInput("ignore-project").filter(s => s.trim() !== "");
         const contents = core.getInput("contents", { required: true });
-        const mode = (core.getInput("write-mode") || "append").toLocaleLowerCase();
-        const path = core.getInput("path", { required: true });
         core.startGroup("Find modules");
         const projects = await (0, dotnet_project_locator_1.getAllProjects)(rootFolder, recursive, projectIgnoreList);
         core.endGroup();
