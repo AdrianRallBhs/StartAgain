@@ -29,4 +29,7 @@
             return latestsVersions;
         }
         return outdated;
-    }
+    }Name: Newtonsoft.Json 
+ 
+                                    Current: 11.0.2
+                                    Latest: 13.0.2 
