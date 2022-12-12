@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "puSoX2+56TiUssxIfx6Axzsj6XV2ynAGrJHsohZhb3dHUTUxcfcPmFR2ZgSHqYxlcccRTmZU3z4idXqUx2B98g==",
+  "dgSpecHash": "l6RW+OTbKdJsc88SJ/f0HFEK5YmYzN3SdHrxcm9a8CK8UlIbKbP5Rvbjcn69sk3vb/A/fn3qdELagzPXvobUbw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Adrian\\Desktop\\BlazorDotNet_Dependency\\BlazorDotNet_Dependency\\BlazorDotNet_Dependency.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/home/runner/work/StartAgain/StartAgain/BlazorDotNet_Dependency/BlazorDotNet_Dependency.csproj",
+  "expectedPackageFiles": [
+    "/home/runner/.nuget/packages/microsoft.extensions.dependencyinjection/5.0.2/microsoft.extensions.dependencyinjection.5.0.2.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/5.0.0/microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/newtonsoft.json/11.0.2/newtonsoft.json.11.0.2.nupkg.sha512"
+  ],
   "logs": []
 }
