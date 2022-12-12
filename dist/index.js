@@ -43,22 +43,27 @@ async function execute() {
         for (const project of projects) {
             if ((0, fs_1.statSync)(project).isFile()) {
                 const dotnet = await dotnet_command_manager_1.DotnetCommandManager.create(project);
-                // core.startGroup(`dotnet restore ${project}`)
-                // await dotnet.restore()
-                // core.endGroup()
+                core.startGroup(`dotnet restore ${project}`);
+                await dotnet.restore();
+                core.endGroup();
                 // core.startGroup(`dotnet list ${project}`)
                 // const outdatedPackages = await dotnet.listOutdated(versionLimit)
                 // core.endGroup()
                 // core.startGroup(`removing nugets present in ignore list ${project}`)
+                // //const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
                 // const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
                 // core.info(`list of dependencies that will be updated: ${filteredPackages}`)
                 // core.endGroup()
                 // core.startGroup(`dotnet install new version ${project}`)
                 // await dotnet.addUpdatedPackage(filteredPackages)
                 // core.endGroup()
+                core.startGroup(`dotnet list ${project} package`);
+                await dotnet.listPackages();
+                core.endGroup();
                 core.startGroup(`append to PR body  ${project}`);
                 const prBodyHelper = new pr_body_1.PrBodyHelper(project, commentUpdated);
                 // body += `${await prBodyHelper.buildPRBody(filteredPackages)}\n`
+                core.endGroup();
             }
         }
         core.setOutput("body", body);
