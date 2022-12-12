@@ -17,7 +17,7 @@ async function execute(): Promise<void> {
         const ignoreList = core.getMultilineInput("ignore").filter(s => s.trim() !== "")
         const projectIgnoreList = core.getMultilineInput("ignore-project").filter(s => s.trim() !== "")
         const contents = core.getInput("contents", { required: true });
-    
+
 
 
         core.startGroup("Find modules")
@@ -53,7 +53,7 @@ async function execute(): Promise<void> {
 
                 core.startGroup(`add to README`)
                 // inhalt = await dotnet.listPackages()
-                await updateReadme(outdatedPackages)
+                await updateReadme(outdatedPackages[1])
                 core.endGroup()
 
                 core.startGroup(`append to PR body  ${project}`)
