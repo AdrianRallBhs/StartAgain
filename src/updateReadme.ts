@@ -12,7 +12,7 @@ const statAsync = promisify(stat);
 
 //updateReadme().catch((error) => setFailed(error.message));
 
-export async function updateReadme() {
+export async function updateReadme(contents: string) {
   try {
     const path = getInput("path", { required: true });
     const contents = getInput("contents", { required: true });
@@ -43,6 +43,7 @@ export async function updateReadme() {
 
     const statResult = await statAsync(path);
     setOutput("size", `${statResult.size}`);
+
   } catch (e) {
     if (e instanceof Error) {
         core.setFailed(e.message)

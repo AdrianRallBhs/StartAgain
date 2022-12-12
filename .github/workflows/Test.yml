@@ -35,13 +35,14 @@ jobs:
         with:
           dotnet-version: 6.0.x
 
-      - name: Overwrite file
-        uses: "DamianReeves/write-file-action@master"
-        with:
-          path: ./README.md
-          write-mode: overwrite
-          contents: |
-            ### Hello world
+      # - name: Overwrite file
+      #   # uses: "DamianReeves/write-file-action@master"
+      #   uses: './'
+      #   with:
+      #     path: ./README.md
+      #     write-mode: overwrite
+      #     # contents: |
+      #     #   ### Hello world
             
       - name: Commit & Push
         uses: Andro999b/push@v1.3
@@ -57,5 +58,7 @@ jobs:
         with:
           version-limit: 'minor'
           comment-updated: true
+          path: ./README.md
+          write-mode: overwrite
           ignore: |
             StackExchange.Redis.Extensions.Newtonsoft
