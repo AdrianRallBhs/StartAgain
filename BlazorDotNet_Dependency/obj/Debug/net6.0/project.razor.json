@@ -111,39 +111,6 @@
         }
       },
       {
-        "HashCode": 1463801666,
-        "Kind": "Components.Component",
-        "Name": "BlazorDotNet_Dependency.App",
-        "AssemblyName": "BlazorDotNet_Dependency",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "App"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorDotNet_Dependency.App"
-        }
-      },
-      {
-        "HashCode": 1645842471,
-        "Kind": "Components.Component",
-        "Name": "BlazorDotNet_Dependency.App",
-        "AssemblyName": "BlazorDotNet_Dependency",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "BlazorDotNet_Dependency.App"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorDotNet_Dependency.App",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
         "HashCode": -327254461,
         "Kind": "Components.Component",
         "Name": "BlazorDotNet_Dependency.Shared.SurveyPrompt",
@@ -193,6 +160,39 @@
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
           "Common.TypeName": "BlazorDotNet_Dependency.Shared.SurveyPrompt",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "HashCode": 1688175599,
+        "Kind": "Components.Component",
+        "Name": "BlazorDotNet_Dependency.Shared.NavMenu",
+        "AssemblyName": "BlazorDotNet_Dependency",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "NavMenu"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorDotNet_Dependency.Shared.NavMenu"
+        }
+      },
+      {
+        "HashCode": 1988813705,
+        "Kind": "Components.Component",
+        "Name": "BlazorDotNet_Dependency.Shared.NavMenu",
+        "AssemblyName": "BlazorDotNet_Dependency",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "BlazorDotNet_Dependency.Shared.NavMenu"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorDotNet_Dependency.Shared.NavMenu",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -293,35 +293,35 @@
         }
       },
       {
-        "HashCode": 1688175599,
+        "HashCode": 1463801666,
         "Kind": "Components.Component",
-        "Name": "BlazorDotNet_Dependency.Shared.NavMenu",
+        "Name": "BlazorDotNet_Dependency.App",
         "AssemblyName": "BlazorDotNet_Dependency",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "NavMenu"
+            "TagName": "App"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorDotNet_Dependency.Shared.NavMenu"
+          "Common.TypeName": "BlazorDotNet_Dependency.App"
         }
       },
       {
-        "HashCode": 1988813705,
+        "HashCode": 1645842471,
         "Kind": "Components.Component",
-        "Name": "BlazorDotNet_Dependency.Shared.NavMenu",
+        "Name": "BlazorDotNet_Dependency.App",
         "AssemblyName": "BlazorDotNet_Dependency",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "BlazorDotNet_Dependency.Shared.NavMenu"
+            "TagName": "BlazorDotNet_Dependency.App"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorDotNet_Dependency.Shared.NavMenu",
+          "Common.TypeName": "BlazorDotNet_Dependency.App",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },

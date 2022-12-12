@@ -55,7 +55,7 @@ jobs:
           # contents: |
           #   ### Hello Adriano
           ignore: |
-            StackExchange.Redis.Extensions.Newtonsoft
+            Radzen.Blazor4.4.1
 
       - name: Commit & Push
         uses: Andro999b/push@v1.3
