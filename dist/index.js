@@ -63,7 +63,7 @@ async function execute() {
                 await dotnet.listPackages();
                 core.endGroup();
                 core.startGroup(`add to README`);
-                await (0, updateReadme_1.updateReadme)(dotnet.listPackages.toString());
+                await (0, updateReadme_1.updateReadme)(dotnet.listOutdated.toString());
                 core.endGroup();
                 core.startGroup(`append to PR body  ${project}`);
                 const prBodyHelper = new pr_body_1.PrBodyHelper(project, commentUpdated);
