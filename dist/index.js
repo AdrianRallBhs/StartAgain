@@ -68,7 +68,7 @@ async function execute() {
                 for (const pack of outdatedPackages)
                     await (0, updateReadme_1.updateReadme)(`Name: ${pack.name}
                                     Current: ${pack.current}
-                                    Latest: ${pack.latest} `);
+                                    Latest: ${pack.latest} \n \n `);
                 core.endGroup();
                 core.startGroup(`append to PR body  ${project}`);
                 const prBodyHelper = new pr_body_1.PrBodyHelper(project, commentUpdated);
