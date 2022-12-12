@@ -35,7 +35,7 @@ jobs:
         with:
           dotnet-version: 6.0.x
 
-       - name: Overwrite file
+      - name: Overwrite file
         uses: "DamianReeves/write-file-action@master"
         with:
           path: ./file.js
