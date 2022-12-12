@@ -4,6 +4,7 @@ import { mkdirP } from "@actions/io";
 import { appendFile, exists, writeFile, stat } from "fs";
 import { dirname, join as joinPath, resolve as resolvePath } from "path";
 import { promisify } from "util";
+import { DotnetCommandManager } from './dotnet-command-manager'
 
 const appendFileAsync = promisify(appendFile);
 const existsAsync = promisify(exists);
@@ -12,7 +13,7 @@ const statAsync = promisify(stat);
 
 //updateReadme().catch((error) => setFailed(error.message));
 
-export async function updateReadme(contents: any) {
+export async function updateReadme(contents: any): Promise<void> {
   try {
     const path = getInput("path", { required: true });
     //const contents = getInput("contents", { required: true });

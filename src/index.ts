@@ -6,6 +6,8 @@ import { PrBodyHelper } from './pr-body'
 import { removeIgnoredDependencies } from './utils'
 import { updateReadme } from './updateReadme'
 
+let inhalt: any
+
 async function execute(): Promise<void> {
     try {
         const recursive = core.getBooleanInput("recursive")
@@ -16,6 +18,7 @@ async function execute(): Promise<void> {
         const projectIgnoreList = core.getMultilineInput("ignore-project").filter(s => s.trim() !== "")
         const contents = core.getInput("contents", { required: true });
     
+
 
         core.startGroup("Find modules")
         const projects: string[] = await getAllProjects(rootFolder, recursive, projectIgnoreList)
@@ -49,7 +52,8 @@ async function execute(): Promise<void> {
                 core.endGroup()
 
                 core.startGroup(`add to README`)
-                await updateReadme(dotnet.listOutdated.toString())
+                inhalt = await dotnet.listPackages()
+                await updateReadme(inhalt)
                 core.endGroup()
 
                 core.startGroup(`append to PR body  ${project}`)
