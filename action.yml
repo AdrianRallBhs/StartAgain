@@ -40,7 +40,7 @@ inputs:
   contents:
     despcription: 'Text for file the path is referencing'
     required: false
-    # default: '# AdrianoBoy'
+    default: '# AdrianoBoy'
 
 outputs:
   body:
