@@ -13,10 +13,11 @@ const statAsync = promisify(stat);
 
 //updateReadme().catch((error) => setFailed(error.message));
 
-export async function updateReadme(contents: any): Promise<void> {
+// export async function updateReadme(contents: any): Promise<void> {
+  export async function updateReadme() {
   try {
     const path = getInput("path", { required: true });
-    //const contents = getInput("contents", { required: true });
+    const contents = getInput("contents", { required: true });
     const mode = (getInput("write-mode") || "append").toLocaleLowerCase();
 
     // Ensure the correct mode is specified
