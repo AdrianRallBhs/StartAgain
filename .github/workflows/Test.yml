@@ -53,6 +53,8 @@ jobs:
           comment-updated: true
           path: ./README.md
           write-mode: overwrite
+          contents: |
+            ### Hello Adriano
           ignore: |
             StackExchange.Redis.Extensions.Newtonsoft
 
