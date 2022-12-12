@@ -41,7 +41,7 @@ jobs:
           path: ./README.md
           write-mode: overwrite
           contents: |
-            'some contents'
+            ###Hello world
             
       - name: Commit & Push
         uses: Andro999b/push@v1.3
