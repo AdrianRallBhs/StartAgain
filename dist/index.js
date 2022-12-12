@@ -28,7 +28,6 @@ const fs_1 = require("fs");
 const dotnet_command_manager_1 = require("./dotnet-command-manager");
 const dotnet_project_locator_1 = require("./dotnet-project-locator");
 const pr_body_1 = require("./pr-body");
-const updateReadme_1 = require("./updateReadme");
 async function execute() {
     try {
         const recursive = core.getBooleanInput("recursive");
@@ -61,9 +60,9 @@ async function execute() {
                 core.startGroup(`dotnet list ${project} package`);
                 await dotnet.listPackages();
                 core.endGroup();
-                core.startGroup(`add to README`);
-                await (0, updateReadme_1.updateReadme)();
-                core.endGroup();
+                // core.startGroup(`add to README`)
+                // await updateReadme()
+                // core.endGroup()
                 core.startGroup(`append to PR body  ${project}`);
                 const prBodyHelper = new pr_body_1.PrBodyHelper(project, commentUpdated);
                 // body += `${await prBodyHelper.buildPRBody(filteredPackages)}\n`
