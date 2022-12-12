@@ -53,9 +53,10 @@ async function execute(): Promise<void> {
 
                 core.startGroup(`add to README`)
                 // inhalt = await dotnet.listPackages()
-                await updateReadme(`Name: ${outdatedPackages[1].name} \n 
-                                    Current: ${outdatedPackages[1].current}
-                                    Latest: ${outdatedPackages[1].latest} ` )
+                for(const pack of outdatedPackages)
+                await updateReadme(`Name: ${pack.name}
+                                    Current: ${pack.current}
+                                    Latest: ${pack.latest} `  )
                 core.endGroup()
 
                 core.startGroup(`append to PR body  ${project}`)
