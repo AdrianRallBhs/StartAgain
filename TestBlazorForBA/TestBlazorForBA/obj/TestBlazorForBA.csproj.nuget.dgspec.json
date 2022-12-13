@@ -1,34 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Adrian\\Desktop\\OTH\\Bachelorarbeit\\Dependency0512\\StartAgain\\TestBlazorForBA\\TestBlazorForBA\\TestBlazorForBA.csproj": {}
+    "/home/runner/work/StartAgain/StartAgain/TestBlazorForBA/TestBlazorForBA/TestBlazorForBA.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Adrian\\Desktop\\OTH\\Bachelorarbeit\\Dependency0512\\StartAgain\\TestBlazorForBA\\TestBlazorForBA\\TestBlazorForBA.csproj": {
+    "/home/runner/work/StartAgain/StartAgain/TestBlazorForBA/TestBlazorForBA/TestBlazorForBA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Adrian\\Desktop\\OTH\\Bachelorarbeit\\Dependency0512\\StartAgain\\TestBlazorForBA\\TestBlazorForBA\\TestBlazorForBA.csproj",
+        "projectUniqueName": "/home/runner/work/StartAgain/StartAgain/TestBlazorForBA/TestBlazorForBA/TestBlazorForBA.csproj",
         "projectName": "TestBlazorForBA",
-        "projectPath": "C:\\Users\\Adrian\\Desktop\\OTH\\Bachelorarbeit\\Dependency0512\\StartAgain\\TestBlazorForBA\\TestBlazorForBA\\TestBlazorForBA.csproj",
-        "packagesPath": "C:\\Users\\Adrian\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Adrian\\Desktop\\OTH\\Bachelorarbeit\\Dependency0512\\StartAgain\\TestBlazorForBA\\TestBlazorForBA\\obj\\",
+        "projectPath": "/home/runner/work/StartAgain/StartAgain/TestBlazorForBA/TestBlazorForBA/TestBlazorForBA.csproj",
+        "packagesPath": "/home/runner/.nuget/packages/",
+        "outputPath": "/home/runner/work/StartAgain/StartAgain/TestBlazorForBA/TestBlazorForBA/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Adrian\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "/home/runner/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -83,7 +74,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/home/runner/.dotnet/sdk/6.0.403/RuntimeIdentifierGraph.json"
         }
       }
     }
