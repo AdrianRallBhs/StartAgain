@@ -19,7 +19,7 @@ jobs:
         include:
           - dotnet-version: 6.0.x
             experimental: true
-  continue-on-error: ${{ matrix.experimental }}
+        continue-on-error: ${{ matrix.experimental }}
 
     steps:
       - uses: actions/checkout@v2
