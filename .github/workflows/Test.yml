@@ -51,7 +51,7 @@ jobs:
         with:
           version-limit: 'minor'
           comment-updated: true
-          wrtie-mode: overwrite
+          mode: append
           # contents: |
           #   ### Hello Adriano
           # ignore: |
