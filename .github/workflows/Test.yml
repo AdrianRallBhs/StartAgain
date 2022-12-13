@@ -12,6 +12,10 @@ jobs:
     name: Run Action
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        dotnet-version: [3.x, 4.x, 5.x, 6.0.x]
+
     steps:
       - uses: actions/checkout@v2
 
@@ -33,7 +37,7 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: ${{ matrix.dotnet-version }}
 
       # - name: Overwrite file
       #   # uses: "DamianReeves/write-file-action@master"
@@ -51,7 +55,7 @@ jobs:
         with:
           version-limit: 'minor'
           comment-updated: true
-          write-mode: preserve
+          write-mode: append
           # contents: |
           #   ### Hello Adriano
           ignore: |
