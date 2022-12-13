@@ -5,57 +5,56 @@ build_property.UsingMicrosoftNETSdkWeb = true
 build_property.ProjectTypeGuids = 
 build_property.InvariantGlobalization = 
 build_property.PlatformNeutralAssembly = 
-build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = BlazorDotNet_Dependency
 build_property.RootNamespace = BlazorDotNet_Dependency
-build_property.ProjectDir = C:\Users\Adrian\Desktop\OTH\Bachelorarbeit\DependencyTest\BlazorDotNet_Dependency\
+build_property.ProjectDir = /home/runner/work/StartAgain/StartAgain/BlazorDotNet_Dependency/
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Adrian\Desktop\OTH\Bachelorarbeit\DependencyTest\BlazorDotNet_Dependency
+build_property.MSBuildProjectDirectory = /home/runner/work/StartAgain/StartAgain/BlazorDotNet_Dependency
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Adrian/Desktop/OTH/Bachelorarbeit/DependencyTest/BlazorDotNet_Dependency/App.razor]
+[/home/runner/work/StartAgain/StartAgain/BlazorDotNet_Dependency/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Adrian/Desktop/OTH/Bachelorarbeit/DependencyTest/BlazorDotNet_Dependency/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
+[/home/runner/work/StartAgain/StartAgain/BlazorDotNet_Dependency/Pages/Counter.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvQ291bnRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Adrian/Desktop/OTH/Bachelorarbeit/DependencyTest/BlazorDotNet_Dependency/Pages/FetchData.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmV0Y2hEYXRhLnJhem9y
+[/home/runner/work/StartAgain/StartAgain/BlazorDotNet_Dependency/Pages/FetchData.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRmV0Y2hEYXRhLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Adrian/Desktop/OTH/Bachelorarbeit/DependencyTest/BlazorDotNet_Dependency/Pages/Index.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+[/home/runner/work/StartAgain/StartAgain/BlazorDotNet_Dependency/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Adrian/Desktop/OTH/Bachelorarbeit/DependencyTest/BlazorDotNet_Dependency/Shared/SurveyPrompt.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
+[/home/runner/work/StartAgain/StartAgain/BlazorDotNet_Dependency/Shared/SurveyPrompt.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL1N1cnZleVByb21wdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Adrian/Desktop/OTH/Bachelorarbeit/DependencyTest/BlazorDotNet_Dependency/_Imports.razor]
+[/home/runner/work/StartAgain/StartAgain/BlazorDotNet_Dependency/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Adrian/Desktop/OTH/Bachelorarbeit/DependencyTest/BlazorDotNet_Dependency/Shared/MainLayout.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = b-sof9kqv1xa
+[/home/runner/work/StartAgain/StartAgain/BlazorDotNet_Dependency/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL01haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-7fxzveuid0
 
-[C:/Users/Adrian/Desktop/OTH/Bachelorarbeit/DependencyTest/BlazorDotNet_Dependency/Shared/NavMenu.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = b-rloz57c0rs
+[/home/runner/work/StartAgain/StartAgain/BlazorDotNet_Dependency/Shared/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL05hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-hd7zdfpdmz
 
-[C:/Users/Adrian/Desktop/OTH/Bachelorarbeit/DependencyTest/BlazorDotNet_Dependency/Pages/Error.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+[/home/runner/work/StartAgain/StartAgain/BlazorDotNet_Dependency/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Adrian/Desktop/OTH/Bachelorarbeit/DependencyTest/BlazorDotNet_Dependency/Pages/_Host.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
+[/home/runner/work/StartAgain/StartAgain/BlazorDotNet_Dependency/Pages/_Host.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX0hvc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Adrian/Desktop/OTH/Bachelorarbeit/DependencyTest/BlazorDotNet_Dependency/Pages/_Layout.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0xheW91dC5jc2h0bWw=
+[/home/runner/work/StartAgain/StartAgain/BlazorDotNet_Dependency/Pages/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXMvX0xheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
