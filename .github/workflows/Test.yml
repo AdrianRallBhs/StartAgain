@@ -51,11 +51,10 @@ jobs:
         with:
           version-limit: 'minor'
           comment-updated: true
-          mode: overwrite
+          wrtie-mode: overwrite
           # contents: |
           #   ### Hello Adriano
-          ignore: |
-            Radzen.Blazor4.4.1
+          # ignore: |
 
       - name: Commit & Push
         uses: Andro999b/push@v1.3

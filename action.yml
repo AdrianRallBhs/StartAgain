@@ -29,7 +29,7 @@ inputs:
     description: 'If recursive mode is enabled you can specify paths for projects to ignore. Multiple projects separated by newline'
     required: true
     default: ''
-  mode:
+  write-mode:
     description: 'append, overwrite or preserve'
     required: true
     default: 'overwrite'
