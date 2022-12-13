@@ -51,7 +51,7 @@ jobs:
         with:
           version-limit: 'minor'
           comment-updated: true
-          mode: append
+          mode: preserve
           # contents: |
           #   ### Hello Adriano
           # ignore: |

@@ -32,7 +32,7 @@ inputs:
   mode:
     description: 'append, overwrite or preserve'
     required: true
-    default: 'append'
+    default: 'preserve'
   path:
     description: 'Path where content get written in'
     required: false
