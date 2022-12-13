@@ -29,10 +29,10 @@ inputs:
     description: 'If recursive mode is enabled you can specify paths for projects to ignore. Multiple projects separated by newline'
     required: true
     default: ''
-  mode:
-    description: 'append, overwrite or preserve'
-    required: true
-    default: 'overwrite'
+  write-mode:
+    description: "The mode of writing to use: `overwrite`, `append`, or `preserve`."
+    required: false
+    default: preserve
   path:
     description: 'Path where content get written in'
     required: false
