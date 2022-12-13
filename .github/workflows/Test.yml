@@ -51,10 +51,11 @@ jobs:
         with:
           version-limit: 'minor'
           comment-updated: true
-          write-mode: preserve
+          write-mode: overwrite
           # contents: |
           #   ### Hello Adriano
-          # ignore: |
+          ignore: |
+            
 
       - name: Commit & Push
         uses: Andro999b/push@v1.3
