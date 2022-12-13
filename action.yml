@@ -32,7 +32,7 @@ inputs:
   write-mode:
     description: "The mode of writing to use: `overwrite`, `append`, or `preserve`."
     required: false
-    default: append
+    default: overwrite
   path:
     description: 'Path where content get written in'
     required: false
