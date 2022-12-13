@@ -12,6 +12,39 @@
   "ProjectWorkspaceState": {
     "TagHelpers": [
       {
+        "HashCode": -1348366616,
+        "Kind": "Components.Component",
+        "Name": "BlazorDotNet_Dependency.Pages.Index",
+        "AssemblyName": "BlazorDotNet_Dependency",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "Index"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorDotNet_Dependency.Pages.Index"
+        }
+      },
+      {
+        "HashCode": -1282928136,
+        "Kind": "Components.Component",
+        "Name": "BlazorDotNet_Dependency.Pages.Index",
+        "AssemblyName": "BlazorDotNet_Dependency",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "BlazorDotNet_Dependency.Pages.Index"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorDotNet_Dependency.Pages.Index",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
         "HashCode": 1628213296,
         "Kind": "Components.Component",
         "Name": "BlazorDotNet_Dependency.Pages.Counter",
@@ -74,39 +107,6 @@
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
           "Common.TypeName": "BlazorDotNet_Dependency.Pages.FetchData",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
-        "HashCode": -1348366616,
-        "Kind": "Components.Component",
-        "Name": "BlazorDotNet_Dependency.Pages.Index",
-        "AssemblyName": "BlazorDotNet_Dependency",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "Index"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorDotNet_Dependency.Pages.Index"
-        }
-      },
-      {
-        "HashCode": -1282928136,
-        "Kind": "Components.Component",
-        "Name": "BlazorDotNet_Dependency.Pages.Index",
-        "AssemblyName": "BlazorDotNet_Dependency",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "BlazorDotNet_Dependency.Pages.Index"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorDotNet_Dependency.Pages.Index",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -193,6 +193,39 @@
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
           "Common.TypeName": "BlazorDotNet_Dependency.Shared.SurveyPrompt",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "HashCode": 1229533380,
+        "Kind": "Components.Component",
+        "Name": "BlazorDotNet_Dependency.Shared.NavMenu",
+        "AssemblyName": "BlazorDotNet_Dependency",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "NavMenu"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorDotNet_Dependency.Shared.NavMenu"
+        }
+      },
+      {
+        "HashCode": -1415510178,
+        "Kind": "Components.Component",
+        "Name": "BlazorDotNet_Dependency.Shared.NavMenu",
+        "AssemblyName": "BlazorDotNet_Dependency",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "BlazorDotNet_Dependency.Shared.NavMenu"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorDotNet_Dependency.Shared.NavMenu",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -289,39 +322,6 @@
           "Runtime.Name": "Components.None",
           "Common.TypeName": "BlazorDotNet_Dependency.Shared.MainLayout.Body",
           "Components.IsSpecialKind": "Components.ChildContent",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
-        "HashCode": 1229533380,
-        "Kind": "Components.Component",
-        "Name": "BlazorDotNet_Dependency.Shared.NavMenu",
-        "AssemblyName": "BlazorDotNet_Dependency",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "NavMenu"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorDotNet_Dependency.Shared.NavMenu"
-        }
-      },
-      {
-        "HashCode": -1415510178,
-        "Kind": "Components.Component",
-        "Name": "BlazorDotNet_Dependency.Shared.NavMenu",
-        "AssemblyName": "BlazorDotNet_Dependency",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "BlazorDotNet_Dependency.Shared.NavMenu"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorDotNet_Dependency.Shared.NavMenu",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
