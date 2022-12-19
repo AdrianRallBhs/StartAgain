@@ -46,16 +46,6 @@ jobs:
         run: dotnet build --configuration Release --no-restore
       - name: Test
         run: dotnet test --no-restore --verbosity normal
-          
-
-      # - name: Overwrite file
-      #   # uses: "DamianReeves/write-file-action@master"
-      #   uses: './'
-      #   with:
-      #     path: ./README.md
-      #     write-mode: overwrite
-      #     # contents: |
-      #     #   ### Hello world
             
 
       - name: update packages
