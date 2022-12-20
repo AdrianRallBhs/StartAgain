@@ -27,9 +27,9 @@ jobs:
           cache: 'npm'
           cache-dependency-path: package-lock.json
 
-      # - name: Install dependencies
-      # # npm ci == npm install but gives feedback if not up-to-date
-      #   run: npm ci
+      - name: Install dependencies
+      # npm ci == npm install but gives feedback if not up-to-date
+        run: npm ci
 
       - name: Build
         run: npm run build
@@ -40,12 +40,12 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
       
-      - name: Install dependencies
-        run: dotnet restore
-      - name: Build
-        run: dotnet build --configuration Release --no-restore
-      - name: Test
-        run: dotnet test --no-restore --verbosity normal
+      # - name: Install dependencies
+      #   run: dotnet restore
+      # - name: Build
+      #   run: dotnet build --configuration Release --no-restore
+      # - name: Test
+      #   run: dotnet test --no-restore --verbosity normal
             
 
       - name: update packages
