@@ -27,6 +27,7 @@ const core = __importStar(require("@actions/core"));
 const fs_1 = require("fs");
 const dotnet_command_manager_1 = require("./dotnet-command-manager");
 const dotnet_project_locator_1 = require("./dotnet-project-locator");
+//import { removeIgnoredDependencies } from './utils'
 const updateReadme_1 = require("./updateReadme");
 let inhalt;
 async function execute() {
@@ -41,7 +42,6 @@ async function execute() {
         core.startGroup("Find modules");
         const projects = await (0, dotnet_project_locator_1.getAllProjects)(rootFolder, recursive, projectIgnoreList);
         core.endGroup();
-        //       let body = ""
         for (const project of projects) {
             if ((0, fs_1.statSync)(project).isFile()) {
                 const dotnet = await dotnet_command_manager_1.DotnetCommandManager.create(project);
@@ -63,18 +63,13 @@ async function execute() {
                 // await dotnet.listPackages()
                 // core.endGroup()
                 core.startGroup(`add to README`);
-                // inhalt = await dotnet.listPackages()
+                // inhalt = await dotnet.listPackages()     
                 for (const pack of outdatedPackages)
                     // await updateReadme(`\n \n ${project} \n - Name: ${pack.name} \n - Current: ${pack.current} \n - Latest: ${pack.latest}`)
                     await (0, updateReadme_1.updateReadme)(`\n \n Name: ${pack.name} : Current: ${pack.current} --> ${pack.latest} \n - ${project}`);
                 core.endGroup();
-                core.startGroup(`append to PR body  ${project}`);
-                //                const prBodyHelper = new PrBodyHelper(project, commentUpdated)
-                // body += `${await prBodyHelper.buildPRBody(filteredPackages)}\n`
-                core.endGroup();
             }
         }
-        //        core.setOutput("body", body)
     }
     catch (e) {
         if (e instanceof Error) {
