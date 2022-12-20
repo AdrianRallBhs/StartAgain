@@ -2,7 +2,7 @@ import * as core from '@actions/core'
 import { statSync } from 'fs'
 import { DotnetCommandManager } from './dotnet-command-manager'
 import { getAllProjects } from './dotnet-project-locator'
-import { PrBodyHelper } from './pr-body'
+//import { PrBodyHelper } from './pr-body'
 import { removeIgnoredDependencies } from './utils'
 import { updateReadme } from './updateReadme'
 
@@ -24,7 +24,7 @@ async function execute(): Promise<void> {
         const projects: string[] = await getAllProjects(rootFolder, recursive, projectIgnoreList)
         core.endGroup()
 
-        let body = ""
+ //       let body = ""
         for (const project of projects) {
             if (statSync(project).isFile()) {
                 const dotnet = await DotnetCommandManager.create(project)
@@ -63,7 +63,7 @@ async function execute(): Promise<void> {
                 
 
                 core.startGroup(`append to PR body  ${project}`)
-                const prBodyHelper = new PrBodyHelper(project, commentUpdated)
+//                const prBodyHelper = new PrBodyHelper(project, commentUpdated)
                 // body += `${await prBodyHelper.buildPRBody(filteredPackages)}\n`
                 core.endGroup()
 
@@ -72,7 +72,7 @@ async function execute(): Promise<void> {
 
             }
         }
-        core.setOutput("body", body)
+//        core.setOutput("body", body)
     } catch (e) {
         if (e instanceof Error) {
             core.setFailed(e.message)

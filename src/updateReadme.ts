@@ -1,4 +1,4 @@
-import { getInput, setFailed, setOutput } from "@actions/core";
+
 import * as core from '@actions/core'
 import { mkdirP } from "@actions/io";
 import { appendFile, exists, writeFile, stat } from "fs";
@@ -16,20 +16,20 @@ const statAsync = promisify(stat);
 export async function updateReadme(contents: any): Promise<void> {
   // export async function updateReadme() {
   try {
-    const path = getInput("path", { required: true });
+    const path = core.getInput("path", { required: true });
     //const contents = getInput("contents", { required: true });
-    const mode = (getInput("write-mode") || "append").toLocaleLowerCase();
+    const mode = (core.getInput("write-mode") || "append").toLocaleLowerCase();
 
     // Ensure the correct mode is specified
     if (mode !== "append" && mode !== "overwrite" && mode !== "preserve") {
-      setFailed("Mode must be one of: overwrite, append, or preserve");
+      core.setFailed("Mode must be one of: overwrite, append, or preserve");
       return;
     }
 
     // Preserve the file
     if (mode === "preserve" && (await existsAsync(path))) {
       const statResult = await statAsync(path);
-      setOutput("size", `${statResult.size}`);
+      core.setOutput("size", `${statResult.size}`);
       return;
     }
 
@@ -44,7 +44,7 @@ export async function updateReadme(contents: any): Promise<void> {
     }
 
     const statResult = await statAsync(path);
-    setOutput("size", `${statResult.size}`);
+    core.setOutput("size", `${statResult.size}`);
 
   } catch (e) {
     if (e instanceof Error) {
