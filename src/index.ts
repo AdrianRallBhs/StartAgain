@@ -3,7 +3,7 @@ import { statSync } from 'fs'
 import { DotnetCommandManager } from './dotnet-command-manager'
 import { getAllProjects } from './dotnet-project-locator'
 //import { PrBodyHelper } from './pr-body'
-import { removeIgnoredDependencies } from './utils'
+//import { removeIgnoredDependencies } from './utils'
 import { updateReadme } from './updateReadme'
 
 let inhalt: any
@@ -52,8 +52,7 @@ async function execute(): Promise<void> {
                 // core.endGroup()
 
                 core.startGroup(`add to README`)
-                // inhalt = await dotnet.listPackages()
-                
+                // inhalt = await dotnet.listPackages()     
                     for (const pack of outdatedPackages)
                    // await updateReadme(`\n \n ${project} \n - Name: ${pack.name} \n - Current: ${pack.current} \n - Latest: ${pack.latest}`)
                         await updateReadme(`\n \n Name: ${pack.name} : Current: ${pack.current} --> ${pack.latest} \n - ${project}`)
@@ -62,10 +61,10 @@ async function execute(): Promise<void> {
 
                 
 
-                core.startGroup(`append to PR body  ${project}`)
-//                const prBodyHelper = new PrBodyHelper(project, commentUpdated)
-                // body += `${await prBodyHelper.buildPRBody(filteredPackages)}\n`
-                core.endGroup()
+//                 core.startGroup(`append to PR body  ${project}`)
+// //                const prBodyHelper = new PrBodyHelper(project, commentUpdated)
+//                 // body += `${await prBodyHelper.buildPRBody(filteredPackages)}\n`
+//                 core.endGroup()
 
 
 
