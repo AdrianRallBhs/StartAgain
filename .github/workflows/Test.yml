@@ -39,13 +39,6 @@ jobs:
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
-      
-      # - name: Install dependencies
-      #   run: dotnet restore
-      # - name: Build
-      #   run: dotnet build --configuration Release --no-restore
-      # - name: Test
-      #   run: dotnet test --no-restore --verbosity normal
             
 
       - name: update packages
@@ -55,8 +48,6 @@ jobs:
           version-limit: 'minor'
           comment-updated: true
           write-mode: append
-          # contents: |
-          #   ### Hello Adriano
           ignore: |
             
             

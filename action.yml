@@ -42,9 +42,6 @@ inputs:
     required: false
     default: '# AdrianoBoy'
 
-outputs:
-  body:
-    description: 'Body reprecenting updates made'
 runs:
   using: 'node16'
   main: 'dist/index.js'
