@@ -2,7 +2,6 @@ import * as core from '@actions/core'
 import { statSync } from 'fs'
 import { DotnetCommandManager } from './dotnet-command-manager'
 import { getAllProjects } from './dotnet-project-locator'
-//import { PrBodyHelper } from './pr-body'
 //import { removeIgnoredDependencies } from './utils'
 import { updateReadme } from './updateReadme'
 
@@ -18,13 +17,10 @@ async function execute(): Promise<void> {
         const projectIgnoreList = core.getMultilineInput("ignore-project").filter(s => s.trim() !== "")
         const contents = core.getInput("contents", { required: true });
 
-
-
         core.startGroup("Find modules")
         const projects: string[] = await getAllProjects(rootFolder, recursive, projectIgnoreList)
         core.endGroup()
 
- //       let body = ""
         for (const project of projects) {
             if (statSync(project).isFile()) {
                 const dotnet = await DotnetCommandManager.create(project)
@@ -57,21 +53,8 @@ async function execute(): Promise<void> {
                    // await updateReadme(`\n \n ${project} \n - Name: ${pack.name} \n - Current: ${pack.current} \n - Latest: ${pack.latest}`)
                         await updateReadme(`\n \n Name: ${pack.name} : Current: ${pack.current} --> ${pack.latest} \n - ${project}`)
                 core.endGroup()
-                
-
-                
-
-//                 core.startGroup(`append to PR body  ${project}`)
-// //                const prBodyHelper = new PrBodyHelper(project, commentUpdated)
-//                 // body += `${await prBodyHelper.buildPRBody(filteredPackages)}\n`
-//                 core.endGroup()
-
-
-
-
             }
         }
-//        core.setOutput("body", body)
     } catch (e) {
         if (e instanceof Error) {
             core.setFailed(e.message)
