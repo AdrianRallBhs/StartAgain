@@ -48,14 +48,12 @@ jobs:
           version-limit: 'minor'
           comment-updated: true
           write-mode: append
-          ignore: |
-            
-            
+          ignore: |         
 
-      - name: Commit & Push
-        uses: Andro999b/push@v1.3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
-          force: true
-          message: 'Overwritten by Github Actions - ${date}'
+      # - name: Commit & Push
+      #   uses: Andro999b/push@v1.3
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     branch: main
+      #     force: true
+      #     message: 'Overwritten by Github Actions - ${date}'
