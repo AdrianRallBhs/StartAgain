@@ -25,12 +25,14 @@ export class DotnetCommandManager {
         }
     }
 
-    async listSource(): Promise<void> {
+    async listSource(): Promise<Sources[]> {
         const result = await this.exec(['nuget', 'list', 'source', '--format', 'Short'])
+        const sources = this.listSources(result.stdout)
         if (result.exitCode !== 0) {
             error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
             throw new Error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
         }
+        return sources
     }
 
     async listPackages(): Promise<void> {
@@ -120,6 +122,19 @@ export class DotnetCommandManager {
         }
         return packages
     }
+
+    private async listSources(sources: string): Promise<Sources[]> {
+        const lines = sources. split('\n')
+        const sourceList: Sources[] = []
+        const regex = /^E $/
+        for(const line in lines) {
+            const match = regex.exec(line)
+            if(match) {
+                sourceList.push({name: match[1]})
+            }
+        }
+        return sourceList
+    }
 }
 
 export class OutdatedPackage {
@@ -145,4 +160,12 @@ export class DotnetOutput {
         this.exitCode = exitCode
     }
 
+}
+
+export class Sources {
+    name: string
+
+    constructor(name: string) {
+        this.name = name
+    }
 }
