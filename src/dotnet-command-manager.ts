@@ -25,6 +25,14 @@ export class DotnetCommandManager {
         }
     }
 
+    async listSource(): Promise<void> {
+        const result = await this.exec(['nuget list source --format Short'])
+        if (result.exitCode !== 0) {
+            error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
+            throw new Error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
+        }
+    }
+
     async listPackages(): Promise<void> {
         const result = await this.exec(['list', this.projectfile, 'package'])
         if (result.exitCode !== 0) {

@@ -29,6 +29,10 @@ async function execute(): Promise<void> {
                 await dotnet.restore()
                 core.endGroup()
 
+                core.startGroup(`dotnet nuget list source --format Short`)
+                await dotnet.listSource()
+                core.endGroup()
+
                 core.startGroup(`dotnet list ${project}`)
                 const outdatedPackages = await dotnet.listOutdated(versionLimit)
                 core.endGroup()
