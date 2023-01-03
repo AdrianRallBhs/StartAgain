@@ -51,12 +51,12 @@ async function execute(): Promise<void> {
                 // await dotnet.listPackages()
                 // core.endGroup()
 
-                core.startGroup(`add to README`)
-                // inhalt = await dotnet.listPackages()     
-                for (const pack of outdatedPackages)
-                    // await updateReadme(`\n \n ${project} \n - Name: ${pack.name} \n - Current: ${pack.current} \n - Latest: ${pack.latest}`)
-                    await updateReadme(`\n \n Name: ${pack.name} : Current: ${pack.current} --> ${pack.latest} \n - ${project}`)
-                core.endGroup()
+                // core.startGroup(`add to README`)
+                // // inhalt = await dotnet.listPackages()     
+                // for (const pack of outdatedPackages)
+                //     // await updateReadme(`\n \n ${project} \n - Name: ${pack.name} \n - Current: ${pack.current} \n - Latest: ${pack.latest}`)
+                //     await updateReadme(`\n \n Name: ${pack.name} : Current: ${pack.current} --> ${pack.latest} \n - ${project}`)
+                // core.endGroup()
             }
         }
     } catch (e) {
