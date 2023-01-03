@@ -126,7 +126,7 @@ export class DotnetCommandManager {
     private async listSources(sources: string): Promise<Sources[]> {
         const lines = sources. split('\n')
         const sourceList: Sources[] = []
-        const regex = /^E $/
+        const regex = /^D $/
         for(const line in lines) {
             const match = regex.exec(line)
             if(match) {
