@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "a5k0oanHv0bevtnM0OET1AMCf2lBrcbVQhOJ/YK///6nl5u7rCAi1MR48JGhc9U8MgQ8BX1pM3djiU0C6nAMGQ==",
+  "dgSpecHash": "lK/LP0c/U2OOxL27y7smruDJSh8EFR81Zqv9yTW4uoovzbkZKsulsu0fpirFKUM4j+Z4opm9rOnta3y5LJGIrg==",
   "success": true,
   "projectFilePath": "/home/runner/work/StartAgain/StartAgain/BlazorDotNet_Dependency/BlazorDotNet_Dependency.csproj",
   "expectedPackageFiles": [
-    "/home/runner/.nuget/packages/microsoft.aspnetcore.html.abstractions/2.1.1/microsoft.aspnetcore.html.abstractions.2.1.1.nupkg.sha512",
-    "/home/runner/.nuget/packages/microsoft.aspnetcore.razor/2.1.2/microsoft.aspnetcore.razor.2.1.2.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.aspnetcore.html.abstractions/2.2.0/microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.aspnetcore.razor/2.2.0/microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",
     "/home/runner/.nuget/packages/microsoft.extensions.dependencyinjection/5.0.2/microsoft.extensions.dependencyinjection.5.0.2.nupkg.sha512",
     "/home/runner/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/5.0.0/microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512",
     "/home/runner/.nuget/packages/newtonsoft.json/11.0.2/newtonsoft.json.11.0.2.nupkg.sha512",

@@ -27,7 +27,7 @@ const core = __importStar(require("@actions/core"));
 const fs_1 = require("fs");
 const dotnet_command_manager_1 = require("./dotnet-command-manager");
 const dotnet_project_locator_1 = require("./dotnet-project-locator");
-//import { removeIgnoredDependencies } from './utils'
+const utils_1 = require("./utils");
 const updateReadme_1 = require("./updateReadme");
 let inhalt;
 async function execute() {
@@ -48,20 +48,23 @@ async function execute() {
                 core.startGroup(`dotnet restore ${project}`);
                 await dotnet.restore();
                 core.endGroup();
+                core.startGroup(`dotnet nuget source --format Short`);
+                await dotnet.listSource();
+                core.endGroup();
                 core.startGroup(`dotnet list ${project}`);
                 const outdatedPackages = await dotnet.listOutdated(versionLimit);
                 core.endGroup();
-                // core.startGroup(`removing nugets present in ignore list ${project}`)
-                // //const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
-                // const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
-                // core.info(`list of dependencies that will be updated: ${filteredPackages}`)
-                // core.endGroup()
-                // core.startGroup(`dotnet install new version ${project}`)
-                // await dotnet.addUpdatedPackage(filteredPackages)
-                // core.endGroup()
-                // core.startGroup(`dotnet list ${project} package`)
-                // await dotnet.listPackages()
-                // core.endGroup()
+                core.startGroup(`removing nugets present in ignore list ${project}`);
+                //const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
+                const filteredPackages = await (0, utils_1.removeIgnoredDependencies)(outdatedPackages, ignoreList);
+                core.info(`list of dependencies that will be updated: ${filteredPackages}`);
+                core.endGroup();
+                core.startGroup(`dotnet install new version ${project}`);
+                await dotnet.addUpdatedPackage(filteredPackages);
+                core.endGroup();
+                core.startGroup(`dotnet list ${project} package`);
+                await dotnet.listPackages();
+                core.endGroup();
                 core.startGroup(`add to README`);
                 // inhalt = await dotnet.listPackages()     
                 for (const pack of outdatedPackages)
