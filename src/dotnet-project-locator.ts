@@ -15,7 +15,7 @@ export const getAllProjects = async (
     const regex = /^.+.csproj$/
     for (const fileName of files) {
         const file = join(rootFolder, fileName)
-        const js = JSON.parse(data)
+   
         if (statSync(file).isDirectory() && recursive) {
             try {
                 result = await getAllProjects(file, recursive, ignoreProjects, result)
@@ -24,7 +24,7 @@ export const getAllProjects = async (
             }
         } else {
             if (regex.test(file)) {
-                info(`project found : ${file} \n ${js}`)
+                info(`project found : ${file}`)
                 result.push(file)
             }
         }
@@ -56,6 +56,7 @@ export const getAllSources = async (
     for (const fileName of files) {
         const file = join(rootFolder, fileName)
         const samples = (file as String)
+        const sam = JSON.stringify(data)
         // var keys = Object.keys(file)
         // let jsonObject = Object.assign(keys.map(key => Object.values(key)).map(value => ({ [value[0]]: value[1] })));  
         // let json = JSON.stringify(jsonObject);  
@@ -71,7 +72,7 @@ export const getAllSources = async (
             }
         } else {
             if (regex.test(file)) {
-                info(`project found : ${file}`)
+                info(`project found : ${file} \n ${sam}`)
                 result.push(file)
             }
         }
