@@ -52,7 +52,7 @@ export const getAllSources = async (
     for (const fileName of files) {
         const file = join(rootFolder, fileName)
         var jsonObj = JSON.parse(file)
-        var keys = Object.keys(jsonObj)
+        
         if (statSync(file).isDirectory() && recursive) {
             try {
                 result = await getAllSources(file, recursive, ignoreProjects, result)
