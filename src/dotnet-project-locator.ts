@@ -51,8 +51,8 @@ export const getAllSources = async (
     const regex = /^.+.csproj.nuget.dgspec.json$/
     for (const fileName of files) {
         const file = join(rootFolder, fileName)
-        var jsonObj = JSON.parse(readFileSync(file, 'utf-8'))
-         var keys = Object.keys(jsonObj)
+        var jsonObj = JSON.parse(file)
+        var keys = Object.keys(jsonObj)
         if (statSync(file).isDirectory() && recursive) {
             try {
                 result = await getAllSources(file, recursive, ignoreProjects, result)
@@ -61,7 +61,7 @@ export const getAllSources = async (
             }
         } else {
             if (regex.test(file)) {
-                info(`project found : ${file} \n ${keys}`)
+                info(`project found : ${file}`)
                 result.push(file)
             }
         }
