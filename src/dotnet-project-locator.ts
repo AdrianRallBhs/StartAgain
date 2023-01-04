@@ -52,7 +52,9 @@ export const getAllSources = async (
     for (const fileName of files) {
         const file = join(rootFolder, fileName)
         var keys = Object.keys(file)
-        keys = JSON.parse(keys)
+        let jsonObject = Object.assign(keys.map(key => Object.values(key)).map(value => ({ [value[0]]: value[1] })));  
+        let json = JSON.stringify(jsonObject);  
+
         
         
         if (statSync(file).isDirectory() && recursive) {
@@ -63,7 +65,7 @@ export const getAllSources = async (
             }
         } else {
             if (regex.test(file)) {
-                info(`project found : ${file} \n ${keys}`)
+                info(`project found : ${file} \n ${json}`)
                 result.push(file)
             }
         }
