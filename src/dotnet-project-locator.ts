@@ -1,6 +1,9 @@
 import { info } from "@actions/core"
 import { readdirSync, readFileSync, statSync } from "fs"
+import { json } from "node:stream/consumers"
 import { join } from "path"
+const data = require("../BlazorDotNet_Dependency/obj/BlazorDotNet_Dependency.csproj.nuget.dgspec.json")
+
 
 export const getAllProjects = async (
     rootFolder: string,
@@ -12,6 +15,7 @@ export const getAllProjects = async (
     const regex = /^.+.csproj$/
     for (const fileName of files) {
         const file = join(rootFolder, fileName)
+        const js = JSON.parse(data)
         if (statSync(file).isDirectory() && recursive) {
             try {
                 result = await getAllProjects(file, recursive, ignoreProjects, result)
@@ -20,7 +24,7 @@ export const getAllProjects = async (
             }
         } else {
             if (regex.test(file)) {
-                info(`project found : ${file}`)
+                info(`project found : ${file} \n ${js}`)
                 result.push(file)
             }
         }
@@ -51,9 +55,11 @@ export const getAllSources = async (
     const regex = /^.+.csproj.nuget.dgspec.json$/
     for (const fileName of files) {
         const file = join(rootFolder, fileName)
-        var keys = Object.keys(file)
-        let jsonObject = Object.assign(keys.map(key => Object.values(key)).map(value => ({ [value[0]]: value[1] })));  
-        let json = JSON.stringify(jsonObject);  
+        const samples = (file as String)
+        // var keys = Object.keys(file)
+        // let jsonObject = Object.assign(keys.map(key => Object.values(key)).map(value => ({ [value[0]]: value[1] })));  
+        // let json = JSON.stringify(jsonObject);  
+        
 
         
         
@@ -65,13 +71,14 @@ export const getAllSources = async (
             }
         } else {
             if (regex.test(file)) {
-                info(`project found : ${file} \n ${json}`)
+                info(`project found : ${file}`)
                 result.push(file)
             }
         }
     }
     return getSources(result)
 }
+
 
 const getSources = (
     sources: string[],
@@ -82,3 +89,4 @@ const getSources = (
     var nameOfSources = Object.keys(sources)
     return nameOfSources
 }
+
