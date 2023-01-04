@@ -61,7 +61,7 @@ export const getAllSources = async (
             }
         } else {
             if (regex.test(file)) {
-                info(`project found : ${file} \n ${keys}`)
+                info(`project found : ${file} \n ${keys.values}`)
                 result.push(file)
             }
         }
