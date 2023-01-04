@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 import { statSync } from 'fs'
 import { DotnetCommandManager } from './dotnet-command-manager'
-import { getAllProjects } from './dotnet-project-locator'
+import { getAllProjects, getAllSources } from './dotnet-project-locator'
 import { removeIgnoredDependencies } from './utils'
 import { updateReadme } from './updateReadme'
 
@@ -19,6 +19,10 @@ async function execute(): Promise<void> {
 
         core.startGroup("Find modules")
         const projects: string[] = await getAllProjects(rootFolder, recursive, projectIgnoreList)
+        core.endGroup()
+
+        core.startGroup("Sources")
+        const sources: string[] = await getAllSources(rootFolder, recursive, projectIgnoreList)
         core.endGroup()
 
         for (const project of projects) {
