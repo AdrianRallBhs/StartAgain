@@ -2,7 +2,7 @@ import * as core from '@actions/core'
 import { statSync } from 'fs'
 import { DotnetCommandManager } from './dotnet-command-manager'
 import { getAllProjects } from './dotnet-project-locator'
-//import { removeIgnoredDependencies } from './utils'
+import { removeIgnoredDependencies } from './utils'
 import { updateReadme } from './updateReadme'
 
 let inhalt: any
@@ -37,26 +37,26 @@ async function execute(): Promise<void> {
                 const outdatedPackages = await dotnet.listOutdated(versionLimit)
                 core.endGroup()
 
-                // core.startGroup(`removing nugets present in ignore list ${project}`)
-                // //const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
-                // const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
-                // core.info(`list of dependencies that will be updated: ${filteredPackages}`)
-                // core.endGroup()
+                core.startGroup(`removing nugets present in ignore list ${project}`)
+                //const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
+                const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
+                core.info(`list of dependencies that will be updated: ${filteredPackages}`)
+                core.endGroup()
 
-                // core.startGroup(`dotnet install new version ${project}`)
-                // await dotnet.addUpdatedPackage(filteredPackages)
-                // core.endGroup()
+                core.startGroup(`dotnet install new version ${project}`)
+                await dotnet.addUpdatedPackage(filteredPackages)
+                core.endGroup()
 
-                // core.startGroup(`dotnet list ${project} package`)
-                // await dotnet.listPackages()
-                // core.endGroup()
+                core.startGroup(`dotnet list ${project} package`)
+                await dotnet.listPackages()
+                core.endGroup()
 
-                // core.startGroup(`add to README`)
-                // // inhalt = await dotnet.listPackages()     
-                // for (const pack of outdatedPackages)
-                //     // await updateReadme(`\n \n ${project} \n - Name: ${pack.name} \n - Current: ${pack.current} \n - Latest: ${pack.latest}`)
-                //     await updateReadme(`\n \n Name: ${pack.name} : Current: ${pack.current} --> ${pack.latest} \n - ${project}`)
-                // core.endGroup()
+                core.startGroup(`add to README`)
+                // inhalt = await dotnet.listPackages()     
+                for (const pack of outdatedPackages)
+                    // await updateReadme(`\n \n ${project} \n - Name: ${pack.name} \n - Current: ${pack.current} \n - Latest: ${pack.latest}`)
+                    await updateReadme(`\n \n Name: ${pack.name} : Current: ${pack.current} --> ${pack.latest} \n - ${project}`)
+                core.endGroup()
             }
         }
     } catch (e) {
