@@ -1,6 +1,7 @@
 import { error } from '@actions/core'
 import * as exec from '@actions/exec'
 import * as io from '@actions/io'
+import { info } from 'console'
 
 
 export class DotnetCommandManager {
@@ -173,6 +174,7 @@ export class DotnetCommandManager {
             else {
                 newArray.push("nicht der gewünschte String \n")
             }
+            info(`List of Sources filtered: ${newArray}`)
             //newArray = await source.name.startsWith("E https://nuget.github.bhs-world.com")
         }
 
