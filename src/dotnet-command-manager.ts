@@ -176,7 +176,7 @@ export class DotnetCommandManager {
             if (blatrim.includes("E https://api.nuget.org/v3/index.json")) {
                 newArray.push(blatrim)
             //}
-            info(`List of Sources filtered: ${newArray}`)
+            info(`List of Sources filtered: ${newArray} \n dsl`)
             //newArray = await source.name.startsWith("E https://nuget.github.bhs-world.com")
             } else {
                 info(blatrim)
