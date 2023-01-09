@@ -26,8 +26,13 @@ export class DotnetCommandManager {
     }
 
     async listSource(): Promise<Sources[]> {
-        const result = await this.exec(['nuget', 'list', '-Source', 'https://nuget.github.bhs-world.com'])
+        let pack = "https://api.nuget.org/v3/index.json";
+        const result = await this.exec(['nuget', 'list', 'source', '--format', 'Short'])
+        if (result.stdout === pack) {
+            const sources = this.listSources("api.nuget soll raus")
+        }
         const sources = this.listSources(result.stdout)
+
         if (result.exitCode !== 0) {
             error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
             throw new Error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
