@@ -28,7 +28,7 @@ export class DotnetCommandManager {
     async listSource(): Promise<Sources[]> {
         const result = await this.exec(['nuget', 'list', 'source', '--format', 'Short'])
         const sources = this.listSources(result.stdout)
-        const filteredSources = await this.filterSources(await sources)
+        const filteredSources = await this.filterSources(result.stdout)
         if (result.exitCode !== 0) {
             error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
             throw new Error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
@@ -137,8 +137,10 @@ export class DotnetCommandManager {
         return sourceList
     }
 
-    private async filterSources(sources: Sources[]): Promise<Sources[]> {
-        return sources.filter((sources) => sources.name.startsWith("E https://nuget.github.bhs-world.com"))
+    private async filterSources(sources: string): Promise<Sources[]> {
+        const lines = sources.split('\n')
+        const sourceList: Sources[] = []
+        return sourceList.filter((sources) => sources.name.startsWith("E https://nuget.github.bhs-world.com"))
     }
 }
 
