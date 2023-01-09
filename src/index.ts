@@ -33,7 +33,7 @@ async function execute(): Promise<void> {
                 await dotnet.restore()
                 core.endGroup()
 
-                core.startGroup(`dotnet nuget source --format Short`)
+                core.startGroup('Source -- nuget list source --format')
                 await dotnet.listSource()
                 core.endGroup()
 
