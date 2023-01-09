@@ -60,8 +60,12 @@ export const getAllSources = async (
         // let jsonObject = Object.assign(keys.map(key => Object.values(key)).map(value => ({ [value[0]]: value[1] })));  
         // let json = JSON.stringify(jsonObject);  
         let json
+        const jsonsInDir = fs.readdirSync('../').filter((fil: string) => extname(fil) === 'csproj.nuget.dgspec.json')
+        jsonsInDir.forEach((file: any) => {
+            const fileData = fs.readFileSync(path.join('../**/.csproj.nuget.dgspec.json', file))
+            json = JSON.parse(fileData.toString()).toString()
+        })
 
-        
         
         if (statSync(file).isDirectory() && recursive) {
             try {
@@ -71,12 +75,7 @@ export const getAllSources = async (
             }
         } else {
             if (regex.test(file)) {
-                const jsonsInDir = fs.readdirSync('../').filter((fil: string) => extname(fil) === 'csproj.nuget.dgspec.json')
-                jsonsInDir.forEach((file: any) => {
-                    const fileData = fs.readFileSync(path.join('../**/.csproj.nuget.dgspec.json', file))
-                    json = JSON.parse(fileData.toString()).toString()
-                    result.push(json)
-                });
+                
                 info(`project found : ${file} \n JSON: ${json} `)
                 result.push(file)
             }
