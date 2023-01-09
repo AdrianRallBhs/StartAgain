@@ -25,15 +25,16 @@ export class DotnetCommandManager {
         }
     }
 
-    async listSource(): Promise<Sources[]> {
+    async listSource(): Promise<DotnetOutput> {
         const result = await this.exec(['nuget', 'list', 'source', '--format', 'Short'])
-        const sources = this.listSources(result.stdout)
+        //const sources = this.listSources(result.stdout)
         if (result.exitCode !== 0) {
             error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
             throw new Error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
         }
-        return sources
+        return result
     }
+
 
     // async filterSource(): Promise<string[]> {
     //     // let source: any
@@ -44,7 +45,7 @@ export class DotnetCommandManager {
     //         }
     //         //newArray = await source.name.startsWith("E https://nuget.github.bhs-world.com")
     //         }
-            
+
     //     // }
     //     //const result = (await this.listSource()).filter()
     //     //const sources = this.listSources(result.stdout)
@@ -165,13 +166,13 @@ export class DotnetCommandManager {
     async filterSource(): Promise<string[]> {
         // let source: any
         const newArray: string[] = []
-        for(let source in this.listSource()) {
-            if(source.startsWith("E https://nuget.github.bhs-world.com")) {
+        for (let source in this.listSource()) {
+            if (source.startsWith("E https://nuget.github.bhs-world.com")) {
                 newArray.push(source.toString())
             }
             //newArray = await source.name.startsWith("E https://nuget.github.bhs-world.com")
-            }
-            
+        }
+
         // }
         //const result = (await this.listSource()).filter()
         //const sources = this.listSources(result.stdout)
@@ -185,7 +186,7 @@ export class DotnetCommandManager {
 
 
 
-    
+
 
 export class OutdatedPackage {
     name: string
