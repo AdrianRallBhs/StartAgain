@@ -173,7 +173,7 @@ export class DotnetCommandManager {
         blatrim = bla.split('\n')
         
         for (let blabla in blatrim) {
-            if (blabla.startsWith("https://api.nuget.org/v3/index.json")) {
+            if (blabla.startsWith("E https://api.nuget.org/v3/index.json")) {
                 newArray.push(blabla)
             //}
             info(`List of Sources filtered: ${newArray}`)
