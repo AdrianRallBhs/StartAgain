@@ -25,7 +25,7 @@ export class DotnetCommandManager {
         }
     }
 
-    async listSource(): Promise<DotnetOutput> {
+    async listSources(): Promise<DotnetOutput> {
         const result = await this.exec(['nuget', 'list', 'source', '--format', 'Short'])
         //const sources = this.listSources(result.stdout)
         if (result.exitCode !== 0) {
@@ -144,24 +144,24 @@ export class DotnetCommandManager {
         return packages
     }
 
-    private async listSources(sources: string): Promise<Sources[]> {
-        const lines = sources.split('\n')
-        const sourceList: Sources[] = []
-        // const regex = /^D $/
-        // for (const line in lines) {
-        //     const match = regex.exec(line)
-        //     if (match) {
-        //         sourceList.push({ name: match[1] })
-        //     }
-        // }
-        return sourceList
-    }
+    // private async listSource(sources: string): Promise<Sources[]> {
+    //     const lines = sources.split('\n')
+    //     const sourceList: Sources[] = []
+    //     // const regex = /^D $/
+    //     // for (const line in lines) {
+    //     //     const match = regex.exec(line)
+    //     //     if (match) {
+    //     //         sourceList.push({ name: match[1] })
+    //     //     }
+    //     // }
+    //     return sourceList
+    // }
 
-    private async filterSources(sources: string): Promise<Sources[]> {
-        const lines = sources.split('\n')
-        const sourceList: Sources[] = []
-        return sourceList.filter((sources) => sources.name.startsWith("E https://nuget.github.bhs-world.com"))
-    }
+    // private async filterSources(sources: string): Promise<Sources[]> {
+    //     const lines = sources.split('\n')
+    //     const sourceList: Sources[] = []
+    //     return sourceList.filter((sources) => sources.name.startsWith("E https://nuget.github.bhs-world.com"))
+    // }
 
     async filterSource(result: DotnetOutput): Promise<string[]> {
         // let source: any
