@@ -73,8 +73,9 @@ export const getAllSources = async (
             if (regex.test(file)) {
                 const jsonsInDir = fs.readdirSync('../').filter((fil: string) => extname(fil) === 'csproj.nuget.dgspec.json')
                 jsonsInDir.forEach((file: any) => {
-                    const fileData = fs.readFileSync(path.join('C:/Users/Adrian/Desktop/OTH/Bachelorarbeit/Dependency0512/StartAgain/BlazorDotNet_Dependency/obj/BlazorDotNet_Dependency.csproj.nuget.dgspec.json', file))
+                    const fileData = fs.readFileSync(path.join('../**/.csproj.nuget.dgspec.json', file))
                     json = JSON.parse(fileData.toString())
+                    info(`project found: ${file} \n JSON: ${json}`)
                 });
                 info(`project found : ${file} \n JSON: ${json} `)
                 result.push(file)
