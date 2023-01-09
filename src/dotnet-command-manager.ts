@@ -168,11 +168,11 @@ export class DotnetCommandManager {
         // let source: any
         const newArray: string[] = []
         for (let source in result) {
-            if (source.startsWith("E https://nuget.github.bhs-world.com")) {
+            if (source.startsWith("E https://api.nuget.org/v3/index.json")) {
                 newArray.push(source.toString())
             }
             else {
-                newArray.push("nicht der gewünschte String \n")
+                newArray.push("\n nicht der gewünschte String \n")
             }
             info(`List of Sources filtered: ${newArray}`)
             //newArray = await source.name.startsWith("E https://nuget.github.bhs-world.com")
