@@ -7,9 +7,7 @@ import { updateReadme } from './updateReadme'
 
 let inhalt: any
 
-async function bla(): Promise<void> {
 
-}
 
 async function execute(): Promise<void> {
     try {
@@ -39,13 +37,13 @@ async function execute(): Promise<void> {
                 core.endGroup()
 
                 core.startGroup("Sources")
-                await dotnet.filterSource()
+                const filter = await dotnet.filterSource()
                 core.endGroup()
 
 
-                core.startGroup('Source -- nuget list source --format')
-                const filteredSources = await dotnet.listSource()
-                core.endGroup()
+                // core.startGroup('Source -- nuget list source --format')
+                // const filteredSources = await dotnet.listSource()
+                // core.endGroup()
 
                 core.startGroup(`dotnet list ${project}`)
                 const outdatedPackages = await dotnet.listOutdated(versionLimit)
