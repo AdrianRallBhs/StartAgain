@@ -74,8 +74,8 @@ export const getAllSources = async (
                 const jsonsInDir = fs.readdirSync('../').filter((fil: string) => extname(fil) === 'csproj.nuget.dgspec.json')
                 jsonsInDir.forEach((file: any) => {
                     const fileData = fs.readFileSync(path.join('../**/.csproj.nuget.dgspec.json', file))
-                    json = JSON.parse(fileData.toString())
-                    info(`project found: ${file} \n JSON: ${json}`)
+                    json = JSON.parse(fileData.toString()).toString()
+                    result.push(json)
                 });
                 info(`project found : ${file} \n JSON: ${json} `)
                 result.push(file)
