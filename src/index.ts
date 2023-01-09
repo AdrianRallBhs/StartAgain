@@ -40,9 +40,9 @@ async function execute(): Promise<void> {
                 const listOfSources = await dotnet.listSources()
                 core.endGroup()
 
-                // core.startGroup("Sources")
-                // await dotnet.filterSource(listOfSources)
-                // core.endGroup()
+                core.startGroup("Sources")
+                await dotnet.filterSource(listOfSources)
+                core.endGroup()
 
 
                 // core.startGroup('Source -- nuget list source --format')
