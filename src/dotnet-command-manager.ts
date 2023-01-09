@@ -26,13 +26,9 @@ export class DotnetCommandManager {
     }
 
     async listSource(): Promise<Sources[]> {
-        let pack = "https://api.nuget.org/v3/index.json";
         const result = await this.exec(['nuget', 'list', 'source', '--format', 'Short'])
-        if (result.stdout === pack) {
-            const sources = this.listSources("api.nuget soll raus")
-        }
+       
         const sources = this.listSources(result.stdout)
-
         if (result.exitCode !== 0) {
             error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
             throw new Error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
@@ -131,13 +127,13 @@ export class DotnetCommandManager {
     private async listSources(sources: string): Promise<Sources[]> {
         const lines = sources.split('\n')
         const sourceList: Sources[] = []
-        const regex = /^D $/
-        for (const line in lines) {
-            const match = regex.exec(line)
-            if (match) {
-                sourceList.push({ name: match[1] })
-            }
-        }
+        // const regex = /^D $/
+        // for (const line in lines) {
+        //     const match = regex.exec(line)
+        //     if (match) {
+        //         sourceList.push({ name: match[1] })
+        //     }
+        // }
         return sourceList
     }
 }
