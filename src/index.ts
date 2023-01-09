@@ -21,9 +21,9 @@ async function execute(): Promise<void> {
         const projects: string[] = await getAllProjects(rootFolder, recursive, projectIgnoreList)
         core.endGroup()
 
-        core.startGroup("Sources")
-        const sources: string[] = await getAllSources(rootFolder, recursive, projectIgnoreList)
-        core.endGroup()
+        // core.startGroup("Sources")
+        // const sources: string[] = await getAllSources(rootFolder, recursive, projectIgnoreList)
+        // core.endGroup()
 
         for (const project of projects) {
             if (statSync(project).isFile()) {
