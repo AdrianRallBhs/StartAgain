@@ -1,8 +1,9 @@
 import { info } from "@actions/core"
 import { readdirSync, readFileSync, statSync } from "fs"
 import { json } from "node:stream/consumers"
-import { join } from "path"
-const data = require("../BlazorDotNet_Dependency/obj/BlazorDotNet_Dependency.csproj.nuget.dgspec.json")
+import { extname, join } from "path"
+const fs = require('fs')
+const path = require('path')
 
 
 export const getAllProjects = async (
@@ -55,12 +56,10 @@ export const getAllSources = async (
     const regex = /^.+.csproj.nuget.dgspec.json$/
     for (const fileName of files) {
         const file = join(rootFolder, fileName)
-        const samples = (file as String)
-        const sam = JSON.stringify(data)
         // var keys = Object.keys(file)
         // let jsonObject = Object.assign(keys.map(key => Object.values(key)).map(value => ({ [value[0]]: value[1] })));  
         // let json = JSON.stringify(jsonObject);  
-        
+        let json
 
         
         
@@ -72,7 +71,12 @@ export const getAllSources = async (
             }
         } else {
             if (regex.test(file)) {
-                info(`project found : ${file} \n ${sam}`)
+                const jsonsInDir = fs.readdirSync('../').filter((fil: string) => extname(fil) === 'csproj.nuget.dgspec.json')
+                jsonsInDir.forEach((file: any) => {
+                    const fileData = fs.readFileSync(path.join('../**/csproj.nuget.dgspec.json', file))
+                    json = JSON.parse(fileData.toString())
+                });
+                info(`project found : ${file} \n JSON: ${json} `)
                 result.push(file)
             }
         }
