@@ -42,10 +42,7 @@ inputs:
     despcription: 'Text for file the path is referencing'
     required: false
     default: '# AdrianoBoy'
-  sources:
-    description: 'Sources to filter'
-    required: false
-    default: 'E https://nuget.github.bhs-world.com'
+
 
 runs:
   using: 'node16'
