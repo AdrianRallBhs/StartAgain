@@ -164,25 +164,25 @@ export class DotnetCommandManager {
     //     return sourceList.filter((sources) => sources.name.startsWith("E https://nuget.github.bhs-world.com"))
     // }
 
-    async filterSource(result: DotnetOutput): Promise<string[]> {
+    async filterSource(result: DotnetOutput): Promise<any> {
         // let source: any
         const newArray: string[] = []
-        let blatrim: string[]
+        let blatrim: string
         let source: any
-        let bla = result.stderr
-        blatrim = bla.split('\n')
+        let bla = result
+        blatrim = bla.stdout
         
-        for (let blabla in blatrim) {
-            if (blabla.startsWith("E https://api.nuget.org/v3/index.json")) {
-                newArray.push(blabla)
+        //for (let blabla in blatrim) {
+            if (blatrim.includes("E https://api.nuget.org/v3/index.json")) {
+                newArray.push(blatrim)
             //}
             info(`List of Sources filtered: ${newArray}`)
             //newArray = await source.name.startsWith("E https://nuget.github.bhs-world.com")
             } else {
-                info(blabla)
+                info(blatrim)
             }
 
-        }
+        
         info(`List of Sources filtered: ${newArray}`)
         // }
         //const result = (await this.listSource()).filter()
