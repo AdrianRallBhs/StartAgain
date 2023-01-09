@@ -7,6 +7,10 @@ import { updateReadme } from './updateReadme'
 
 let inhalt: any
 
+async function bla(): Promise<void> {
+
+}
+
 async function execute(): Promise<void> {
     try {
         const recursive = core.getBooleanInput("recursive")
@@ -21,6 +25,7 @@ async function execute(): Promise<void> {
         const projects: string[] = await getAllProjects(rootFolder, recursive, projectIgnoreList)
         core.endGroup()
 
+
         // core.startGroup("Sources")
         // const sources: string[] = await getAllSources(rootFolder, recursive, projectIgnoreList)
         // core.endGroup()
@@ -32,6 +37,11 @@ async function execute(): Promise<void> {
                 core.startGroup(`dotnet restore ${project}`)
                 await dotnet.restore()
                 core.endGroup()
+
+                core.startGroup("Sources")
+                await dotnet.filterSource()
+                core.endGroup()
+
 
                 core.startGroup('Source -- nuget list source --format')
                 const filteredSources = await dotnet.listSource()
