@@ -178,7 +178,10 @@ export class DotnetCommandManager {
             //}
             info(`List of Sources filtered: ${newArray}`)
             //newArray = await source.name.startsWith("E https://nuget.github.bhs-world.com")
-        }
+            } else {
+                info(`öalsdkj`)
+            }
+
         }
         info(`List of Sources filtered: ${newArray}`)
         // }
