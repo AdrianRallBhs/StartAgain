@@ -169,7 +169,7 @@ export class DotnetCommandManager {
         const newArray: string[] = []
         let blatrim: string[]
         let source: any
-        let bla = result.stdout
+        let bla = result.stderr
         blatrim = bla.split('\n')
         
         for (let blabla in blatrim) {
