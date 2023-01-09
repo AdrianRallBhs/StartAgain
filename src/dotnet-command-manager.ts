@@ -27,13 +27,13 @@ export class DotnetCommandManager {
 
     async listSource(): Promise<Sources[]> {
         const result = await this.exec(['nuget', 'list', 'source', '--format', 'Short'])
-       
         const sources = this.listSources(result.stdout)
+        const filteredSources = await this.filterSources(await sources)
         if (result.exitCode !== 0) {
             error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
             throw new Error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
         }
-        return sources
+        return filteredSources
     }
 
     async listPackages(): Promise<void> {
@@ -136,7 +136,13 @@ export class DotnetCommandManager {
         // }
         return sourceList
     }
+
+    private async filterSources(sources: Sources[]): Promise<Sources[]> {
+        return sources.filter((sources) => sources.name.startsWith("E https://nuget.github.bhs-world.com"))
+    }
 }
+
+    
 
 export class OutdatedPackage {
     name: string
