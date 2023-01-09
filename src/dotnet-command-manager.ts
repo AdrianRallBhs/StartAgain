@@ -179,7 +179,7 @@ export class DotnetCommandManager {
             info(`List of Sources filtered: ${newArray}`)
             //newArray = await source.name.startsWith("E https://nuget.github.bhs-world.com")
         }
-
+        }
         // }
         //const result = (await this.listSource()).filter()
         //const sources = this.listSources(result.stdout)
