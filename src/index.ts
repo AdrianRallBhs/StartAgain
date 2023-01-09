@@ -36,8 +36,12 @@ async function execute(): Promise<void> {
                 await dotnet.restore()
                 core.endGroup()
 
+                core.startGroup("Source -- nuget list source")
+                const listOfSources = await dotnet.listSource()
+                core.endGroup()
+
                 core.startGroup("Sources")
-                const filter = await dotnet.filterSource()
+                const filter = await dotnet.filterSource(listOfSources)
                 core.endGroup()
 
 

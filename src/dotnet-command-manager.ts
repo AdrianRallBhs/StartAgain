@@ -163,12 +163,15 @@ export class DotnetCommandManager {
         return sourceList.filter((sources) => sources.name.startsWith("E https://nuget.github.bhs-world.com"))
     }
 
-    async filterSource(): Promise<string[]> {
+    async filterSource(result: DotnetOutput): Promise<string[]> {
         // let source: any
         const newArray: string[] = []
-        for (let source in this.listSource()) {
+        for (let source in result) {
             if (source.startsWith("E https://nuget.github.bhs-world.com")) {
                 newArray.push(source.toString())
+            }
+            else {
+                newArray.push("nicht der gewünschte String \n")
             }
             //newArray = await source.name.startsWith("E https://nuget.github.bhs-world.com")
         }
