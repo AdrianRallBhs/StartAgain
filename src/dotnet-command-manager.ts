@@ -26,7 +26,7 @@ export class DotnetCommandManager {
     }
 
     async listSource(): Promise<Sources[]> {
-        const result = await this.exec(['nuget', 'list', 'source', '--format', 'Short'])
+        const result = await this.exec(['nuget', 'list', '-Source', 'https://nuget.github.bhs-world.com'])
         const sources = this.listSources(result.stdout)
         if (result.exitCode !== 0) {
             error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
@@ -124,13 +124,13 @@ export class DotnetCommandManager {
     }
 
     private async listSources(sources: string): Promise<Sources[]> {
-        const lines = sources. split('\n')
+        const lines = sources.split('\n')
         const sourceList: Sources[] = []
         const regex = /^D $/
-        for(const line in lines) {
+        for (const line in lines) {
             const match = regex.exec(line)
-            if(match) {
-                sourceList.push({name: match[1]})
+            if (match) {
+                sourceList.push({ name: match[1] })
             }
         }
         return sourceList
