@@ -176,7 +176,7 @@ export class DotnetCommandManager {
         
         //for (let blabla in blatrim) {
             if (blatrim.includes("E https://api.nuget")) {
-                blatrim.slice(1)
+                blatrim = blatrim.slice(0, 4)
                 blatrim.trim()
                 newArray.push(blatrim)
             //}
