@@ -195,7 +195,7 @@ export class DotnetCommandManager {
         //     error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
         //     throw new Error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
         // }
-        return blatrim
+        return newArray
     }
 }
 
