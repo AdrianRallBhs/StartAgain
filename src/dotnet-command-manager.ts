@@ -176,11 +176,11 @@ export class DotnetCommandManager {
         
         //for (let blabla in blatrim) {
             if (blatrim.includes("E https://api.nuget")) {
-                blatrim.replace("E ", "")
+                blatrim.slice(1)
                 blatrim.trim()
                 newArray.push(blatrim)
             //}
-               info(`List of Sources filtered: ${blatrim}`)
+               info(`Blatrim: ${blatrim} \n newArray: ${newArray}`)
             //newArray = await source.name.startsWith("E https://nuget.github.bhs-world.com")
             } else {
                 info(`nichts in filterSource (.net command manager):  ${blatrim}`)
