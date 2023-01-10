@@ -87,6 +87,7 @@ export class DotnetCommandManager {
                 break
         }
         sources = await this.filterSource(await this.listSources())
+        
         const result = await this.exec(['list', this.projectfile, 'package', versionFlag, '--outdated', '--source', sources[0]])
         if (result.exitCode !== 0) {
             error(`dotnet list package (outdated) returned non-zero exitcode: ${result.exitCode}`)

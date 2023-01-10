@@ -5,9 +5,6 @@ import { getAllProjects, getAllSources } from './dotnet-project-locator'
 import { removeIgnoredDependencies } from './utils'
 import { updateReadme } from './updateReadme'
 
-let inhalt: any
-
-
 
 async function execute(): Promise<void> {
     try {
