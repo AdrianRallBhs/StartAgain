@@ -180,7 +180,7 @@ export class DotnetCommandManager {
                 blatrim.trim()
                 newArray.push(blatrim)
             //}
-                info(`List of Sources filtered: ${newArray[0]}`)
+               info(`List of Sources filtered: ${blatrim}`)
             //newArray = await source.name.startsWith("E https://nuget.github.bhs-world.com")
             } else {
                 info(`nichts in filterSource (.net command manager):  ${blatrim}`)
@@ -195,7 +195,7 @@ export class DotnetCommandManager {
         //     error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
         //     throw new Error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
         // }
-        return newArray
+        return blatrim
     }
 }
 
