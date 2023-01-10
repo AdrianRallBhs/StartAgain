@@ -52,6 +52,10 @@ async function execute(): Promise<void> {
                 core.startGroup(`dotnet list ${project}`)
                 const outdatedPackages = await dotnet.listOutdated(versionLimit)
                 core.endGroup()
+             
+                core.startGroup(`dotnet list ${project} package`)
+                await dotnet.listPackages()
+                core.endGroup()
 
                 // core.startGroup(`removing nugets present in ignore list ${project}`)
                 // //const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
@@ -63,8 +67,9 @@ async function execute(): Promise<void> {
                 // await dotnet.addUpdatedPackage(filteredPackages)
                 // core.endGroup()
 
-                core.startGroup(`dotnet list ${project} package`)
-                await dotnet.listPackages()
+                core.startGroup(`dotnet add Project package`)
+                const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
+                await dotnet.addPackage(filteredPackages)
                 core.endGroup()
 
                 // core.startGroup(`add to README`)

@@ -65,6 +65,16 @@ export class DotnetCommandManager {
         }
     }
 
+    async addPackage(outdatedPackages: OutdatedPackage[]): Promise<void> {
+        for (const outdatedPackage of outdatedPackages) {
+            const result = await this.exec(['add', this.projectfile, 'package', outdatedPackage.name])
+            if (result.exitCode !== 0) {
+                error(`dotnet add returned non-zero exitcode: ${result.exitCode}`)
+                throw new Error(`dotnet add returned non-zero exitcode: ${result.exitCode}`)
+            }
+        }
+    }
+
     async listOutdated(versionLimit: string): Promise<OutdatedPackage[]> {
         let sources: string[] = []
         let versionFlag = ""
