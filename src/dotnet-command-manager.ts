@@ -77,7 +77,7 @@ export class DotnetCommandManager {
                 break
         }
         sources = await this.filterSource(await this.listSources())
-        const result = await this.exec(['list', this.projectfile, 'package', versionFlag, '--outdated', '--source', sources[0]])
+        const result = await this.exec(['list', this.projectfile, 'package', versionFlag, '--outdated', '--source', 'https://api.nuget.org/v3/index.json'])
         if (result.exitCode !== 0) {
             error(`dotnet list package (outdated) returned non-zero exitcode: ${result.exitCode}`)
             throw new Error(`dotnet list package (outdated) returned non-zero exitcode: ${result.exitCode}`)
