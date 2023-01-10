@@ -76,7 +76,7 @@ export class DotnetCommandManager {
                 versionFlag = "--highest-patch"
                 break
         }
-        sources = this.filterSource(await this.listSources())
+        sources = await this.filterSource(await this.listSources())
         const result = await this.exec(['list', this.projectfile, 'package', versionFlag, '--outdated', '--source', sources[0]])
         if (result.exitCode !== 0) {
             error(`dotnet list package (outdated) returned non-zero exitcode: ${result.exitCode}`)
@@ -166,7 +166,7 @@ export class DotnetCommandManager {
     //     return sourceList.filter((sources) => sources.name.startsWith("E https://nuget.github.bhs-world.com"))
     // }
 
-    public filterSource(result: DotnetOutput) {
+    async filterSource(result: DotnetOutput) {
         // let source: any
         const newArray: string[] = []
         let blatrim: string
@@ -178,7 +178,7 @@ export class DotnetCommandManager {
             if (blatrim.includes("E https://api.nuget")) {
                 newArray.push(blatrim)
             //}
-                info(`List of Sources filtered: ${newArray}`)
+                info(`List of Sources filtered: ${newArray[0]}`)
             //newArray = await source.name.startsWith("E https://nuget.github.bhs-world.com")
             } else {
                 info(`nichts in filterSource (.net command manager):  ${blatrim}`)
