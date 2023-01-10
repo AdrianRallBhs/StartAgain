@@ -67,7 +67,7 @@ async function execute(): Promise<void> {
                 // await dotnet.addUpdatedPackage(filteredPackages)
                 // core.endGroup()
 
-                core.startGroup(`dotnet add Project package`)
+                core.startGroup(`dotnet add ${project} package`)
                 const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
                 await dotnet.addPackage(filteredPackages)
                 core.endGroup()
