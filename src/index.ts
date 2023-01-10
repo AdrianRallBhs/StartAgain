@@ -41,7 +41,7 @@ async function execute(): Promise<void> {
                 core.endGroup()
 
                 core.startGroup("Sources")
-                await dotnet.filterSource(listOfSources)
+                dotnet.filterSource(listOfSources)
                 core.endGroup()
 
 

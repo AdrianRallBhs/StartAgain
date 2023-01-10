@@ -66,6 +66,7 @@ export class DotnetCommandManager {
     }
 
     async listOutdated(versionLimit: string): Promise<OutdatedPackage[]> {
+        let sources: string[] = []
         let versionFlag = ""
         switch (versionLimit) {
             case "minor":
@@ -75,7 +76,8 @@ export class DotnetCommandManager {
                 versionFlag = "--highest-patch"
                 break
         }
-        const result = await this.exec(['list', this.projectfile, 'package', versionFlag, '--outdated'])
+        sources = this.filterSource(await this.listSources())
+        const result = await this.exec(['list', this.projectfile, 'package', versionFlag, '--outdated', '--source', sources[0]])
         if (result.exitCode !== 0) {
             error(`dotnet list package (outdated) returned non-zero exitcode: ${result.exitCode}`)
             throw new Error(`dotnet list package (outdated) returned non-zero exitcode: ${result.exitCode}`)
@@ -164,7 +166,7 @@ export class DotnetCommandManager {
     //     return sourceList.filter((sources) => sources.name.startsWith("E https://nuget.github.bhs-world.com"))
     // }
 
-    async filterSource(result: DotnetOutput): Promise<any> {
+    public filterSource(result: DotnetOutput) {
         // let source: any
         const newArray: string[] = []
         let blatrim: string
@@ -176,14 +178,14 @@ export class DotnetCommandManager {
             if (blatrim.includes("E https://api.nuget")) {
                 newArray.push(blatrim)
             //}
-            info(`List of Sources filtered: ${newArray}`)
+                info(`List of Sources filtered: ${newArray}`)
             //newArray = await source.name.startsWith("E https://nuget.github.bhs-world.com")
             } else {
-                info("Sonstiges:  ${blatrim}")
+                info(`nichts in filterSource (.net command manager):  ${blatrim}`)
             }
 
         
-        info(`List of other sources: ${newArray}`)
+       // info(`List of other sources: ${newArray}`)
         // }
         //const result = (await this.listSource()).filter()
         //const sources = this.listSources(result.stdout)
