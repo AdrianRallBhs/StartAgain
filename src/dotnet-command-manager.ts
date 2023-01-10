@@ -176,14 +176,14 @@ export class DotnetCommandManager {
             if (blatrim.includes("E https://api.nuget")) {
                 newArray.push(blatrim)
             //}
-            info(`List of Sources filtered: ${newArray} \n dsl`)
+            info(`List of Sources filtered: ${newArray}`)
             //newArray = await source.name.startsWith("E https://nuget.github.bhs-world.com")
             } else {
-                info(blatrim)
+                info("Sonstiges:  ${blatrim}")
             }
 
         
-        info(`List of Sources filtered: ${newArray}`)
+        info(`List of other sources: ${newArray}`)
         // }
         //const result = (await this.listSource()).filter()
         //const sources = this.listSources(result.stdout)
