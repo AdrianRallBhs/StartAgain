@@ -77,7 +77,7 @@ export class DotnetCommandManager {
                 break
         }
         sources = await this.filterSource(await this.listSources())
-        const result = await this.exec(['list', this.projectfile, 'package', versionFlag, '--outdated', '--source', 'https://api.nuget.org/v3/index.json'])
+        const result = await this.exec(['list', this.projectfile, 'package', versionFlag, '--outdated', '--source', sources[0]])
         if (result.exitCode !== 0) {
             error(`dotnet list package (outdated) returned non-zero exitcode: ${result.exitCode}`)
             throw new Error(`dotnet list package (outdated) returned non-zero exitcode: ${result.exitCode}`)
@@ -176,6 +176,8 @@ export class DotnetCommandManager {
         
         //for (let blabla in blatrim) {
             if (blatrim.includes("E https://api.nuget")) {
+                blatrim.replace("E ", "")
+                blatrim.trim()
                 newArray.push(blatrim)
             //}
                 info(`List of Sources filtered: ${newArray[0]}`)
