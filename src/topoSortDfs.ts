@@ -22,8 +22,8 @@ export class Graph {
         this.edges++;
     }
 
-    printAdjazent() {
-        info(this.vertices.toString())
+    getAdjazent() {
+        return this.vertices;
     }
 
 

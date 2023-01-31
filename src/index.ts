@@ -31,7 +31,7 @@ async function execute(): Promise<void> {
         projects.forEach(element => {
             graph.addVertex(element)
         });
-        core.info('Graph:', graph.printAdjazent())
+        core.info('Graph:' + graph.getAdjazent())
         core.endGroup()
 
 
