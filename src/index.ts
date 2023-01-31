@@ -1,3 +1,4 @@
+import { Graph } from './topoSortDfs';
 import * as core from '@actions/core'
 import { statSync } from 'fs'
 import { DotnetCommandManager } from './dotnet-command-manager'
@@ -25,6 +26,14 @@ async function execute(): Promise<void> {
         // const sources: string[] = await getAllSources(rootFolder, recursive, projectIgnoreList)
         // core.endGroup()
 
+        core.startGroup("Graph")
+        const graph = new Graph()
+        projects.forEach(element => {
+            graph.addVertex(element)
+        });
+        core.endGroup()
+
+
         for (const project of projects) {
             if (statSync(project).isFile()) {
                 const dotnet = await DotnetCommandManager.create(project)
@@ -46,10 +55,10 @@ async function execute(): Promise<void> {
                 // const filteredSources = await dotnet.listSource()
                 // core.endGroup()
 
-                core.startGroup(`dotnet list ${project}`)
-                const outdatedPackages = await dotnet.listOutdated(versionLimit)
-                core.endGroup()
-             
+                // core.startGroup(`dotnet list ${project}`)
+                // const outdatedPackages = await dotnet.listOutdated(versionLimit)
+                // core.endGroup()
+
                 core.startGroup(`dotnet list ${project} package`)
                 await dotnet.listPackages()
                 core.endGroup()
@@ -64,10 +73,10 @@ async function execute(): Promise<void> {
                 // await dotnet.addUpdatedPackage(filteredPackages)
                 // core.endGroup()
 
-                core.startGroup(`dotnet add ${project} package`)
-                const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
-                await dotnet.addPackage(filteredPackages)
-                core.endGroup()
+                // core.startGroup(`dotnet add ${project} package`)
+                // const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
+                // await dotnet.addPackage(filteredPackages)
+                // core.endGroup()
 
                 // core.startGroup(`add to README`)
                 // // inhalt = await dotnet.listPackages()     
