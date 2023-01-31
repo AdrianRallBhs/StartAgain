@@ -1,3 +1,5 @@
+import { info } from "@actions/core";
+
 export class Graph {
     vertices: any[];
     adjacent: any[];
@@ -18,6 +20,10 @@ export class Graph {
         this.adjacent[v].push(w);
         this.adjacent[w].push(v);
         this.edges++;
+    }
+
+    printAdjazent() {
+        info(this.vertices.toString())
     }
 
 
@@ -64,3 +70,4 @@ export class Graph {
 // g.addEdge("GrpcConnector", "FileManager");
 // g.addEdge("GrpcConnector", "DataManager");
 
+//console.log(g.topoSort());
