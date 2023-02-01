@@ -24,9 +24,7 @@ inputs:
   ignore:
     description: 'Dependencies to ignore during update. Multiple nugets separated by newline'
     required: true
-    default: |
-    'Microsoft.Extensions.DependencyInjection'
-    'Microsoft.EntityFrameworkCore.SqlServer'
+    default: 'Microsoft.EntityFrameworkCore.SqlServer'
   packageToUpdate:
     description: 'Name of the start package that shall be updated in the projects'
     required: false
