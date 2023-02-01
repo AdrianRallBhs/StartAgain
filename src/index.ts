@@ -65,9 +65,9 @@ async function execute(): Promise<void> {
                 const outdatedPackages = await dotnet.listOutdated(versionLimit)
                 core.endGroup()
 
-                core.startGroup(`dotnet list ${project} package`)
-                const packages = await dotnet.listPackagesWithOutput()
-                core.endGroup()
+                // core.startGroup(`dotnet list ${project} package`)
+                // const packages = await dotnet.listPackagesWithOutput()
+                // core.endGroup()
 
                 core.startGroup('Whats inside?')
                 const destinatedPackage = await getDestinatedDependency(outdatedPackages, packageToUpdate)
@@ -81,11 +81,11 @@ async function execute(): Promise<void> {
                 // });
                 core.endGroup()
 
-                // core.startGroup(`removing nugets present in ignore list ${project}`)
-                // //const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
-                // const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
-                // core.info(`list of dependencies that will be updated: ${filteredPackages}`)
-                // core.endGroup()
+                core.startGroup(`removing nugets present in ignore list ${project}`)
+                //const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
+                const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
+                core.info(`list of dependencies that will be updated: ${filteredPackages}`)
+                core.endGroup()
 
                 // core.startGroup(`dotnet install new version ${project}`)
                 // await dotnet.addUpdatedPackage(filteredPackages)
