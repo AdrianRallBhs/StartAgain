@@ -71,7 +71,7 @@ async function execute(): Promise<void> {
 
                 core.startGroup('Whats inside?')
                 const destinatedPackage = await getDestinatedDependency(outdatedPackages, packageToUpdate)
-                core.info(`single dependency ${destinatedPackage}`)
+                core.info(`single dependency ${destinatedPackage[0]}`)
                 // packages.forEach(element =>  {
                 //     graph.addVertex(element)
                 //     core.info(graph.getAdjazent)
