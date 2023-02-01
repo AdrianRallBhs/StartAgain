@@ -67,11 +67,15 @@ async function execute(): Promise<void> {
 
                 core.startGroup(`dotnet list ${project} package`)
                 const packages = await dotnet.listPackagesWithOutput()
+                core.endGroup()
+
+                core.startGroup('Whats inside?')
                 packages.forEach(e => {
-                    core.info(e.name)
+                    core.info(`-`+e.name)
                 })
                 packages.forEach(element =>  {
                     graph.addVertex(element)
+                    core.info(graph.getAdjazent)
                 })
                 packages.forEach(element => {
                     graph.addEdge(project, element)
