@@ -73,7 +73,9 @@ async function execute(): Promise<void> {
                 
                 const destinatedDep = outdatedPackages.filter(p => p.name === packageToUpdate)
                 //const destinatedPackage = await getDestinatedDependency(packages, packageToUpdate)
-                core.info(`single dependency ${destinatedDep[0].name}`)
+                core.info(`Destinated Dep length: ` +destinatedDep.length)
+                core.info(`outdatedPackages length: ` + outdatedPackages.length)
+                //core.info(`single dependency ${destinatedDep[0].name}`)
                 // packages.forEach(element =>  {
                 //     graph.addVertex(element)
                 //     core.info(graph.getAdjazent)
