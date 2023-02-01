@@ -60,6 +60,5 @@ jobs:
           comment-updated: true
           write-mode: append
           packageToUpdate: 'Microsoft.AspNetCore.Razor'
-          ignore: | 
-          'Microsoft.EntityFrameworkCore.SqlServer'       
+          ignore: 'Microsoft.EntityFrameworkCore.SqlServer'       
 
