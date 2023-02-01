@@ -69,7 +69,7 @@ async function execute(): Promise<void> {
                 // const packages = await dotnet.listPackagesWithOutput()
                 // core.endGroup()
 
-                core.startGroup('Whats inside?')
+                core.startGroup('Whats inside outdatedPackages?')
                 //const destinatedPackage = await getDestinatedDependency(outdatedPackages, packageToUpdate)
                 core.info(`single dependency ${outdatedPackages}`)
                 // packages.forEach(element =>  {
@@ -84,7 +84,7 @@ async function execute(): Promise<void> {
                 core.startGroup(`removing nugets present in ignore list ${project}`)
                 //const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
                 const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
-                core.info(`list of dependencies that will be updated: ${filteredPackages.toString()}`)
+                core.info(`list of dependencies that will be updated: ${filteredPackages}`)
                 core.endGroup()
 
                 // core.startGroup(`dotnet install new version ${project}`)
