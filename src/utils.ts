@@ -44,6 +44,6 @@ export const getDestinatedDependency = async (
     dependencies: Package[],
     destinated: string
     ): Promise<Package[]> => {
-        return dependencies.filter((dependency) => { return destinated.indexOf(dependency.name) === 1})
+        return dependencies.filter((obj) => { return obj.name === destinated })
     }
     
