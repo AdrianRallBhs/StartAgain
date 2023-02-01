@@ -78,7 +78,7 @@ async function execute(): Promise<void> {
                 core.info(`outdatedPackages length: ` + outdatedPackages.length)
                 core.info(`destinated Package: ` + destinatedDep[0].name)
                 const DepWithVersion = destinatedDep[0].name + " " + destinatedDep[0].current
-                graph.addVertex(DepWithVersion)
+                graph.addVertex(destinatedDep[0])
                 graph.vertices.forEach(element => {
                     core.info(element)
                 });
