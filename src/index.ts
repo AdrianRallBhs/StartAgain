@@ -126,6 +126,7 @@ async function execute(): Promise<void> {
             core.info(element)
         });
         core.info("Topological Sort: " +graph.topoSort())
+        core.info("\nAdjazent: " + graph.getAdjazent())
         core.endGroup()
 
     } catch (e) {
