@@ -78,7 +78,7 @@ async function execute(): Promise<void> {
                 core.info(`outdatedPackages length: ` + outdatedPackages.length)
                 core.info(`destinated Package: ` + destinatedDep[0].name)
                 graph.addVertex(NameOfDependency)
-                graph.addEdge(NameOfDependency, project)
+                core.info(graph.getAdjazent().toString())
                 //core.info(`single dependency ${destinatedDep[0].name}`)
                 // packages.forEach(element =>  {
                 //     graph.addVertex(element)
@@ -114,6 +114,7 @@ async function execute(): Promise<void> {
         }
 
         core.startGroup('Graph Edges')
+        core.info(graph.getAdjazent.toString())
         core.info(graph.topoSort())
         core.endGroup()
 
