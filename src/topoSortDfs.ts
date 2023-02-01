@@ -25,28 +25,28 @@ export class Graph {
     getVertices() {
         return this.vertices;
     }
-
+    
     getAdjazent() {
-        return this.adjacent;
+        return this.adjacent
     }
 
 
-    topoSort(v = this.vertices[0], discovered: boolean[], s: any) {
+    topoSort(v?:any, discovered?: boolean[], s?: any) {
         const stack = s || [];
-
+        v = this.vertices[0];
         let adj = this.adjacent;
+            if (typeof discovered !== 'undefined') {
+                discovered[v] = true;
 
-        if (typeof discovered !== 'undefined') {
-            discovered[v] = true;
+                for (let i = 0; i < adj[v].length; i++) {
+                    let w = adj[v][i];
 
-            for (let i = 0; i < adj[v].length; i++) {
-                let w = adj[v][i];
-
-                if (!discovered[w]) {
-                    this.topoSort(w, discovered, stack);
+                    if (!discovered[w]) {
+                        this.topoSort(w, discovered, stack);
+                    }
                 }
             }
-        }
+        
         stack.unshift(v);
         return stack || false;
     }
