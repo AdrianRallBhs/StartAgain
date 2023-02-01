@@ -59,12 +59,8 @@ jobs:
           version-limit: 'minor'
           comment-updated: true
           write-mode: append
-          ignore: |         
+          packageToUpdate: 'Microsoft.AspNetCore.Razor'
+          ignore: | 
+          'Microsoft.EntityFrameworkCore.SqlServer'
+          'Microsoft.Extensions.DependencyInjection'        
 
-      # - name: Commit & Push
-      #   uses: Andro999b/push@v1.3
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     branch: main
-      #     force: true
-      #     message: 'Overwritten by Github Actions - ${date}'
