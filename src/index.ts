@@ -71,7 +71,7 @@ async function execute(): Promise<void> {
 
                 core.startGroup('Whats inside?')
                 packages.forEach(e => {
-                    core.info(`-` + e.name)
+                    core.info(`-Name: ${e.name}`)
                 })
                 // packages.forEach(element =>  {
                 //     graph.addVertex(element)
