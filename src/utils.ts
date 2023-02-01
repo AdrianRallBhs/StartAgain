@@ -1,4 +1,4 @@
-import { OutdatedPackage } from "./dotnet-command-manager"
+import { OutdatedPackage, Package } from "./dotnet-command-manager"
 
 
 interface Map {
@@ -39,3 +39,11 @@ export const removeIgnoredDependencies = async (
         }
     )
 }
+
+export const getDestinatedDependency = async (
+    dependencies: Package[],
+    destinated: string
+    ): Promise<Package[]> => {
+        return dependencies.filter((dependency) => { return destinated.indexOf(dependency.name)})
+    }
+    

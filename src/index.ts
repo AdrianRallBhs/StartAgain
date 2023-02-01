@@ -3,7 +3,7 @@ import * as core from '@actions/core'
 import { statSync } from 'fs'
 import { DotnetCommandManager } from './dotnet-command-manager'
 import { getAllProjects, getAllSources } from './dotnet-project-locator'
-import { removeIgnoredDependencies } from './utils'
+import { removeIgnoredDependencies, getDestinatedDependency } from './utils'
 import { updateReadme } from './updateReadme'
 
 
@@ -70,8 +70,8 @@ async function execute(): Promise<void> {
                 core.endGroup()
 
                 core.startGroup('Whats inside?')
-                
-                dotnet.listPackagesWithOutput(packages)
+                const destinatedPackage = await getDestinatedDependency(packages, packageToUpdate)
+                core.info(`single dependency ${destinatedPackage}`)
                 // packages.forEach(element =>  {
                 //     graph.addVertex(element)
                 //     core.info(graph.getAdjazent)

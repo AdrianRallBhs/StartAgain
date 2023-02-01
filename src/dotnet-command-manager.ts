@@ -171,7 +171,8 @@ export class DotnetCommandManager {
     }
 
 
-    async parseListPackageGetDestinated(output: string): Promise<Package[]> {
+    async parseListPackageGetDestinated(output:string): Promise<Package[]> {
+       
         const lines = output.split('\n')
         const packages: Package[] = []
         const destinatedPackage = packageToUpdate
