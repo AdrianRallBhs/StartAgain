@@ -77,22 +77,18 @@ async function execute() {
                 // core.endGroup()
                 core.startGroup('Whats inside outdatedPackages?');
                 const destinatedDep = outdatedPackages.filter(p => p.name === 'Microsoft.AspNetCore.Razor');
-                const NameOfDependency = destinatedDep[0].name;
+                const NameOfDependency = destinatedDep[0].name + destinatedDep[0].current;
                 //const destinatedPackage = await getDestinatedDependency(packages, packageToUpdate)
                 // core.info(`Destinated Dep length: ` +destinatedDep.length)
                 // core.info(`outdatedPackages length: ` + outdatedPackages.length)
                 core.info(`destinated Package: ` + destinatedDep[0].name);
                 const DepWithVersion = destinatedDep[0].name + " " + destinatedDep[0].current;
-                graph.addVertex(NameOfDependency);
-                projects.forEach(element => {
-                    graph.addVertex(element);
-                });
+                graph.addVertex(destinatedDep[0].name);
+                graph.addVertex(project);
                 graph.vertices.forEach(element => {
                     core.info(element);
                 });
-                graph.vertices.forEach(element => {
-                    core.info(element);
-                });
+                graph.addEdge(project, destinatedDep[0].name);
                 //graph.addEdge(project, NameOfDependency)
                 //core.info(`single dependency ${destinatedDep[0].name}`)
                 // packages.forEach(element =>  {
@@ -128,6 +124,7 @@ async function execute() {
             core.info(element);
         });
         core.info("Topological Sort: " + graph.topoSort());
+        core.info("\nAdjazent: " + graph.getAdjazent());
         core.endGroup();
     }
     catch (e) {
