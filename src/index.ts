@@ -48,13 +48,13 @@ async function execute(): Promise<void> {
                 await dotnet.restore()
                 core.endGroup()
 
-                core.startGroup("Source -- nuget list source")
-                const listOfSources = await dotnet.listSources()
-                core.endGroup()
+                // core.startGroup("Source -- nuget list source")
+                // const listOfSources = await dotnet.listSources()
+                // core.endGroup()
 
-                core.startGroup("Sources")
-                dotnet.filterSource(listOfSources)
-                core.endGroup()
+                // core.startGroup("Sources")
+                // dotnet.filterSource(listOfSources)
+                // core.endGroup()
 
 
                 // core.startGroup('Source -- nuget list source --format')
@@ -70,8 +70,8 @@ async function execute(): Promise<void> {
                 // core.endGroup()
 
                 core.startGroup('Whats inside?')
-                const destinatedPackage = await getDestinatedDependency(outdatedPackages, packageToUpdate)
-                core.info(`single dependency ${destinatedPackage}`)
+                //const destinatedPackage = await getDestinatedDependency(outdatedPackages, packageToUpdate)
+                core.info(`single dependency ${outdatedPackages}`)
                 // packages.forEach(element =>  {
                 //     graph.addVertex(element)
                 //     core.info(graph.getAdjazent)
