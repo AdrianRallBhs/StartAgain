@@ -67,15 +67,14 @@ export class DotnetCommandManager {
         }
     }
 
-    async listPackagesWithOutput(): Promise<DotnetOutput> {
+    async listPackagesWithOutput(): Promise<Package[]> {
         const result = await this.exec(['list', this.projectfile, 'package'])
         if (result.exitCode !== 0) {
             core.error(`dotnet list package returned non-zero exitcode: ${result.exitCode}`)
             throw new Error(`dotnet list package returned non-zero exitcode: ${result.exitCode}`)
         }
-       
-        
-        return result
+        const destinatedPack = this.parseListPackageGetDestinated(result.stdout)
+        return destinatedPack
     }
 
     async addPackage(outdatedPackages: OutdatedPackage[]): Promise<void> {
@@ -172,16 +171,20 @@ export class DotnetCommandManager {
     }
 
 
-    async parseListPackage(output: string): Promise<Package[]> {
+    async parseListPackageGetDestinated(output: string): Promise<Package[]> {
         const lines = output.split('\n')
         const packages: Package[] = []
+        const destinatedPackage = packageToUpdate
         const regex = /^\s+>\s(.*?)\s+(\d+\.\d+\.\d+)\s+(\d+\.\d+\.\d+)\s+(\d+\.\d+\.\d+)\s*$/
         for (const line of lines) {
             const match = regex.exec(line)
             if (match) {
+                if(match[1] == packageToUpdate)
                 packages.push({
                     name: match[1],
-                    version: match[2],
+                    current: match[2],
+                    wanted: match[4],
+                    latest: match[4]
                 })
             }
         }
@@ -252,7 +255,7 @@ export class DotnetCommandManager {
                 blatrim = blatrim.trim()
                 newArray.push(blatrim)
             //}
-               info(`Blatrim: ${blatrim} \n newArray: ${newArray}`)
+               info(`Blatrim: ${blatrim}`)
             //newArray = await source.name.startsWith("E https://nuget.github.bhs-world.com")
             } else {
                 info(`nichts in filterSource (.net command manager):  ${blatrim}`)
@@ -292,11 +295,15 @@ export class OutdatedPackage {
 
 export class Package {
     name: string
-    version: string
+    current: string
+    wanted: string
+    latest: string
     
-    constructor(name: string, version: string) {
+    constructor(name: string, current: string, wanted: string, latest: string) {
         this.name = name
-        this.version = version
+        this.current = current
+        this.wanted = wanted
+        this.latest = latest
     }
 }
 
