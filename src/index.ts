@@ -67,6 +67,9 @@ async function execute(): Promise<void> {
 
                 core.startGroup(`dotnet list ${project} package`)
                 const packages = await dotnet.listPackagesWithOutput()
+                packages.forEach(e => {
+                    core.info(e.name)
+                })
                 packages.forEach(element =>  {
                     graph.addVertex(element)
                 })
