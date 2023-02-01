@@ -96,7 +96,7 @@ async function execute(): Promise<void> {
         }
 
         core.startGroup('Graph Edges')
-        graph.topoSort()
+        core.info(graph.topoSort())
         core.endGroup()
 
     } catch (e) {
