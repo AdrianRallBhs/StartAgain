@@ -70,8 +70,10 @@ async function execute(): Promise<void> {
                 core.endGroup()
 
                 core.startGroup('Whats inside outdatedPackages?')
-                const destinatedPackage = await getDestinatedDependency(packages, packageToUpdate)
-                core.info(`single dependency ${destinatedPackage[0].name}`)
+                const outdatedPackages = await dotnet.listOutdated(versionLimit)
+                const destinatedDep = outdatedPackages.filter(p => p.name === packageToUpdate)
+                //const destinatedPackage = await getDestinatedDependency(packages, packageToUpdate)
+                core.info(`single dependency ${destinatedDep[0].name}`)
                 // packages.forEach(element =>  {
                 //     graph.addVertex(element)
                 //     core.info(graph.getAdjazent)
