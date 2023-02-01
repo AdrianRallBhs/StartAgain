@@ -29,6 +29,13 @@ async function execute(): Promise<void> {
 
         core.startGroup("Graph Vertices")
         const graph = new Graph()
+        // projects.forEach(element => {
+        //     graph.addVertex(element)
+        // });
+
+        // graph.vertices.forEach(element => {
+        //     core.info(element)
+        // });
         //core.info('Graph: ' +  graph.getAdjazent())
         core.endGroup()
 
@@ -72,11 +79,18 @@ async function execute(): Promise<void> {
                 core.info(`destinated Package: ` + destinatedDep[0].name)
                 const DepWithVersion = destinatedDep[0].name + " " + destinatedDep[0].current
                 graph.addVertex(NameOfDependency)
+                projects.forEach(element => {
+                    graph.addVertex(element)
+                });
+
+                graph.vertices.forEach(element => {
+                    core.info(element)
+                });
                 graph.vertices.forEach(element => {
                     core.info(element)
                 });
 
-                graph.addEdge(project, NameOfDependency)
+                //graph.addEdge(project, NameOfDependency)
                 //core.info(`single dependency ${destinatedDep[0].name}`)
                 // packages.forEach(element =>  {
                 //     graph.addVertex(element)
@@ -112,13 +126,6 @@ async function execute(): Promise<void> {
         }
 
         core.startGroup('Graph Edges')
-        projects.forEach(element => {
-            graph.addVertex(element)
-        });
-
-        graph.vertices.forEach(element => {
-            core.info(element)
-        });
         graph.vertices.forEach(element => {
             core.info(element)
         });
