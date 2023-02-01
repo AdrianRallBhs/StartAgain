@@ -25,13 +25,13 @@ export class Graph {
     getVertices() {
         return this.vertices;
     }
-    
+
     getAdjazent() {
         return this.adjacent;
     }
 
 
-    topoSort(v = this.vertices[0], discovered?: boolean[], s?: any) {
+    topoSort(v = this.vertices[0], discovered: boolean[], s: any) {
         const stack = s || [];
 
         let adj = this.adjacent;
