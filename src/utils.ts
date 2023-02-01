@@ -43,9 +43,9 @@ export const removeIgnoredDependencies = async (
 
 //Get single dependency
 export const getDestinatedDependency = async (
-    dependencies: OutdatedPackage[],
+    dependencies: Package[],
     destinated: string
-    ): Promise<OutdatedPackage[]> => {
+    ): Promise<Package[]> => {
         return dependencies.filter((dependency) => { return dependency.name === destinated })
     }
     
