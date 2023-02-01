@@ -61,16 +61,16 @@ async function execute(): Promise<void> {
                 // const filteredSources = await dotnet.listSource()
                 // core.endGroup()
 
-                // core.startGroup(`dotnet list ${project}`)
-                // const outdatedPackages = await dotnet.listOutdated(versionLimit)
-                // core.endGroup()
+                core.startGroup(`dotnet list ${project}`)
+                const outdatedPackages = await dotnet.listOutdated(versionLimit)
+                core.endGroup()
 
                 core.startGroup(`dotnet list ${project} package`)
                 const packages = await dotnet.listPackagesWithOutput()
                 core.endGroup()
 
                 core.startGroup('Whats inside?')
-                const destinatedPackage = await getDestinatedDependency(packages, packageToUpdate)
+                const destinatedPackage = await getDestinatedDependency(outdatedPackages, packageToUpdate)
                 core.info(`single dependency ${destinatedPackage}`)
                 // packages.forEach(element =>  {
                 //     graph.addVertex(element)
