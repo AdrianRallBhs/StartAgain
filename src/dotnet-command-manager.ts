@@ -1,7 +1,9 @@
-import { error } from '@actions/core'
+import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as io from '@actions/io'
 import { info } from 'console'
+
+const packageToUpdate = core.getInput(" packageToUpdate")
 
 
 export class DotnetCommandManager {
@@ -21,7 +23,7 @@ export class DotnetCommandManager {
     async restore(): Promise<void> {
         const result = await this.exec(['restore', this.projectfile])
         if (result.exitCode !== 0) {
-            error(`dotnet restore returned non-zero exitcode: ${result.exitCode}`)
+            core.error(`dotnet restore returned non-zero exitcode: ${result.exitCode}`)
             throw new Error(`dotnet restore returned non-zero exitcode: ${result.exitCode}`)
         }
     }
@@ -30,7 +32,7 @@ export class DotnetCommandManager {
         const result = await this.exec(['nuget', 'list', 'source', '--format', 'Short'])
         //const sources = this.listSources(result.stdout)
         if (result.exitCode !== 0) {
-            error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
+            core.error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
             throw new Error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
         }
         return result
@@ -60,27 +62,27 @@ export class DotnetCommandManager {
     async listPackages(): Promise<void> {
         const result = await this.exec(['list', this.projectfile, 'package'])
         if (result.exitCode !== 0) {
-            error(`dotnet list package returned non-zero exitcode: ${result.exitCode}`)
+            core.error(`dotnet list package returned non-zero exitcode: ${result.exitCode}`)
             throw new Error(`dotnet list package returned non-zero exitcode: ${result.exitCode}`)
         }
     }
 
-    async listPackagesWithOutput(): Promise<Package[]> {
+    async listPackagesWithOutput(): Promise<DotnetOutput> {
         const result = await this.exec(['list', this.projectfile, 'package'])
         if (result.exitCode !== 0) {
-            error(`dotnet list package returned non-zero exitcode: ${result.exitCode}`)
+            core.error(`dotnet list package returned non-zero exitcode: ${result.exitCode}`)
             throw new Error(`dotnet list package returned non-zero exitcode: ${result.exitCode}`)
         }
        
-        const packagelist = this.parseListPackage(result.stdout);
-        return packagelist
+        
+        return result
     }
 
     async addPackage(outdatedPackages: OutdatedPackage[]): Promise<void> {
         for (const outdatedPackage of outdatedPackages) {
             const result = await this.exec(['add', this.projectfile, 'package', outdatedPackage.name])
             if (result.exitCode !== 0) {
-                error(`dotnet add returned non-zero exitcode: ${result.exitCode}`)
+                core.error(`dotnet add returned non-zero exitcode: ${result.exitCode}`)
                 throw new Error(`dotnet add returned non-zero exitcode: ${result.exitCode}`)
             }
         }
@@ -101,7 +103,7 @@ export class DotnetCommandManager {
         
         const result = await this.exec(['list', this.projectfile, 'package', versionFlag, '--outdated', '--source', sources[0]])
         if (result.exitCode !== 0) {
-            error(`dotnet list package (outdated) returned non-zero exitcode: ${result.exitCode}`)
+            core.error(`dotnet list package (outdated) returned non-zero exitcode: ${result.exitCode}`)
             throw new Error(`dotnet list package (outdated) returned non-zero exitcode: ${result.exitCode}`)
         }
         const outdated = this.parseListOutput(result.stdout)
@@ -120,7 +122,7 @@ export class DotnetCommandManager {
         for (const outdatedPackage of outdatedPackages) {
             const result = await this.exec(['add', this.projectfile, 'package', outdatedPackage.name, '-v', outdatedPackage.wanted])
             if (result.exitCode !== 0) {
-                error(`dotnet add returned non-zero exitcode: ${result.exitCode}`)
+                core.error(`dotnet add returned non-zero exitcode: ${result.exitCode}`)
                 throw new Error(`dotnet add returned non-zero exitcode: ${result.exitCode}`)
             }
         }
@@ -224,8 +226,6 @@ export class DotnetCommandManager {
             } else {
                 info(`nichts in filterSource (.net command manager):  ${blatrim}`)
             }
-
-        
        // info(`List of other sources: ${newArray}`)
         // }
         //const result = (await this.listSource()).filter()
@@ -236,7 +236,41 @@ export class DotnetCommandManager {
         // }
         return newArray
     }
+
+
+
+    async filterPackages(result: DotnetOutput) {
+        // let source: any
+        const newArray: string[] = []
+        let blatrim: string
+        let source: any
+        let bla = result
+        blatrim = bla.stdout
+        
+        //for (let blabla in blatrim) {
+            if (blatrim.includes(packageToUpdate)) {
+                blatrim = blatrim.trim()
+                newArray.push(blatrim)
+            //}
+               info(`Blatrim: ${blatrim} \n newArray: ${newArray}`)
+            //newArray = await source.name.startsWith("E https://nuget.github.bhs-world.com")
+            } else {
+                info(`nichts in filterSource (.net command manager):  ${blatrim}`)
+            }
+       // info(`List of other sources: ${newArray}`)
+        // }
+        //const result = (await this.listSource()).filter()
+        //const sources = this.listSources(result.stdout)
+        // if (result.exitCode !== 0) {
+        //     error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
+        //     throw new Error(`dotnet nuget list source --format Short returned non-zero exitcode: ${result.exitCode}`)
+        // }
+        return newArray
+    }
+    
 }
+
+
 
 
 

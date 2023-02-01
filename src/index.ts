@@ -71,9 +71,7 @@ async function execute(): Promise<void> {
 
                 core.startGroup('Whats inside?')
                 
-                packages.forEach(e => {
-                    core.info(`-Name: ${e.name}`)
-                })
+                dotnet.filterPackages(packages)
                 // packages.forEach(element =>  {
                 //     graph.addVertex(element)
                 //     core.info(graph.getAdjazent)
