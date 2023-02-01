@@ -71,7 +71,7 @@ async function execute(): Promise<void> {
 
                 core.startGroup('Whats inside outdatedPackages?')
                 
-                const destinatedDep = outdatedPackages.filter(p => p.name === packageToUpdate)
+                const destinatedDep = outdatedPackages.filter(p => p.name === 'Microsoft.AspNetCore.Razor')
                 //const destinatedPackage = await getDestinatedDependency(packages, packageToUpdate)
                 core.info(`Destinated Dep length: ` +destinatedDep.length)
                 core.info(`outdatedPackages length: ` + outdatedPackages.length)
