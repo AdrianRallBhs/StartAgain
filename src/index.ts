@@ -79,17 +79,13 @@ async function execute(): Promise<void> {
                 core.info(`destinated Package: ` + destinatedDep[0].name)
                 const DepWithVersion = destinatedDep[0].name + " " + destinatedDep[0].current
                 graph.addVertex(NameOfDependency)
-                projects.forEach(element => {
-                    graph.addVertex(element)
-                });
 
-                graph.vertices.forEach(element => {
-                    core.info(element)
-                });
+                graph.addVertex(project)
                 graph.vertices.forEach(element => {
                     core.info(element)
                 });
 
+                graph.addEdge(NameOfDependency, project)
                 //graph.addEdge(project, NameOfDependency)
                 //core.info(`single dependency ${destinatedDep[0].name}`)
                 // packages.forEach(element =>  {
