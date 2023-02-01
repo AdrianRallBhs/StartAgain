@@ -83,7 +83,7 @@ async function execute(): Promise<void> {
                     core.info(element)
                 });
 
-                graph.addEdge(DepWithVersion, project)
+                graph.addEdge(NameOfDependency, project)
                 //core.info(`single dependency ${destinatedDep[0].name}`)
                 // packages.forEach(element =>  {
                 //     graph.addVertex(element)
