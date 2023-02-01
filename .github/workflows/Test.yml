@@ -59,6 +59,5 @@ jobs:
           version-limit: 'minor'
           comment-updated: true
           write-mode: append
-          packageToUpdate: 'Microsoft.AspNetCore.Razor'
           ignore: 'Microsoft.EntityFrameworkCore.SqlServer'       
 

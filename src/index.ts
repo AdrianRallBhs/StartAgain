@@ -71,10 +71,14 @@ async function execute(): Promise<void> {
 
                 core.startGroup('Whats inside outdatedPackages?')
                 
-                const destinatedDep = outdatedPackages.filter(p => p.name === packageToUpdate.toString())
+                const destinatedDep = outdatedPackages.filter(p => p.name === 'Microsoft.AspNetCore.Razor')
+                const NameOfDependency = destinatedDep[0].name
                 //const destinatedPackage = await getDestinatedDependency(packages, packageToUpdate)
                 core.info(`Destinated Dep length: ` +destinatedDep.length)
                 core.info(`outdatedPackages length: ` + outdatedPackages.length)
+                core.info(`destinated Package: ` + destinatedDep[0].name)
+                graph.addVertex(NameOfDependency)
+                graph.addEdge(NameOfDependency, project)
                 //core.info(`single dependency ${destinatedDep[0].name}`)
                 // packages.forEach(element =>  {
                 //     graph.addVertex(element)
