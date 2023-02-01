@@ -70,7 +70,7 @@ async function execute(): Promise<void> {
                 core.endGroup()
 
                 core.startGroup('Whats inside?')
-                core.info(packages)
+                
                 packages.forEach(e => {
                     core.info(`-Name: ${e.name}`)
                 })
