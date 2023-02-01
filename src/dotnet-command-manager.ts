@@ -248,7 +248,7 @@ export class DotnetCommandManager {
         blatrim = bla.stdout
         
         //for (let blabla in blatrim) {
-            if (blatrim.includes(packageToUpdate)) {
+            if (blatrim.includes("Neverenough")) {
                 blatrim = blatrim.trim()
                 newArray.push(blatrim)
             //}
