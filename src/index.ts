@@ -29,13 +29,6 @@ async function execute(): Promise<void> {
 
         core.startGroup("Graph Vertices")
         const graph = new Graph()
-        projects.forEach(element => {
-            graph.addVertex(element)
-        });
-
-        graph.vertices.forEach(element => {
-            core.info(element)
-        });
         //core.info('Graph: ' +  graph.getAdjazent())
         core.endGroup()
 
@@ -119,6 +112,13 @@ async function execute(): Promise<void> {
         }
 
         core.startGroup('Graph Edges')
+        projects.forEach(element => {
+            graph.addVertex(element)
+        });
+
+        graph.vertices.forEach(element => {
+            core.info(element)
+        });
         graph.vertices.forEach(element => {
             core.info(element)
         });

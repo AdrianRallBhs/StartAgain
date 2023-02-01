@@ -22,8 +22,12 @@ export class Graph {
         this.edges++;
     }
 
-    getAdjazent() {
+    getVertices() {
         return this.vertices;
+    }
+    
+    getAdjazent() {
+        return this.adjacent;
     }
 
 
