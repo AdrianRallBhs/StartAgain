@@ -70,15 +70,15 @@ async function execute(): Promise<void> {
                 // core.endGroup()
 
                 core.startGroup('Whats inside outdatedPackages?')
-                
+
                 const destinatedDep = outdatedPackages.filter(p => p.name === 'Microsoft.AspNetCore.Razor')
                 const NameOfDependency = destinatedDep[0].name
                 //const destinatedPackage = await getDestinatedDependency(packages, packageToUpdate)
-                core.info(`Destinated Dep length: ` +destinatedDep.length)
+                core.info(`Destinated Dep length: ` + destinatedDep.length)
                 core.info(`outdatedPackages length: ` + outdatedPackages.length)
                 core.info(`destinated Package: ` + destinatedDep[0].name)
                 const DepWithVersion = destinatedDep[0].name + " " + destinatedDep[0].current
-                graph.addVertex(destinatedDep)
+                graph.addVertex(destinatedDep[0].name)
                 graph.vertices.forEach(element => {
                     core.info(element)
                 });
@@ -122,7 +122,7 @@ async function execute(): Promise<void> {
         graph.vertices.forEach(element => {
             core.info(element)
         });
-        core.info("Topological Sort: " +graph.topoSort())
+        core.info("Topological Sort: " + graph.topoSort())
         core.endGroup()
 
     } catch (e) {
