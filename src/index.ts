@@ -82,6 +82,8 @@ async function execute(): Promise<void> {
                 graph.vertices.forEach(element => {
                     core.info(element)
                 });
+
+                graph.addEdge(DepWithVersion, project)
                 //core.info(`single dependency ${destinatedDep[0].name}`)
                 // packages.forEach(element =>  {
                 //     graph.addVertex(element)
