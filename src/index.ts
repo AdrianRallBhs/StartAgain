@@ -84,7 +84,7 @@ async function execute(): Promise<void> {
                 core.startGroup(`removing nugets present in ignore list ${project}`)
                 //const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
                 const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
-                core.info(`list of dependencies that will be updated: ${filteredPackages}`)
+                core.info(`list of dependencies that will be updated: ${filteredPackages.toString()}`)
                 core.endGroup()
 
                 // core.startGroup(`dotnet install new version ${project}`)
