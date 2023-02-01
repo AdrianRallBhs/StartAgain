@@ -13,6 +13,7 @@ async function execute(): Promise<void> {
         const commentUpdated = core.getBooleanInput("comment-updated")
         const rootFolder = core.getInput("root-folder")
         const versionLimit = core.getInput("version-limit")
+        const packageToUpdate = core.getInput(" packageToUpdate")
         const ignoreList = core.getMultilineInput("ignore").filter(s => s.trim() !== "")
         const projectIgnoreList = core.getMultilineInput("ignore-project").filter(s => s.trim() !== "")
         const contents = core.getInput("contents", { required: true });
@@ -66,6 +67,9 @@ async function execute(): Promise<void> {
 
                 core.startGroup(`dotnet list ${project} package`)
                 const packages = await dotnet.listPackagesWithOutput()
+                packages.forEach(element =>  {
+                    graph.addVertex(element)
+                })
                 packages.forEach(element => {
                     graph.addEdge(project, element)
                 });
