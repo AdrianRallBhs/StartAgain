@@ -26,14 +26,14 @@ async function execute(): Promise<void> {
         // const sources: string[] = await getAllSources(rootFolder, recursive, projectIgnoreList)
         // core.endGroup()
 
-        core.startGroup("Graph")
+        core.startGroup("Graph Vertices")
         const graph = new Graph()
         projects.forEach(element => {
             graph.addVertex(element)
         });
 
         graph.vertices.forEach(element => {
-            core.info(element + '\n')
+            core.info(element)
         });
         //core.info('Graph: ' +  graph.getAdjazent())
         core.endGroup()
@@ -65,7 +65,10 @@ async function execute(): Promise<void> {
                 // core.endGroup()
 
                 core.startGroup(`dotnet list ${project} package`)
-                await dotnet.listPackages()
+                const packages = await dotnet.listPackagesWithOutput()
+                packages.forEach(element => {
+                    graph.addEdge(project, element)
+                });
                 core.endGroup()
 
                 // core.startGroup(`removing nugets present in ignore list ${project}`)
@@ -91,6 +94,11 @@ async function execute(): Promise<void> {
                 // core.endGroup()
             }
         }
+
+        core.startGroup('Graph Edges')
+        graph.topoSort()
+        core.endGroup()
+
     } catch (e) {
         if (e instanceof Error) {
             core.setFailed(e.message)

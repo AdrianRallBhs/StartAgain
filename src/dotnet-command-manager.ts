@@ -65,6 +65,17 @@ export class DotnetCommandManager {
         }
     }
 
+    async listPackagesWithOutput(): Promise<Package[]> {
+        const result = await this.exec(['list', this.projectfile, 'package'])
+        if (result.exitCode !== 0) {
+            error(`dotnet list package returned non-zero exitcode: ${result.exitCode}`)
+            throw new Error(`dotnet list package returned non-zero exitcode: ${result.exitCode}`)
+        }
+       
+        const packagelist = this.parseListPackage(result.stdout);
+        return packagelist
+    }
+
     async addPackage(outdatedPackages: OutdatedPackage[]): Promise<void> {
         for (const outdatedPackage of outdatedPackages) {
             const result = await this.exec(['add', this.projectfile, 'package', outdatedPackage.name])
@@ -158,6 +169,23 @@ export class DotnetCommandManager {
         return packages
     }
 
+
+    async parseListPackage(output: string): Promise<Package[]> {
+        const lines = output.split('\n')
+        const packages: Package[] = []
+        const regex = /^\s+>\s(.*?)\s+(\d+\.\d+\.\d+)\s+(\d+\.\d+\.\d+)\s+(\d+\.\d+\.\d+)\s*$/
+        for (const line of lines) {
+            const match = regex.exec(line)
+            if (match) {
+                packages.push({
+                    name: match[1],
+                    version: match[2],
+                })
+            }
+        }
+        return packages
+    }
+
     // private async listSource(sources: string): Promise<Sources[]> {
     //     const lines = sources.split('\n')
     //     const sourceList: Sources[] = []
@@ -225,6 +253,16 @@ export class OutdatedPackage {
         this.current = current
         this.wanted = wanted
         this.latest = latest
+    }
+}
+
+export class Package {
+    name: string
+    version: string
+    
+    constructor(name: string, version: string) {
+        this.name = name
+        this.version = version
     }
 }
 
