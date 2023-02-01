@@ -71,15 +71,15 @@ async function execute(): Promise<void> {
 
                 core.startGroup('Whats inside?')
                 packages.forEach(e => {
-                    core.info(`-`+e.name)
+                    core.info(`-` + e.name)
                 })
-                packages.forEach(element =>  {
-                    graph.addVertex(element)
-                    core.info(graph.getAdjazent)
-                })
-                packages.forEach(element => {
-                    graph.addEdge(project, element)
-                });
+                // packages.forEach(element =>  {
+                //     graph.addVertex(element)
+                //     core.info(graph.getAdjazent)
+                // })
+                // packages.forEach(element => {
+                //     graph.addEdge(project, element)
+                // });
                 core.endGroup()
 
                 // core.startGroup(`removing nugets present in ignore list ${project}`)
