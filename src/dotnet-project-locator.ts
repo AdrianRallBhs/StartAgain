@@ -1,5 +1,5 @@
 import { info } from "@actions/core"
-import { readdirSync, readFileSync, statSync } from "fs"
+import { readdirSync, readFileSync, readlinkSync, statSync } from "fs"
 import { json } from "node:stream/consumers"
 import { extname, join } from "path"
 const fs = require('fs')
@@ -13,11 +13,30 @@ export const getAllProjects = async (
     result: string[] = []
 ): Promise<string[]> => {
     const files: string[] = readdirSync(rootFolder)
+    const submod: string = readlinkSync(rootFolder)
     const regex = /^.+.csproj$/
+
+    for(const fileName of submod) {
+        const file = join(rootFolder, fileName)
+   
+        if (statSync(file).isDirectory() && recursive ) {
+            try {
+                result = await getAllProjects(file, recursive, ignoreProjects, result)
+            } catch (error) {
+                continue
+            }
+        } else {
+            if (regex.test(file)) {
+                info(`project found : ${file}`)
+                result.push(file)
+            }
+        }
+    }
+
     for (const fileName of files) {
         const file = join(rootFolder, fileName)
    
-        if (statSync(file).isDirectory() && recursive) {
+        if (statSync(file).isDirectory() && recursive ) {
             try {
                 result = await getAllProjects(file, recursive, ignoreProjects, result)
             } catch (error) {
