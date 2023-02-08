@@ -78,14 +78,15 @@ async function execute(): Promise<void> {
                 // core.info(`outdatedPackages length: ` + outdatedPackages.length)
                 core.info(`destinated Package: ` + destinatedDep[0].name + destinatedDep[0].current)
                 const DepWithVersion = destinatedDep[0].name + " " + destinatedDep[0].current
-                graph.addVertex(destinatedDep[0].name)
+                //graph.addVertex(destinatedDep[0].name)
+                graph.addVertex(destinatedDep[0].current)
                 //graph.addVertex(DepWithVersion)
                 graph.addVertex(project)
                 graph.vertices.forEach(element => {
                     core.info(element)
                 });
 
-                graph.addEdge(project, destinatedDep[0].name)
+                graph.addEdge(project, destinatedDep[0].current)
                 //graph.addEdge(project, NameOfDependency)
                 //core.info(`single dependency ${destinatedDep[0].name}`)
                 // packages.forEach(element =>  {
@@ -125,7 +126,7 @@ async function execute(): Promise<void> {
         graph.vertices.forEach(element => {
             core.info(element)
         });
-        core.info("Topological Sort: " + graph.topoSort()) 
+        //core.info("Topological Sort: " + graph.topoSort()) 
         core.endGroup()
 
     } catch (e) {
