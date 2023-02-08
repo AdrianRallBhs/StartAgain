@@ -78,7 +78,7 @@ async function execute(): Promise<void> {
                 // core.info(`outdatedPackages length: ` + outdatedPackages.length)
                 core.info(`destinated Package: ` + destinatedDep[0].name + destinatedDep[0].current)
                 const DepWithVersion = destinatedDep[0].name + " " + destinatedDep[0].current
-                graph.addVertex(destinatedDep[0].current)
+                graph.addVertex(destinatedDep[0].name)
                 //graph.addVertex(DepWithVersion)
                 graph.addVertex(project)
                 graph.vertices.forEach(element => {
@@ -125,8 +125,7 @@ async function execute(): Promise<void> {
         graph.vertices.forEach(element => {
             core.info(element)
         });
-        core.info("Topological Sort: " + graph.topoSort().forEach((element: string) => {
-            core.info(element)
+        core.info("Topological Sort: " + graph.topoSort())  
         }))
         core.endGroup()
 
