@@ -24,9 +24,9 @@ async function execute(): Promise<void> {
         const projects: string[] = await getAllProjects(rootFolder, recursive, projectIgnoreList)
         core.endGroup()
 
-        core.startGroup("Find links")
-        const links: string[] = await getAllSubModules(rootFolder, recursive, projectIgnoreList)
-        core.endGroup()
+        // core.startGroup("Find links")
+        // const links: string[] = await getAllSubModules(rootFolder, recursive, projectIgnoreList)
+        // core.endGroup()
 
         // core.startGroup("Sources")
         // const sources: string[] = await getAllSources(rootFolder, recursive, projectIgnoreList)
