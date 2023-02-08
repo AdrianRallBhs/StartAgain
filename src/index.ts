@@ -70,7 +70,7 @@ async function execute(): Promise<void> {
                 // core.endGroup()
 
                 core.startGroup('Whats inside outdatedPackages?')
-                
+
                 const destinatedDep = outdatedPackages.filter(p => p.name === 'Microsoft.AspNetCore.Razor')
                 const NameOfDependency = destinatedDep[0].name + destinatedDep[0].current
                 //const destinatedPackage = await getDestinatedDependency(packages, packageToUpdate)
@@ -125,8 +125,9 @@ async function execute(): Promise<void> {
         graph.vertices.forEach(element => {
             core.info(element)
         });
-        core.info("Topological Sort: " +graph.topoSort())
-        core.info("\nAdjazent: " + graph.getAdjazent())
+        core.info("Topological Sort: " + graph.topoSort().forEach(element => {
+            core.info(element)
+        }))
         core.endGroup()
 
     } catch (e) {
