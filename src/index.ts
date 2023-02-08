@@ -76,10 +76,10 @@ async function execute(): Promise<void> {
                 //const destinatedPackage = await getDestinatedDependency(packages, packageToUpdate)
                 // core.info(`Destinated Dep length: ` +destinatedDep.length)
                 // core.info(`outdatedPackages length: ` + outdatedPackages.length)
-                core.info(`destinated Package: ` + destinatedDep[0].name)
+                core.info(`destinated Package: ` + destinatedDep[0].name + destinatedDep[0].current)
                 const DepWithVersion = destinatedDep[0].name + " " + destinatedDep[0].current
-                graph.addVertex(destinatedDep[0].name)
-
+                //graph.addVertex(destinatedDep[0].name)
+                graph.addVertex(DepWithVersion)
                 graph.addVertex(project)
                 graph.vertices.forEach(element => {
                     core.info(element)
