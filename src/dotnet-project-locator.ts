@@ -35,9 +35,48 @@ export const getAllProjects = async (
     return filterProjectList(result, ignoreProjects)
 }
 
-const filterProjectList = (
+export const getAllSubModules = async (
+    rootFolder: string,
+    recursive: boolean,
+    ignoreProjects: string[] = [],
+    result: string[] = []
+): Promise<string[]> => {
+    const files: string = readlinkSync(rootFolder)
+    const regex = /^.+.csproj$/
+
+    for (const fileName of files) {
+        const file = join(rootFolder, fileName)
+   
+        if (statSync(file).isSymbolicLink() && recursive ) {
+            try {
+                result = await getAllSubModules(file, recursive, ignoreProjects, result)
+            } catch (error) {
+                continue
+            }
+        } else {
+            if (regex.test(file)) {
+                info(`project found : ${file}`)
+                result.push(file)
+            }
+        }
+    }
+    return filterProjectLinks(result, ignoreProjects)
+}
+
+const filterProjectLinks = (
     projects: string[],
     ignoreProjects: string[]
+): string[] => {
+    return projects.filter(
+        (project) => {
+            return ignoreProjects.indexOf(project) === -1
+        }
+    )
+}
+
+const filterProjectList = (
+    projects: string[],
+
 ): string[] => {
     return projects.filter(
         (project) => {
