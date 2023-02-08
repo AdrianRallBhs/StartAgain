@@ -13,7 +13,7 @@ async function execute(): Promise<void> {
         const commentUpdated = core.getBooleanInput("comment-updated")
         const rootFolder = core.getInput("root-folder")
         const versionLimit = core.getInput("version-limit")
-        const packageToUpdate = core.getInput(" packageToUpdate")
+        const packageToUpdate = core.getInput("packageToUpdate")
         const ignoreList = core.getMultilineInput("ignore").filter(s => s.trim() !== "")
         const projectIgnoreList = core.getMultilineInput("ignore-project").filter(s => s.trim() !== "")
         const contents = core.getInput("contents", { required: true });
@@ -71,7 +71,7 @@ async function execute(): Promise<void> {
 
                 core.startGroup('Whats inside outdatedPackages?')
 
-                const destinatedDep = outdatedPackages.filter(p => p.name === 'Microsoft.AspNetCore.Razor')
+                const destinatedDep = outdatedPackages.filter(p => p.name === packageToUpdate)
                 const NameOfDependency = destinatedDep[0].name + destinatedDep[0].current
                 //const destinatedPackage = await getDestinatedDependency(packages, packageToUpdate)
                 // core.info(`Destinated Dep length: ` +destinatedDep.length)
