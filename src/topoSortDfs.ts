@@ -31,9 +31,9 @@ export class Graph {
     }
 
 
-    topoSort(v:any = this.vertices[0], discovered?: boolean[], s?: any) {
+    topoSort(v:any = this.vertices, discovered?: boolean[], s?: any) {
         const stack = s || [];
-        v = this.vertices[0];
+        v = this.vertices;
         let adj = this.adjacent;
             if (typeof discovered !== 'undefined') {
                 discovered[v] = true;
