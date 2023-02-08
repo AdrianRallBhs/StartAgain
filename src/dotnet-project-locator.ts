@@ -1,5 +1,6 @@
 import { info } from "@actions/core"
 import { readdirSync, readFileSync, readlinkSync, statSync } from "fs"
+import { readlink } from "fs/promises"
 import { json } from "node:stream/consumers"
 import { extname, join } from "path"
 const fs = require('fs')
