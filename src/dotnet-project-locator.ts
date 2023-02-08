@@ -17,7 +17,7 @@ export const getAllProjects = async (
     for (const fileName of files) {
         const file = join(rootFolder, fileName)
    
-        if (statSync(file).isDirectory() && recursive || statSync(file).isSymbolicLink() && recursive) {
+        if (statSync(file).isDirectory() && recursive) {
             try {
                 result = await getAllProjects(file, recursive, ignoreProjects, result)
             } catch (error) {
