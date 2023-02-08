@@ -125,7 +125,7 @@ async function execute(): Promise<void> {
         graph.vertices.forEach(element => {
             core.info(element)
         });
-        core.info("Topological Sort: " + graph.topoSort().forEach(element => {
+        core.info("Topological Sort: " + graph.topoSort().forEach((element: string) => {
             core.info(element)
         }))
         core.endGroup()
