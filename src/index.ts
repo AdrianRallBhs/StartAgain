@@ -2,7 +2,7 @@ import { Graph } from './topoSortDfs';
 import * as core from '@actions/core'
 import { statSync } from 'fs'
 import { DotnetCommandManager } from './dotnet-command-manager'
-import { getAllProjects, getAllSources, getAllSubModules } from './dotnet-project-locator'
+import { getAllProjects, getAllSources } from './dotnet-project-locator'
 import { removeIgnoredDependencies, getDestinatedDependency } from './utils'
 import { updateReadme } from './updateReadme'
 
@@ -24,9 +24,6 @@ async function execute(): Promise<void> {
         const projects: string[] = await getAllProjects(rootFolder, recursive, projectIgnoreList)
         core.endGroup()
 
-        // core.startGroup("Find links")
-        // const links: string[] = await getAllSubModules(rootFolder, recursive, projectIgnoreList)
-        // core.endGroup()
 
         // core.startGroup("Sources")
         // const sources: string[] = await getAllSources(rootFolder, recursive, projectIgnoreList)
