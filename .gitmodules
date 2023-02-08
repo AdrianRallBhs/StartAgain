@@ -1,0 +1,3 @@
+[submodule "submarine"]
+	path = submarine
+	url = https://github.com/AdrianRallBhs/submarine.git
