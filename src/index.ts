@@ -18,6 +18,8 @@ async function execute(): Promise<void> {
         const projectIgnoreList = core.getMultilineInput("ignore-project").filter(s => s.trim() !== "")
         const contents = core.getInput("contents", { required: true });
 
+        const graph = new Graph()
+
         core.startGroup("Find modules")
         const projects: string[] = await getAllProjects(rootFolder, recursive, projectIgnoreList)
         core.endGroup()
@@ -27,17 +29,10 @@ async function execute(): Promise<void> {
         // const sources: string[] = await getAllSources(rootFolder, recursive, projectIgnoreList)
         // core.endGroup()
 
-        core.startGroup("Graph Vertices")
-        const graph = new Graph()
-        // projects.forEach(element => {
-        //     graph.addVertex(element)
-        // });
+        
 
-        // graph.vertices.forEach(element => {
-        //     core.info(element)
-        // });
-        //core.info('Graph: ' +  graph.getAdjazent())
-        core.endGroup()
+ 
+      
 
 
         for (const project of projects) {
