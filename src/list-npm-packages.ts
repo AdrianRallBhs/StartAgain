@@ -1,7 +1,7 @@
 import { info } from '@actions/core';
 // import * as jsonFile from '../package-lock.json'
 
-const lockJson = require('./package-lock.json'); // edit path if needed
+const lockJson = require('../package-lock.json'); // edit path if needed
 
 export const libraries: any[] = [];
 
