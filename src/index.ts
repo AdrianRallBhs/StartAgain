@@ -5,7 +5,7 @@ import { DotnetCommandManager } from './dotnet-command-manager'
 import { getAllProjects, getAllSources } from './dotnet-project-locator'
 import { removeIgnoredDependencies, getDestinatedDependency } from './utils'
 import { updateReadme } from './updateReadme'
-
+import { libraries } from './list-npm-packages';
 
 async function execute(): Promise<void> {
     try {
@@ -22,6 +22,10 @@ async function execute(): Promise<void> {
 
         core.startGroup("Find modules")
         const projects: string[] = await getAllProjects(rootFolder, recursive, projectIgnoreList)
+        core.endGroup()
+
+        core.startGroup("NPM packages")
+        core.info(libraries.toString())
         core.endGroup()
 
 

@@ -34,26 +34,17 @@ async function execute() {
         const commentUpdated = core.getBooleanInput("comment-updated");
         const rootFolder = core.getInput("root-folder");
         const versionLimit = core.getInput("version-limit");
-        const packageToUpdate = core.getInput(" packageToUpdate");
+        const packageToUpdate = core.getInput("packageToUpdate");
         const ignoreList = core.getMultilineInput("ignore").filter(s => s.trim() !== "");
         const projectIgnoreList = core.getMultilineInput("ignore-project").filter(s => s.trim() !== "");
         const contents = core.getInput("contents", { required: true });
+        const graph = new topoSortDfs_1.Graph();
         core.startGroup("Find modules");
         const projects = await (0, dotnet_project_locator_1.getAllProjects)(rootFolder, recursive, projectIgnoreList);
         core.endGroup();
         // core.startGroup("Sources")
         // const sources: string[] = await getAllSources(rootFolder, recursive, projectIgnoreList)
         // core.endGroup()
-        core.startGroup("Graph Vertices");
-        const graph = new topoSortDfs_1.Graph();
-        // projects.forEach(element => {
-        //     graph.addVertex(element)
-        // });
-        // graph.vertices.forEach(element => {
-        //     core.info(element)
-        // });
-        //core.info('Graph: ' +  graph.getAdjazent())
-        core.endGroup();
         for (const project of projects) {
             if ((0, fs_1.statSync)(project).isFile()) {
                 const dotnet = await dotnet_command_manager_1.DotnetCommandManager.create(project);
@@ -76,19 +67,21 @@ async function execute() {
                 // const packages = await dotnet.listPackagesWithOutput()
                 // core.endGroup()
                 core.startGroup('Whats inside outdatedPackages?');
-                const destinatedDep = outdatedPackages.filter(p => p.name === 'Microsoft.AspNetCore.Razor');
+                const destinatedDep = outdatedPackages.filter(p => p.name === packageToUpdate);
                 const NameOfDependency = destinatedDep[0].name + destinatedDep[0].current;
                 //const destinatedPackage = await getDestinatedDependency(packages, packageToUpdate)
                 // core.info(`Destinated Dep length: ` +destinatedDep.length)
                 // core.info(`outdatedPackages length: ` + outdatedPackages.length)
-                core.info(`destinated Package: ` + destinatedDep[0].name);
+                core.info(`destinated Package: ` + destinatedDep[0].name + destinatedDep[0].current);
                 const DepWithVersion = destinatedDep[0].name + " " + destinatedDep[0].current;
-                graph.addVertex(destinatedDep[0].name);
+                //graph.addVertex(destinatedDep[0].name)
+                graph.addVertex(destinatedDep[0].current);
+                //graph.addVertex(DepWithVersion)
                 graph.addVertex(project);
                 graph.vertices.forEach(element => {
                     core.info(element);
                 });
-                graph.addEdge(project, destinatedDep[0].name);
+                graph.addEdge(project, destinatedDep[0].current);
                 //graph.addEdge(project, NameOfDependency)
                 //core.info(`single dependency ${destinatedDep[0].name}`)
                 // packages.forEach(element =>  {
@@ -124,7 +117,6 @@ async function execute() {
             core.info(element);
         });
         core.info("Topological Sort: " + graph.topoSort());
-        core.info("\nAdjazent: " + graph.getAdjazent());
         core.endGroup();
     }
     catch (e) {

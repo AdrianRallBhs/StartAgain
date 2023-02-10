@@ -7,6 +7,7 @@ const fs = require('fs')
 const path = require('path')
 
 
+
 export const getAllProjects = async (
     rootFolder: string,
     recursive: boolean,
@@ -46,6 +47,8 @@ const filterProjectList = (
         }
     )
 }
+
+
 
 
 
@@ -97,4 +100,46 @@ const getSources = (
     var nameOfSources = Object.keys(sources)
     return nameOfSources
 }
+
+
+
+export const getAllPackageJSON = async (
+    rootFolder: string,
+    recursive: boolean,
+    ignoreProjects: string[] = [],
+    result: string[] = []
+): Promise<string[]> => {
+    const files: string[] = readdirSync(rootFolder)
+    const regex = /^package.json$/
+
+    for (const fileName of files) {
+        const file = join(rootFolder, fileName)
+   
+        if (statSync(file).isDirectory() && recursive ) {
+            try {
+                result = await getAllPackageJSON(file, recursive, ignoreProjects, result)
+            } catch (error) {
+                continue
+            }
+        } else {
+            if (regex.test(file)) {
+                info(`file found : ${file}`)
+                result.push(file)
+            }
+        }
+    }
+    return getNpmPackages(result)
+}
+
+const getNpmPackages = (
+    sources: string[],
+): string[] => {
+    var jsonObj = getAllPackageJSON
+    var keys = Object.keys(jsonObj)
+    sources = keys
+    var nameOfSources = Object.keys(sources)
+    return nameOfSources
+}
+
+
 
