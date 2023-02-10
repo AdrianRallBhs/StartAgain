@@ -28,6 +28,7 @@ const core = __importStar(require("@actions/core"));
 const fs_1 = require("fs");
 const dotnet_command_manager_1 = require("./dotnet-command-manager");
 const dotnet_project_locator_1 = require("./dotnet-project-locator");
+const list_npm_packages_1 = require("./list-npm-packages");
 async function execute() {
     try {
         const recursive = core.getBooleanInput("recursive");
@@ -41,6 +42,12 @@ async function execute() {
         const graph = new topoSortDfs_1.Graph();
         core.startGroup("Find modules");
         const projects = await (0, dotnet_project_locator_1.getAllProjects)(rootFolder, recursive, projectIgnoreList);
+        core.endGroup();
+        core.startGroup("NPM packages");
+        // libraries.forEach(element => {
+        //     core.info()
+        // })
+        core.info(`Dependencies: ${list_npm_packages_1.libraries[0]}`);
         core.endGroup();
         // core.startGroup("Sources")
         // const sources: string[] = await getAllSources(rootFolder, recursive, projectIgnoreList)

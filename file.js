@@ -18,8 +18,8 @@ Object.keys(lockJson.dependencies).forEach((dependencyName) => {
       const subdependencyVersion = dependencyData.requires[subdependencyName];
 
       libraries.push({
-        libName: subdependencyName,
-        libVersion: subdependencyVersion,
+        DependencyName: subdependencyName,
+        Version: subdependencyVersion,
         parent: dependencyName,
       });
     });

@@ -25,10 +25,10 @@ async function execute(): Promise<void> {
         core.endGroup()
 
         core.startGroup("NPM packages")
-        // libraries.forEach(element => {
-        //     core.info()
-        // })
-        core.info(`Dependencies: ${libraries.values}`)
+        libraries.forEach(element => {
+            core.info(`${libraries[element]}`)
+        })
+        // core.info(`Dependencies: ${libraries[0]}`)
         core.endGroup()
 
 
