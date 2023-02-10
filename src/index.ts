@@ -28,7 +28,7 @@ async function execute(): Promise<void> {
         // libraries.forEach(element => {
         //     core.info()
         // })
-        core.info(`Dependencies: ${libraries}`)
+        core.info(`Dependencies: ${libraries.values}`)
         core.endGroup()
 
 
