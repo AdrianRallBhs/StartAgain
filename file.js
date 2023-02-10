@@ -26,4 +26,4 @@ Object.keys(lockJson.dependencies).forEach((dependencyName) => {
   }
 });
 
-console.log(libraries);
+console.log(libraries[0]);
