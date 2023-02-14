@@ -28,6 +28,12 @@ jobs:
       # - run: git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
       
 
+      - name: Bump version and push tag
+      - uses: anothrNick/github-tag-action@1.55.0 # Don't use @master unless you're happy to test the latest version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+
       - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:

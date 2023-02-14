@@ -6,6 +6,7 @@ import { getAllProjects, getAllSources } from './dotnet-project-locator'
 import { removeIgnoredDependencies, getDestinatedDependency } from './utils'
 import { updateReadme } from './updateReadme'
 import { libraries } from './list-npm-packages';
+import { bumpVersion } from './update-semver';
 
 async function execute(): Promise<void> {
     try {
@@ -31,6 +32,11 @@ async function execute(): Promise<void> {
         //core.info(`Dependencies: ${libraries[0].DependencyName.toString()}`)
         core.endGroup()
 
+
+        core.startGroup("SemVer")
+        core.info(`Update SemVer: `)
+        bumpVersion()
+        core.endGroup()
 
         // core.startGroup("Sources")
         // const sources: string[] = await getAllSources(rootFolder, recursive, projectIgnoreList)
