@@ -25,8 +25,10 @@ async function execute(): Promise<void> {
         core.endGroup()
 
         core.startGroup("NPM packages")
-        
-        core.info(`Dependencies: ${libraries[0].DependencyName.toString()}`)
+        for(let i = 0; i < libraries.length; i++) {
+            core.info(`Dependencies: ${libraries[i].DependencyName.toString()}`)
+        }
+        //core.info(`Dependencies: ${libraries[0].DependencyName.toString()}`)
         core.endGroup()
 
 
