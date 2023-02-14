@@ -58,7 +58,12 @@ jobs:
       - name: Build
         run: npm run build --if-present
 
-    
+      - name: SemVer
+        uses: ./
+        id: semver
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true  
 
 
       - name: update packages
@@ -70,8 +75,7 @@ jobs:
           comment-updated: true
           write-mode: append
           ignore: 'Microsoft.EntityFrameworkCore.SqlServer'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true      
+    
 
 
       
