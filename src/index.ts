@@ -33,10 +33,10 @@ async function execute(): Promise<void> {
         core.endGroup()
 
 
-        core.startGroup("SemVer")
-        core.info(`Update SemVer: `)
-        bumpVersion()
-        core.endGroup()
+        // core.startGroup("SemVer")
+        // core.info(`Update SemVer: `)
+        // bumpVersion()
+        // core.endGroup()
 
         // core.startGroup("Sources")
         // const sources: string[] = await getAllSources(rootFolder, recursive, projectIgnoreList)

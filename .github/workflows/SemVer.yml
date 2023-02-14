@@ -1,27 +1,34 @@
-# name: Version Increment
+name: Version Increment
 
-# on:
-#   push:
-#     branches:
-#       - main
+on:
+  push:
+    branches:
+      - main
 
-# # if the commit message contains the keyword patch,
-# # the action will only update the patch version. 
-# # If the keyword is not found, it will update the minor version as before.
-
-# jobs:
-#   version:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v2
-      # - run: git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      # - run: git config user.name "$GITHUB_ACTOR"
-      # - name: Determine version increment
-      #   id: determine-version
-      #   run: echo "::set-output name=increment::$(echo ${{ github.event.head_commit.message }} | grep -iqE 'patch' && echo 'patch' || echo 'minor')"
-      # - name: Bump version
-      #   run: npm version ${{ steps.determine-version.outputs.increment }} -m "v%s"
-      # - run: VERSION=$(node -p "require('./package.json').version")
-      # - run: git tag ${VERSION}
-      # - run: git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
-      # - run: git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - run: git config user.name "$GITHUB_ACTOR"
+      - name: Determine version increment
+        id: determine-version
+        run: |
+          if echo "${{ github.event.head_commit.message }}" | grep -iq 'patch'; then
+            echo "::set-output name=increment::patch"
+          elif echo "${{ github.event.head_commit.message }}" | grep -iq 'minor'; then
+            echo "::set-output name=increment::minor"
+          else
+            echo "::set-output name=increment::none"
+          fi
+      - name: Bump version
+        if: steps.determine-version.outputs.increment != 'none'
+        run: npm version ${{ steps.determine-version.outputs.increment }} -m "v%s"
+      - run: VERSION=$(node -p "require('./package.json').version")
+      - run: git tag ${VERSION}
+      - run: |
+          if [ "${{ steps.determine-version.outputs.increment }}" != "none" ]; then
+            git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
+            git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
+          fi

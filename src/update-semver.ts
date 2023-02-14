@@ -6,7 +6,7 @@ export function bumpVersion(): void {
     const defaultSemvarBump: string = process.env.DEFAULT_BUMP || "minor";
     const defaultBranch: any = process.env.DEFAULT_BRANCH || process.env.GITHUB_BASE_REF;
     const withV: boolean = process.env.WITH_V === "true";
-    const releaseBranches: string = process.env.RELEASE_BRANCHES || "master,main";
+    const releaseBranches: string = process.env.RELEASE_BRANCHES || "main";
     const customTag: string = process.env.CUSTOM_TAG || "";
     const source: string = process.env.SOURCE || ".";
     const dryRun: boolean = process.env.DRY_RUN === "true";

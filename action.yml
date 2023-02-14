@@ -45,9 +45,7 @@ inputs:
     despcription: 'Text for file the path is referencing'
     required: false
     default: '# AdrianoBoy'
-  WITH_V:
-    required: false
-    default: true
+
 
 
 runs:
