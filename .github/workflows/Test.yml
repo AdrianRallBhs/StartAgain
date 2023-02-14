@@ -19,7 +19,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
+      - run: git config user.name "$GITHUB_ACTOR"
+      - run: npm version minor -m "v%s"
+      - run: VERSION=$(node -p "require('./package.json').version")
+      - run: git tag ${VERSION}
+      - run: git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
+      
       - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
@@ -63,10 +68,5 @@ jobs:
           ignore: 'Microsoft.EntityFrameworkCore.SqlServer'      
 
 
-      - name: Version Increment
-      - run: git config user.name "$GITHUB_ACTOR"
-      - run: npm version minor -m "v%s"
-      - run: VERSION=$(node -p "require('./package.json').version")
-      - run: git tag ${VERSION}
-      - run: git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
+      
 
