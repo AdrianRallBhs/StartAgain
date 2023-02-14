@@ -18,7 +18,6 @@ jobs:
         
 
     steps:
-      - name: Checkout + SemVer
       - uses: actions/checkout@v2
       - run: git config user.name "$GITHUB_ACTOR"
       - run: npm version minor -m "v%s"
