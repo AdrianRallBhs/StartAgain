@@ -29,16 +29,20 @@ async function execute(): Promise<void> {
         const projects: string[] = await getAllProjects(rootFolder, recursive, projectIgnoreList)
         const submods: string[] = await findEvenSubmodules();
         //core.info(`Submodules: ${submods}`)
-        submods.forEach(element => {
-            core.info(element)
-        });
+        
         //const projects = await getAllProjects("./", true)
         //const projects: string[] = await findEvenSubmodules()
         core.endGroup()
 
+        core.startGroup("Show Modules")
+        submods.forEach(element => {
+            core.info(element)
+        });
+        core.endGroup()
+
         core.startGroup("NPM packages")
         for (let i = 0; i < libraries.length; i++) {
-            core.info(`Dependencies: ${libraries[i].DependencyName.toString()}`)
+            core.info(`Dependencies: ${libraries[i].DependencyName.toString()} ${libraries[i].Version.toString()}`)
         }
         //core.info(`Dependencies: ${libraries[0].DependencyName.toString()}`)
         core.endGroup()
@@ -145,9 +149,7 @@ async function execute(): Promise<void> {
         graph.vertices.forEach(element => {
             core.info(element)
         });
-        core.info(`Topological Sort: ${graph.topoSort()}`)
-        const top = graph.topoSort() .toString()
-        core.info(`topo split: ${top.trim().split(',')}`)
+        core.info(`Topological Sort: ${graph.topoSort()}`)  
         core.endGroup()
 
         core.startGroup('Write in Repo submarine')
