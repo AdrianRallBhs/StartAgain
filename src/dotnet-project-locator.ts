@@ -47,10 +47,8 @@ export const getAllProjects = async (
             const submoduleFolder = join(rootFolder, gitPath)
             result = await getAllProjects(submoduleFolder, recursive, ignoreProjects, result)
         }
-    } catch (err) {
-        if (err instanceof Error) {
-            core.setFailed(err.message)
-        }
+    } catch {
+        core.info("Error in dotnet-project-locator-find submodules")
     }
 
     return filterProjectList(result, ignoreProjects)
