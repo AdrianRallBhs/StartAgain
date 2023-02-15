@@ -144,9 +144,9 @@ async function execute(): Promise<void> {
         core.info("Topological Sort: " + graph.topoSort())
         core.endGroup()
 
-        // core.startGroup('Write in Repo submarine')
-        // writeInRepo()
-        // core.endGroup()
+        core.startGroup('Write in Repo submarine')
+        writeInRepo(graph.topoSort())
+        core.endGroup()
          
     } catch (e) {
         if (e instanceof Error) {
