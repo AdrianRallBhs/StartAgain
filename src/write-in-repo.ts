@@ -9,7 +9,7 @@ export async function writeInRepo(inputText: string) {
         // Construct the API URL
         const baseUrl = `https://api.github.com/repos`;
         const owner = 'AdrianRallBhs';
-        const repo = 'rubmarine';
+        const repo = 'submarine';
         const filePath = 'README.md';
         const url = `${baseUrl}/${owner}/${repo}/contents/${filePath}`;
 
