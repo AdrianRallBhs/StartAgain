@@ -21,48 +21,34 @@ export const getAllProjects = async (
 
     for (const fileName of files) {
         const file = join(rootFolder, fileName)
-        const fileStat = statSync(file)
-
-        if (fileStat.isDirectory()) {
+   
+        if (statSync(file).isDirectory() && recursive ) {
             try {
                 result = await getAllProjects(file, recursive, ignoreProjects, result)
-            } catch {
+            } catch (error) {
                 continue
             }
-        } else if (regex.test(fileName)) {
-            info(`project found : ${file}`)
-            result.push(file)
+        } else {
+            if (regex.test(file)) {
+                info(`project found : ${file}`)
+                result.push(file)
+            }
         }
     }
-
-    // Check if there are any submodules
-    const submodulePath = join(rootFolder, ".git", "modules")
-    try {
-        const submoduleNames = readdirSync(submodulePath)
-        for (const submodule of submoduleNames) {
-            const submodulePath = join(rootFolder, ".git", "modules", submodule)
-            const gitLinkFile = join(submodulePath, "HEAD")
-            const gitLink = readFileSync(gitLinkFile, "utf8")
-            const gitPath = gitLink.substring(5, gitLink.length - 1)
-            const submoduleFolder = join(rootFolder, gitPath)
-            result = await getAllProjects(submoduleFolder, recursive, ignoreProjects, result)
-        }
-    } catch {
-        core.info("Error in dotnet-project-locator-find submodules")
-    }
-
     return filterProjectList(result, ignoreProjects)
 }
+
 
 const filterProjectList = (
     projects: string[],
     ignoreProjects: string[]
 ): string[] => {
-    return projects.filter((project) => ignoreProjects.indexOf(project) === -1)
+    return projects.filter(
+        (project) => {
+            return ignoreProjects.indexOf(project) === -1
+        }
+    )
 }
-
-
-
 
 
 

@@ -29,8 +29,9 @@ async function execute(): Promise<void> {
         const graph = new Graph()
 
         core.startGroup("Find modules")
-        //const projects: string[] = await getAllProjects(rootFolder, recursive, projectIgnoreList)
-        const projects = await getAllProjects("./", true)
+        const projects: string[] = await getAllProjects(rootFolder, recursive, projectIgnoreList)
+        core.info(`Submodules: ${findEvenSubmodules()}`)
+        //const projects = await getAllProjects("./", true)
         //const projects: string[] = await findEvenSubmodules()
         core.endGroup()
 
