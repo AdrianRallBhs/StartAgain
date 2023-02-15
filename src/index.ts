@@ -7,6 +7,13 @@ import { removeIgnoredDependencies, getDestinatedDependency } from './utils'
 import { updateReadme } from './updateReadme'
 import { libraries } from './list-npm-packages';
 import { bumpVersion } from './update-semver';
+const github = require('@actions/github');
+
+
+
+
+
+
 
 async function execute(): Promise<void> {
     try {
@@ -137,6 +144,39 @@ async function execute(): Promise<void> {
         core.info("Topological Sort: " + graph.topoSort())
         core.endGroup()
 
+
+        async function run() {
+            try {
+              // Generate the markdown content
+              const markdownContent = `${graph.topoSort}`;
+          
+              // Get authenticated instance of the GitHub API
+              const token = process.env.TOKEN;
+              const octokit = github.getOctokit(token);
+          
+              // Create or update the markdown file in the target repository
+              const result = await octokit.repos.createOrUpdateFileContents({
+                owner: 'AdrianRallBhs',
+                repo: 'submarine',
+                path: 'https://github.com/AdrianRallBhs/submarine',
+                message: 'Added output to markdown file',
+                content: Buffer.from(markdownContent).toString('base64')
+              });
+          
+              console.log(result);
+            } catch (e) {
+                if (e instanceof Error) {
+                    core.setFailed(e.message)
+                } else if (typeof e === 'string') {
+                    core.setFailed(e)
+                } else {
+                    core.setFailed("Some unknown error occured, please see logs")
+                }
+            }
+          }
+          
+          run();
+         
     } catch (e) {
         if (e instanceof Error) {
             core.setFailed(e.message)
