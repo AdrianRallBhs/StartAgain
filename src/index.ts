@@ -28,7 +28,10 @@ async function execute(): Promise<void> {
         core.startGroup("Find modules")
         const projects: string[] = await getAllProjects(rootFolder, recursive, projectIgnoreList)
         const submods: string[] = await findEvenSubmodules();
-        core.info(`Submodules: ${submods}`)
+        //core.info(`Submodules: ${submods}`)
+        submods.forEach(element => {
+            core.info(element)
+        });
         //const projects = await getAllProjects("./", true)
         //const projects: string[] = await findEvenSubmodules()
         core.endGroup()
@@ -56,7 +59,7 @@ async function execute(): Promise<void> {
 
 
 
-        for (const project of projects) {
+        for (const project of submods) {
             if (statSync(project).isFile()) {
                 const dotnet = await DotnetCommandManager.create(project)
 

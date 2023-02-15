@@ -164,7 +164,7 @@ export async function findEvenSubmodules(): Promise<string[]> {
       const csprojFileList = csprojFiles.trim().split('\n');
   
       // Output the list of `csproj` files found
-      core.info(`List of csproj files found: ${csprojFileList}`);
+      //core.info(`List of csproj files found: ${csprojFileList}`);
   
       return csprojFileList;
     } catch {
