@@ -2,10 +2,10 @@ import { Graph } from './topoSortDfs';
 import * as core from '@actions/core'
 import { statSync } from 'fs'
 import { DotnetCommandManager } from './dotnet-command-manager'
-import { getAllProjects, getAllSources, findEvenSubmodules } from './dotnet-project-locator'
+import { getAllProjects, getAllSources, findEvenSubmodules, } from './dotnet-project-locator'
 import { removeIgnoredDependencies, getDestinatedDependency } from './utils'
 import { updateReadme } from './updateReadme'
-import { libraries } from './list-npm-packages';
+import { libraries, writeNPMToPlantUML } from './list-npm-packages';
 import { bumpVersion } from './update-semver';
 import { writeInRepo } from './write-in-repo';
 
@@ -44,6 +44,8 @@ async function execute(): Promise<void> {
         for (let i = 0; i < libraries.length; i++) {
             core.info(`Dependencies: ${libraries[i].DependencyName.toString()} ${libraries[i].Version.toString()}`)
         }
+
+        core.info(`\nMake PlantUML File: ${writeNPMToPlantUML(libraries)}`)
         //core.info(`Dependencies: ${libraries[0].DependencyName.toString()}`)
         core.endGroup()
 
