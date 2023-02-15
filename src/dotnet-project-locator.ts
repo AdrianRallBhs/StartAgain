@@ -176,8 +176,8 @@ export async function findEvenSubmodules() {
 
         // Output the list of `csproj` files found
         core.info(`List of csproj files found: ${csprojFiles}`);
-    } catch (e) {
-        core.setFailed(e);
+    } catch {
+        core.info("error in dotnet-project");
     }
 }
 
