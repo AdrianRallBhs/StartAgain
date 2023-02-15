@@ -26,7 +26,7 @@ export const getAllProjects = async (
         if (fileStat.isDirectory()) {
             try {
                 result = await getAllProjects(file, recursive, ignoreProjects, result)
-            } catch (error) {
+            } catch {
                 continue
             }
         } else if (regex.test(fileName)) {
