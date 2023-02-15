@@ -10,45 +10,100 @@ import * as exec from '@actions/exec'
 
 
 
-export const getAllProjects = async (
-    rootFolder: string,
-    recursive: boolean,
-    ignoreProjects: string[] = [],
-    result: string[] = []
-): Promise<string[]> => {
-    const files: string[] = readdirSync(rootFolder)
-    const regex = /^.+.csproj$/
+// export const getAllProjects = async (
+//     rootFolder: string,
+//     recursive: boolean,
+//     ignoreProjects: string[] = [],
+//     result: string[] = []
+// ): Promise<string[]> => {
+//     const files: string[] = readdirSync(rootFolder)
+//     const regex = /^.+.csproj$/
 
-    for (const fileName of files) {
-        const file = join(rootFolder, fileName)
+//     for (const fileName of files) {
+//         const file = join(rootFolder, fileName)
    
-        if (statSync(file).isDirectory() && recursive ) {
-            try {
-                result = await getAllProjects(file, recursive, ignoreProjects, result)
-            } catch (error) {
-                continue
-            }
-        } else {
-            if (regex.test(file)) {
-                info(`project found : ${file}`)
-                result.push(file)
-            }
-        }
-    }
-    return filterProjectList(result, ignoreProjects)
-}
+//         if (statSync(file).isDirectory() && recursive ) {
+//             try {
+//                 result = await getAllProjects(file, recursive, ignoreProjects, result)
+//             } catch (error) {
+//                 continue
+//             }
+//         } else {
+//             if (regex.test(file)) {
+//                 info(`project found : ${file}`)
+//                 result.push(file)
+//             }
+//         }
+//     }
+//     return filterProjectList(result, ignoreProjects)
+// }
 
+
+export const getAllProjects = async (
+  rootFolder: string,
+  recursive: boolean,
+  ignoreProjects: string[] = [],
+  result: string[] = []
+): Promise<string[]> => {
+  const files: string[] = readdirSync(rootFolder)
+  const regex = /^.+.csproj$/
+
+  for (const fileName of files) {
+    const file = join(rootFolder, fileName)
+    const fileStat = statSync(file)
+
+    if (fileStat.isDirectory()) {
+      try {
+        result = await getAllProjects(file, recursive, ignoreProjects, result)
+      } catch (error) {
+        continue
+      }
+    } else if (regex.test(fileName)) {
+      info(`project found : ${file}`)
+      result.push(file)
+    }
+  }
+
+  // Check if there are any submodules
+  const submodulePath = join(rootFolder, ".git", "modules")
+  try {
+    const submoduleNames = readdirSync(submodulePath)
+    for (const submodule of submoduleNames) {
+      const submodulePath = join(rootFolder, ".git", "modules", submodule)
+      const gitLinkFile = join(submodulePath, "HEAD")
+      const gitLink = readFileSync(gitLinkFile, "utf8")
+      const gitPath = gitLink.substring(5, gitLink.length - 1)
+      const submoduleFolder = join(rootFolder, gitPath)
+      result = await getAllProjects(submoduleFolder, recursive, ignoreProjects, result)
+    }
+  } catch (e) {
+    if (e instanceof Error) {
+        core.setFailed(e.message)
+      }
+  }
+
+  return filterProjectList(result, ignoreProjects)
+}
 
 const filterProjectList = (
-    projects: string[],
-    ignoreProjects: string[]
+  projects: string[],
+  ignoreProjects: string[]
 ): string[] => {
-    return projects.filter(
-        (project) => {
-            return ignoreProjects.indexOf(project) === -1
-        }
-    )
+  return projects.filter((project) => ignoreProjects.indexOf(project) === -1)
 }
+
+
+
+// const filterProjectList = (
+//     projects: string[],
+//     ignoreProjects: string[]
+// ): string[] => {
+//     return projects.filter(
+//         (project) => {
+//             return ignoreProjects.indexOf(project) === -1
+//         }
+//     )
+// }
 
 
 
