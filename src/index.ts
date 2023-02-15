@@ -2,7 +2,7 @@ import { Graph } from './topoSortDfs';
 import * as core from '@actions/core'
 import { statSync } from 'fs'
 import { DotnetCommandManager } from './dotnet-command-manager'
-import { getAllProjects, getAllSources } from './dotnet-project-locator'
+import { getAllProjects, getAllSources, findEvenSubmodules } from './dotnet-project-locator'
 import { removeIgnoredDependencies, getDestinatedDependency } from './utils'
 import { updateReadme } from './updateReadme'
 import { libraries } from './list-npm-packages';
@@ -30,10 +30,11 @@ async function execute(): Promise<void> {
 
         core.startGroup("Find modules")
         const projects: string[] = await getAllProjects(rootFolder, recursive, projectIgnoreList)
+        //const projects: string[] = await findEvenSubmodules()
         core.endGroup()
 
         core.startGroup("NPM packages")
-        for(let i = 0; i < libraries.length; i++) {
+        for (let i = 0; i < libraries.length; i++) {
             core.info(`Dependencies: ${libraries[i].DependencyName.toString()}`)
         }
         //core.info(`Dependencies: ${libraries[0].DependencyName.toString()}`)
@@ -49,10 +50,10 @@ async function execute(): Promise<void> {
         // const sources: string[] = await getAllSources(rootFolder, recursive, projectIgnoreList)
         // core.endGroup()
 
-        
 
- 
-      
+
+
+
 
 
         for (const project of projects) {
@@ -147,7 +148,7 @@ async function execute(): Promise<void> {
         core.startGroup('Write in Repo submarine')
         writeInRepo(graph.topoSort())
         core.endGroup()
-         
+
     } catch (e) {
         if (e instanceof Error) {
             core.setFailed(e.message)

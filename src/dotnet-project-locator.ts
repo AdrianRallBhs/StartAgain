@@ -5,6 +5,8 @@ import { json } from "node:stream/consumers"
 import { extname, join } from "path"
 const fs = require('fs')
 const path = require('path')
+import * as core from '@actions/core'
+import * as exec from '@actions/exec'
 
 
 
@@ -19,34 +21,48 @@ export const getAllProjects = async (
 
     for (const fileName of files) {
         const file = join(rootFolder, fileName)
-   
-        if (statSync(file).isDirectory() && recursive ) {
+        const fileStat = statSync(file)
+
+        if (fileStat.isDirectory()) {
             try {
                 result = await getAllProjects(file, recursive, ignoreProjects, result)
             } catch (error) {
                 continue
             }
-        } else {
-            if (regex.test(file)) {
-                info(`project found : ${file}`)
-                result.push(file)
-            }
+        } else if (regex.test(fileName)) {
+            info(`project found : ${file}`)
+            result.push(file)
         }
     }
+
+    // Check if there are any submodules
+    const submodulePath = join(rootFolder, ".git", "modules")
+    try {
+        const submoduleNames = readdirSync(submodulePath)
+        for (const submodule of submoduleNames) {
+            const submodulePath = join(rootFolder, ".git", "modules", submodule)
+            const gitLinkFile = join(submodulePath, "HEAD")
+            const gitLink = readFileSync(gitLinkFile, "utf8")
+            const gitPath = gitLink.substring(5, gitLink.length - 1)
+            const submoduleFolder = join(rootFolder, gitPath)
+            result = await getAllProjects(submoduleFolder, recursive, ignoreProjects, result)
+        }
+    } catch (err) {
+        if (err instanceof Error) {
+            core.setFailed(err.message)
+        }
+    }
+
     return filterProjectList(result, ignoreProjects)
 }
-
 
 const filterProjectList = (
     projects: string[],
     ignoreProjects: string[]
 ): string[] => {
-    return projects.filter(
-        (project) => {
-            return ignoreProjects.indexOf(project) === -1
-        }
-    )
+    return projects.filter((project) => ignoreProjects.indexOf(project) === -1)
 }
+
 
 
 
@@ -72,7 +88,7 @@ export const getAllSources = async (
             json = JSON.parse(fileData.toString()).toString()
         })
 
-        
+
         if (statSync(file).isDirectory() && recursive) {
             try {
                 result = await getAllSources(file, recursive, ignoreProjects, result)
@@ -81,7 +97,7 @@ export const getAllSources = async (
             }
         } else {
             if (regex.test(file)) {
-                
+
                 info(`project found : ${file} \n JSON: ${json} `)
                 result.push(file)
             }
@@ -114,8 +130,8 @@ export const getAllPackageJSON = async (
 
     for (const fileName of files) {
         const file = join(rootFolder, fileName)
-   
-        if (statSync(file).isDirectory() && recursive ) {
+
+        if (statSync(file).isDirectory() && recursive) {
             try {
                 result = await getAllPackageJSON(file, recursive, ignoreProjects, result)
             } catch (error) {
@@ -140,6 +156,34 @@ const getNpmPackages = (
     var nameOfSources = Object.keys(sources)
     return nameOfSources
 }
+
+
+
+
+export async function findEvenSubmodules() {
+    try {
+        // Checkout the repository including submodules
+        await exec.exec('git', ['submodule', 'update', '--init', '--recursive']);
+
+        // Use the `find` command to locate all `csproj` files
+        let csprojFiles = '';
+        const options = {
+            listeners: {
+                stdout: (data: Buffer) => {
+                    csprojFiles += data.toString();
+                }
+            }
+        };
+        await exec.exec('find', ['.', '-name', '*.csproj'], options);
+
+        // Output the list of `csproj` files found
+        core.info(`List of csproj files found: ${csprojFiles}`);
+    } catch (e) {
+        core.setFailed(e);
+    }
+}
+
+
 
 
 
