@@ -145,7 +145,7 @@ async function execute(): Promise<void> {
         core.endGroup()
 
         core.startGroup('Write in Repo submarine')
-        writeInRepo(graph.topoSort())
+        writeInRepo()
         core.endGroup()
          
     } catch (e) {
