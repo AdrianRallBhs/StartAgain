@@ -146,8 +146,8 @@ async function execute(): Promise<void> {
             core.info(element)
         });
         core.info(`Topological Sort: ${graph.topoSort()}`)
-        const top = graph.topoSort().toString()
-        core.info(`topo split: ${top.trim().split('\n')}`)
+        const top = graph.topoSort() .toString()
+        core.info(`topo split: ${top.trim().split(',')}`)
         core.endGroup()
 
         core.startGroup('Write in Repo submarine')
