@@ -12,9 +12,6 @@ import { writeInRepo } from './write-in-repo';
 
 
 
-
-
-
 async function execute(): Promise<void> {
     try {
         const recursive = core.getBooleanInput("recursive")
