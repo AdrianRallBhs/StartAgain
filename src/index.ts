@@ -145,9 +145,9 @@ async function execute(): Promise<void> {
         graph.vertices.forEach(element => {
             core.info(element)
         });
-        core.info("Topological Sort: ")
-        const top = graph.topoSort()
-        core.info(`${top.trim().split('\n')}`)
+        core.info(`Topological Sort: ${graph.topoSort()}`)
+        const top = graph.topoSort.toString()
+        core.info(`topo split: ${top.trim().split('\n')}`)
         core.endGroup()
 
         core.startGroup('Write in Repo submarine')
