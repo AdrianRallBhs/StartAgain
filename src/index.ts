@@ -146,7 +146,7 @@ async function execute(): Promise<void> {
             core.info(element)
         });
         core.info(`Topological Sort: ${graph.topoSort()}`)
-        const top = graph.topoSort.toString()
+        const top = graph.topoSort().toString()
         core.info(`topo split: ${top.trim().split('\n')}`)
         core.endGroup()
 
