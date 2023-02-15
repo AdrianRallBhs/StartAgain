@@ -31,30 +31,30 @@ Object.keys(lockJson.dependencies).forEach((dependencyName) => {
     }
 });
 
-export async function writeNPMToPlantUML(libraries: any[]): Promise<void> {
+export async function writeNPMToPlantUML(libra: any[]): Promise<void> {
 
 
-let plantumlString = '@startuml\n';
+    let plantumlString = '@startuml\n';
 
-// Loop through libraries and create PlantUML entries for each dependency with subdependencies
-libraries.forEach((library) => {
-    if (library.parent) {
-        // If the library has a parent, it is a subdependency
-        plantumlString += `${library.parent} --> ${library.DependencyName} : ${library.Version}\n`;
-    } else {
-        // If the library does not have a parent, it is a top-level dependency
-        plantumlString += `package "${library.DependencyName} ${library.Version}" {\n`;
-        const subdependencies = libraries.filter((sub) => sub.parent === library.DependencyName);
-        subdependencies.forEach((sub) => {
-            plantumlString += `\t${sub.DependencyName} : ${sub.Version}\n`;
-        });
-        plantumlString += '}\n';
-    }
-});
+    // Loop through libraries and create PlantUML entries for each dependency with subdependencies
+    libra.forEach((library) => {
+        if (library.parent) {
+            // If the library has a parent, it is a subdependency
+            plantumlString += `${library.parent} --> ${library.DependencyName} : ${library.Version}\n`;
+        } else {
+            // If the library does not have a parent, it is a top-level dependency
+            plantumlString += `package "${library.DependencyName} ${library.Version}" {\n`;
+            const subdependencies = libra.filter((sub) => sub.parent === library.DependencyName);
+            subdependencies.forEach((sub) => {
+                plantumlString += `\t${sub.DependencyName} : ${sub.Version}\n`;
+            });
+            plantumlString += '}\n';
+        }
+    });
 
-plantumlString += '@enduml\n';
+    plantumlString += '@enduml\n';
 
-fs.writeFileSync('dependencies.plantuml', plantumlString);
+    fs.writeFileSync('dependencies.plantuml', plantumlString);
 }
 
 
