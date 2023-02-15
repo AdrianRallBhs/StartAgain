@@ -1,4 +1,3 @@
-import { libraries } from './list-npm-packages';
 import { info } from '@actions/core';
 const fs = require('fs');
 // import * as jsonFile from '../package-lock.json'
@@ -30,6 +29,7 @@ Object.keys(lockJson.dependencies).forEach((dependencyName) => {
         });
     }
 });
+
 
 export async function writeNPMToPlantUML(libra: any[]): Promise<void> {
 
