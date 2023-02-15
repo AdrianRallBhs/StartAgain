@@ -27,7 +27,8 @@ async function execute(): Promise<void> {
 
         core.startGroup("Find modules")
         const projects: string[] = await getAllProjects(rootFolder, recursive, projectIgnoreList)
-        core.info(`Submodules: ${findEvenSubmodules()}`)
+        const submods: string[] = await findEvenSubmodules();
+        core.info(`Submodules: ${submods}`)
         //const projects = await getAllProjects("./", true)
         //const projects: string[] = await findEvenSubmodules()
         core.endGroup()
