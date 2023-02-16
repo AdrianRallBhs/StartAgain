@@ -28,13 +28,15 @@ jobs:
       # - run: git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
       
 
-
       - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
           node-version: 16.x
           cache: 'npm'
           cache-dependency-path: package-lock.json
+
+      - name: Cache dependencies etc
+        uses: actions/cache@v1
 
 
       - name: Setup .NET Core
@@ -77,25 +79,25 @@ jobs:
           ignore: 'Microsoft.EntityFrameworkCore.SqlServer'
 
 
-      - name: Commit code changes
-        run: |
-          git config --global user.email "adrian@asda4.de"
-          git config --global user.name "AdrianRallBhs"
-          git add .
-          git commit -m "Commit message"
-          gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
-          gh repo view --json name,url --jq '.name + " " + .url' -- --repo "$(basename $GITHUB_REPOSITORY)" | xargs gh repo clone
-          cd "$(basename $GITHUB_REPOSITORY)"
-          git push origin main
+      # - name: Commit code changes
+      #   run: |
+      #     git config --global user.email "adrian@asda4.de"
+      #     git config --global user.name "AdrianRallBhs"
+      #     git add .
+      #     git commit -m "Commit message"
+      #     gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
+      #     gh repo view --json name,url --jq '.name + " " + .url' -- --repo "$(basename $GITHUB_REPOSITORY)" | xargs gh repo clone
+      #     cd "$(basename $GITHUB_REPOSITORY)"
+      #     git push origin main
 
 
-      # - name: Commit & Push
-      #   uses: Andro999b/push@v1.3
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     branch: main
-      #     force: true
-      #     message: `Overwritten by Github Actions - ${date}`
+      - name: Commit & Push
+        uses: Andro999b/push@v1.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+          force: true
+          message: `Overwritten by Github Actions - ${date}`
 
   
 
