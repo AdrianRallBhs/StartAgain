@@ -6,12 +6,10 @@ interface Library {
   parent: string | null;
 }
 
-export const plantumlString: string = "Hello\n";
+const lockJson = require('../package-lock.json'); // edit path if needed
 
-export function generateDependenciesPlantUML(libraries: any[], lockJsonPath: string, outputFilePath: string): string {
-  const lockJson = require(lockJsonPath);
-
-  libraries = [];
+export let plantumlString: string = "";
+const libraries: any[] = [];
 
   Object.keys(lockJson.dependencies).forEach((dependencyName) => {
     const dependencyData = lockJson.dependencies[dependencyName];
@@ -35,7 +33,7 @@ export function generateDependenciesPlantUML(libraries: any[], lockJsonPath: str
     }
   });
 
-  let plantumlString = '@startuml\n';
+  plantumlString += '@startuml\n';
   plantumlString += 'digraph foo {\n';
 
   libraries.forEach((library) => {
@@ -50,11 +48,4 @@ export function generateDependenciesPlantUML(libraries: any[], lockJsonPath: str
       plantumlString += '}\n';
     }
   });
-  plantumlString += '}\n';
   plantumlString += '@enduml\n';
-
-  fs.writeFileSync(outputFilePath, plantumlString);
-
-  return plantumlString;
-
-}
