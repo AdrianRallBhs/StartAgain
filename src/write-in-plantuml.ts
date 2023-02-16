@@ -73,7 +73,7 @@ interface Library {
     return true;
   }
   
-  let plantumlString: string = "";
+  export let plantumlString: string = "";
   const libraries: any[] = [];
   
   Object.keys(lockJson.dependencies).forEach((dependencyName) => {
