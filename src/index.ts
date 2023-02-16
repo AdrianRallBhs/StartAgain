@@ -45,7 +45,8 @@ async function execute(): Promise<void> {
         for (let i = 0; i < libraries.length; i++) {
             core.info(`Dependencies: ${libraries[i].DependencyName.toString()} ${libraries[i].Version.toString()}`)
         }
-
+        core.endGroup()
+        core.startGroup("PlantUML")
         core.info(`Generated plantuml from npm packages: ${plantumlString}`)
 
         //fs.writeFileSync("../dependencies.txt", plantumlString);
