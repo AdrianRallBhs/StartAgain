@@ -77,16 +77,16 @@ jobs:
           ignore: 'Microsoft.EntityFrameworkCore.SqlServer'
 
 
-    - name: Commit code changes
-      run: |
-        git config --global user.email "adrian@asda4.de"
-        git config --global user.name "AdrianRallBhs"
-        git add .
-        git commit -m "Commit message"
-        gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
-        gh repo view --json name,url --jq '.name + " " + .url' -- --repo "$(basename $GITHUB_REPOSITORY)" | xargs gh repo clone
-        cd "$(basename $GITHUB_REPOSITORY)"
-        git push origin main
+      - name: Commit code changes
+        run: |
+          git config --global user.email "adrian@asda4.de"
+          git config --global user.name "AdrianRallBhs"
+          git add .
+          git commit -m "Commit message"
+          gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
+          gh repo view --json name,url --jq '.name + " " + .url' -- --repo "$(basename $GITHUB_REPOSITORY)" | xargs gh repo clone
+          cd "$(basename $GITHUB_REPOSITORY)"
+          git push origin main
 
 
       # - name: Commit & Push
@@ -97,6 +97,5 @@ jobs:
       #     force: true
       #     message: `Overwritten by Github Actions - ${date}`
 
-
-      
+  
 
