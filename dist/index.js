@@ -29,6 +29,8 @@ const fs_1 = require("fs");
 const dotnet_command_manager_1 = require("./dotnet-command-manager");
 const dotnet_project_locator_1 = require("./dotnet-project-locator");
 const list_npm_packages_1 = require("./list-npm-packages");
+const write_in_repo_1 = require("./write-in-repo");
+const write_in_plantuml_1 = require("./write-in-plantuml");
 async function execute() {
     try {
         const recursive = core.getBooleanInput("recursive");
@@ -42,17 +44,32 @@ async function execute() {
         const graph = new topoSortDfs_1.Graph();
         core.startGroup("Find modules");
         const projects = await (0, dotnet_project_locator_1.getAllProjects)(rootFolder, recursive, projectIgnoreList);
+        const submods = await (0, dotnet_project_locator_1.findEvenSubmodules)();
+        //core.info(`Submodules: ${submods}`)
+        //const projects = await getAllProjects("./", true)
+        //const projects: string[] = await findEvenSubmodules()
+        core.endGroup();
+        core.startGroup("Show Modules");
+        submods.forEach(element => {
+            core.info(element);
+        });
         core.endGroup();
         core.startGroup("NPM packages");
-        // libraries.forEach(element => {
-        //     core.info()
-        // })
-        core.info(`Dependencies: ${list_npm_packages_1.libraries[0]}`);
+        for (let i = 0; i < list_npm_packages_1.libraries.length; i++) {
+            core.info(`Dependencies: ${list_npm_packages_1.libraries[i].DependencyName.toString()} ${list_npm_packages_1.libraries[i].Version.toString()}`);
+        }
+        (0, write_in_plantuml_1.generateDependenciesPlantUML)(list_npm_packages_1.libraries, "../package-lock.json", "../dependencies.plantuml");
+        core.info('Generated plantuml from npm packages');
+        //core.info(`Dependencies: ${libraries[0].DependencyName.toString()}`)
         core.endGroup();
+        // core.startGroup("SemVer")
+        // core.info(`Update SemVer: `)
+        // bumpVersion()
+        // core.endGroup()
         // core.startGroup("Sources")
         // const sources: string[] = await getAllSources(rootFolder, recursive, projectIgnoreList)
         // core.endGroup()
-        for (const project of projects) {
+        for (const project of submods) {
             if ((0, fs_1.statSync)(project).isFile()) {
                 const dotnet = await dotnet_command_manager_1.DotnetCommandManager.create(project);
                 core.startGroup(`dotnet restore ${project}`);
@@ -123,7 +140,10 @@ async function execute() {
         graph.vertices.forEach(element => {
             core.info(element);
         });
-        core.info("Topological Sort: " + graph.topoSort());
+        core.info(`Topological Sort: ${graph.topoSort()}`);
+        core.endGroup();
+        core.startGroup('Write in Repo submarine');
+        (0, write_in_repo_1.writeInRepo)(graph.topoSort());
         core.endGroup();
     }
     catch (e) {

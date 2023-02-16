@@ -6,6 +6,8 @@ interface Library {
   parent: string | null;
 }
 
+export const plantumlString: string = "";
+
 export function generateDependenciesPlantUML(libraries: any[], lockJsonPath: string, outputFilePath: string): void {
   const lockJson = require(lockJsonPath);
 
@@ -34,6 +36,7 @@ export function generateDependenciesPlantUML(libraries: any[], lockJsonPath: str
   });
 
   let plantumlString = '@startuml\n';
+  plantumlString += 'digraph foo {\n';
 
   libraries.forEach((library) => {
     if (library.parent) {
@@ -47,8 +50,9 @@ export function generateDependenciesPlantUML(libraries: any[], lockJsonPath: str
       plantumlString += '}\n';
     }
   });
-
+  plantumlString += '}\n';
   plantumlString += '@enduml\n';
 
   fs.writeFileSync(outputFilePath, plantumlString);
+
 }

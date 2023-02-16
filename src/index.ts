@@ -8,7 +8,7 @@ import { updateReadme } from './updateReadme'
 import {  libraries } from './list-npm-packages';
 import { bumpVersion } from './update-semver';
 import { writeInRepo } from './write-in-repo';
-import { generateDependenciesPlantUML } from './write-in-plantuml'
+import { generateDependenciesPlantUML, plantumlString } from './write-in-plantuml'
 
 
 
@@ -47,7 +47,7 @@ async function execute(): Promise<void> {
         }
 
         generateDependenciesPlantUML(libraries, "../package-lock.json", "../dependencies.plantuml")
-        core.info('Generated plantuml from npm packages')
+        core.info(`Generated plantuml from npm packages: ${plantumlString}`)
         //core.info(`Dependencies: ${libraries[0].DependencyName.toString()}`)
         core.endGroup()
 
