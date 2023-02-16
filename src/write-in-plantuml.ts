@@ -15,8 +15,8 @@ Object.keys(lockJson.dependencies).forEach((dependencyName) => {
     const dependencyData = lockJson.dependencies[dependencyName];
 
     libraries.push({
-        ChildDependencyName: dependencyName.toString(),
-        ChildVersion: dependencyData.version.toString(),
+        DependencyName: dependencyName.toString(),
+        Version: dependencyData.version.toString(),
         parent: null,
     });
 
@@ -25,8 +25,8 @@ Object.keys(lockJson.dependencies).forEach((dependencyName) => {
             const subdependencyVersion = dependencyData.requires[subdependencyName];
 
             libraries.push({
-                ParentDependencyName: subdependencyName.toString(),
-                ParentVersion: subdependencyVersion.toString(),
+                DependencyName: subdependencyName.toString(),
+                Version: subdependencyVersion.toString(),
                 parent: dependencyName.toString(),
             });
         });
@@ -38,13 +38,13 @@ plantumlString += 'digraph foo {\n';
 
 libraries.forEach((library) => {
     if (library.parent) {
-        plantumlString += `"${library.ParentDependencyName} ${library.ParentVersion}" -> "${library.ChildDependencyName} ${library.ChildVersion}"\n`;
+        plantumlString += `"${library.DependencyName} ${library.Version}"\n`;
     } else {
-        //   plantumlString += `"package ${library.DependencyName} ${library.Version}" {\n`;
-        //   const subdependencies = libraries.filter((sub) => sub.parent === library.DependencyName);
-        //   subdependencies.forEach((sub) => {
-        //     plantumlString += `\t${sub.DependencyName} : ${sub.Version}\n`;
-        //   });
+          plantumlString += `"${library.DependencyName} ${library.Version}" {\n`;
+          const subdependencies = libraries.filter((sub) => sub.parent === library.DependencyName);
+          subdependencies.forEach((sub) => {
+            plantumlString += ` -> "${sub.DependencyName} ${sub.Version}"\n`;
+          });
     }
 });
 
