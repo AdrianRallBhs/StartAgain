@@ -8,7 +8,7 @@ interface Library {
 
 export const plantumlString: string = "";
 
-export function generateDependenciesPlantUML(libraries: any[], lockJsonPath: string, outputFilePath: string): void {
+export function generateDependenciesPlantUML(libraries: any[], lockJsonPath: string, outputFilePath: string): string {
   const lockJson = require(lockJsonPath);
 
   libraries = [];
@@ -54,5 +54,7 @@ export function generateDependenciesPlantUML(libraries: any[], lockJsonPath: str
   plantumlString += '@enduml\n';
 
   fs.writeFileSync(outputFilePath, plantumlString);
+
+  return plantumlString;
 
 }

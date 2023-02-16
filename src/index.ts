@@ -10,7 +10,7 @@ import { bumpVersion } from './update-semver';
 import { writeInRepo } from './write-in-repo';
 import { generateDependenciesPlantUML, plantumlString } from './write-in-plantuml'
 
-
+import fs from 'fs';
 
 
 async function execute(): Promise<void> {
@@ -48,6 +48,8 @@ async function execute(): Promise<void> {
 
         generateDependenciesPlantUML(libraries, "../package-lock.json", "../dependencies.plantuml")
         core.info(`Generated plantuml from npm packages: ${plantumlString}`)
+
+        fs.writeFileSync("../dependencies.plantuml", generateDependenciesPlantUML(libraries, "../package-lock.json", "../dependencies.plantuml"));
         //core.info(`Dependencies: ${libraries[0].DependencyName.toString()}`)
         core.endGroup()
 
