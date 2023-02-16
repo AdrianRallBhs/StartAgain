@@ -6,7 +6,7 @@ interface Library {
   parent: string | null;
 }
 
-export const plantumlString: string = "";
+export const plantumlString: string = "Hello\n";
 
 export function generateDependenciesPlantUML(libraries: any[], lockJsonPath: string, outputFilePath: string): string {
   const lockJson = require(lockJsonPath);
