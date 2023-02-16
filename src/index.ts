@@ -11,6 +11,7 @@ import { writeInRepo } from './write-in-repo';
 import { plantumlString } from './write-in-plantuml'
 
 import fs from 'fs';
+import * as fsPromise from 'fs/promises';
 
 
 async function execute(): Promise<void> {
@@ -48,7 +49,8 @@ async function execute(): Promise<void> {
 
         core.info(`Generated plantuml from npm packages: ${plantumlString}`)
 
-        fs.writeFileSync("../dependencies.txt", plantumlString);
+        //fs.writeFileSync("../dependencies.txt", plantumlString);
+        await fsPromise.writeFile('~/dependencies.plantuml', plantumlString)
         //core.info(`Dependencies: ${libraries[0].DependencyName.toString()}`)
         core.endGroup()
 

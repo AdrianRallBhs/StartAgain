@@ -38,15 +38,14 @@ const libraries: any[] = [];
 
   libraries.forEach((library) => {
     if (library.parent) {
-      plantumlString += `"${library.parent}" -> "${library.DependencyName}"\n`;
+      plantumlString += `"${library.parent} ${library.Version}" -> "${library.DependencyName} ${library.Version}"\n`;
     } else {
-    //   plantumlString += `package "${library.DependencyName} ${library.Version}" {\n`;
+    //   plantumlString += `"package ${library.DependencyName} ${library.Version}" {\n`;
     //   const subdependencies = libraries.filter((sub) => sub.parent === library.DependencyName);
     //   subdependencies.forEach((sub) => {
     //     plantumlString += `\t${sub.DependencyName} : ${sub.Version}\n`;
     //   });
-      plantumlString += '}\n';
     }
   });
 
-  plantumlString += '@enduml\n';
+  plantumlString += '}\n@enduml\n';
