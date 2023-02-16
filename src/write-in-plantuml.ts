@@ -38,7 +38,7 @@ const libraries: any[] = [];
 
   libraries.forEach((library) => {
     if (library.parent) {
-      plantumlString += `"${library.parent} ${library.Version}" -> "${library.DependencyName} ${library.Version}"\n`;
+      plantumlString += `"${library.parent} ${library.parent.Version}" -> "${library.DependencyName} ${library.DependencyName.values}"\n`;
     } else {
     //   plantumlString += `"package ${library.DependencyName} ${library.Version}" {\n`;
     //   const subdependencies = libraries.filter((sub) => sub.parent === library.DependencyName);
