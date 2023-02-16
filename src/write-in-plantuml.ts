@@ -61,61 +61,85 @@ interface Library {
   const lockJson = require('../package-lock.json'); // edit path if needed
   
   function areVersionsCompatible(version1: string, version2: string): boolean {
-    const version1Parts = version1.split(".");
-    const version2Parts = version2.split(".");
-    for (let i = 0; i < Math.max(version1Parts.length, version2Parts.length); i++) {
-      const v1 = parseInt(version1Parts[i] || "0");
-      const v2 = parseInt(version2Parts[i] || "0");
-      if (v1 !== v2) {
-        return v1 > v2;
+    const version1Parts = version1.split('.');
+    const version2Parts = version2.split('.');
+    for (let i = 0; i < 3; i++) {
+      const part1 = parseInt(version1Parts[i], 10);
+      const part2 = parseInt(version2Parts[i], 10);
+      if (part1 !== part2) {
+        return false;
       }
     }
     return true;
   }
   
-  export let plantumlString: string = "";
-  const libraries: any[] = [];
+  const visited: {[dependency: string]: boolean} = {};
+  const sorted: Library[] = [];
+  
+  function visit(library: Library, libraries: Library[]): void {
+    if (visited[library.DependencyName]) {
+      return;
+    }
+    visited[library.DependencyName] = true;
+  
+    const subdependencies = libraries.filter((sub) => sub.parent === library.DependencyName);
+  
+    subdependencies.forEach((sub) => {
+      visit(sub, libraries);
+    });
+  
+    sorted.push(library);
+  }
+  
+  const libraries: Library[] = [];
   
   Object.keys(lockJson.dependencies).forEach((dependencyName) => {
     const dependencyData = lockJson.dependencies[dependencyName];
   
-    libraries.push({
+    const library: Library = {
       DependencyName: dependencyName.toString(),
       Version: dependencyData.version.toString(),
       parent: null,
-    });
+    };
+  
+    if (!libraries.some((l) => l.DependencyName === library.DependencyName)) {
+      libraries.push(library);
+    }
   
     if (dependencyData.requires) {
       Object.keys(dependencyData.requires).forEach((subdependencyName) => {
         const subdependencyVersion = dependencyData.requires[subdependencyName];
   
-        if (areVersionsCompatible(dependencyData.version, subdependencyVersion)) {
-          libraries.push({
-            DependencyName: subdependencyName.toString(),
-            Version: subdependencyVersion.toString(),
-            parent: dependencyName.toString(),
-          });
-        } else {
-          const parent = libraries.find((lib) => lib.DependencyName === subdependencyName);
-          libraries.push({
-            DependencyName: subdependencyName.toString(),
-            Version: subdependencyVersion.toString(),
-            parent: parent?.DependencyName || null,
-          });
+        const subdependency: Library = {
+          DependencyName: subdependencyName.toString(),
+          Version: subdependencyVersion.toString(),
+          parent: dependencyName.toString(),
+        };
+  
+        if (!libraries.some((l) => l.DependencyName === subdependency.DependencyName)) {
+          libraries.push(subdependency);
         }
       });
     }
   });
   
-  plantumlString += '\n@startuml\n';
+  libraries.forEach((library) => {
+    visit(library, libraries);
+  });
+  
+  export let plantumlString = '\n@startuml\n';
   plantumlString += 'digraph foo {\n';
   
-  libraries.forEach((library) => {
-    const subdependencies = libraries.filter((sub) => sub.parent === library.DependencyName);
-    subdependencies.forEach((sub) => {
-      plantumlString += `"${sub.DependencyName} ${sub.Version}" -> "${library.DependencyName} ${library.Version}"\n`;
-    });
+  sorted.forEach((library) => {
+    if (library.parent) {
+      const parentLibrary = libraries.find((l) => l.DependencyName === library.parent);
+      if (parentLibrary) {
+        plantumlString += `"${parentLibrary.DependencyName} ${parentLibrary.Version}" -> "${library.DependencyName} ${library.Version}"\n`;
+      }
+    }
   });
   
   plantumlString += '}\n@enduml\n';
+  
+  console.log(plantumlString);
   
