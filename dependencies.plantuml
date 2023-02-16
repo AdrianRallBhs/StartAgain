@@ -1,6 +1,6 @@
- @startuml
+@startuml
 digraph foo {
-"@actions/http-client undefined" -> "@actions/core undefined"
+  "@actions/http-client undefined" -> "@actions/core undefined"
   "uuid undefined" -> "@actions/core undefined"
   "@actions/io undefined" -> "@actions/exec undefined"
   "@actions/http-client undefined" -> "@actions/github undefined"
