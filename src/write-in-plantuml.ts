@@ -15,8 +15,8 @@ const libraries: any[] = [];
     const dependencyData = lockJson.dependencies[dependencyName];
 
     libraries.push({
-      DependencyName: dependencyName.toString(),
-      Version: dependencyData.version.toString(),
+      ChildDependencyName: dependencyName.toString(),
+      ChildVersion: dependencyData.version.toString(),
       parent: null,
     });
 
@@ -25,8 +25,8 @@ const libraries: any[] = [];
         const subdependencyVersion = dependencyData.requires[subdependencyName];
 
         libraries.push({
-          DependencyName: subdependencyName.toString(),
-          Version: subdependencyVersion.toString(),
+          ParentDependencyName: subdependencyName.toString(),
+          ParentVersion: subdependencyVersion.toString(),
           parent: dependencyName.toString(),
         });
       });
@@ -38,7 +38,7 @@ const libraries: any[] = [];
 
   libraries.forEach((library) => {
     if (library.parent) {
-      plantumlString += `"${library.DependencyName} ${library.DependencyName.values}" -> "${library.parent} ${library.parent.Version}"\n`;
+      plantumlString += `"${library.ParentDependencyName} ${library.ChildVersion}" -> "${library.parent} ${library.Version}"\n`;
     } else {
     //   plantumlString += `"package ${library.DependencyName} ${library.Version}" {\n`;
     //   const subdependencies = libraries.filter((sub) => sub.parent === library.DependencyName);
