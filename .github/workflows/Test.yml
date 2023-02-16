@@ -37,7 +37,9 @@ jobs:
 
       - name: Cache dependencies etc
         uses: actions/cache@v1
-
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-js-${{ hashFiles('package-lock.json') }}
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v2
