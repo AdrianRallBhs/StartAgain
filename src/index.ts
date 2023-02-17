@@ -170,7 +170,7 @@ async function execute(): Promise<void> {
 
         core.startGroup("Nuget as PlantUML string")
         function generatePlantUMLDigraph(outdatedPackages: OutdatedPackage[], projects: string[]): string {
-            let result = "@startuml\n\ndigraph {\n"
+            let result = "@startuml\ndigraph {\n"
           
             // Add vertices for projects
             for (const project of projects) {
