@@ -33,24 +33,6 @@
 //     }
 // });
 
-// plantumlString += '\n@startuml\n';
-// plantumlString += 'digraph foo {\n';
-
-// libraries.forEach((library) => {
-//     // if (library.parent) {
-//     //     plantumlString += `"${library.DependencyName} ${library.Version}"\n`;
-//     // } else {
-//     //plantumlString += `"${library.DependencyName} ${library.Version}"`;
-//     const subdependencies = libraries.filter((sub) => sub.parent === library.DependencyName);
-//     subdependencies.forEach((sub) => {
-//         plantumlString += `"${sub.DependencyName} ${sub.Version} -> "${library.DependencyName} ${library.Version}""\n`;
-//     });
-//     // }
-// });
-
-// plantumlString += '}\n@enduml\n';
-
-
 
 import fs from 'fs';
 
