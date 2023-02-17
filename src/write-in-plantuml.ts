@@ -115,7 +115,7 @@ function visit(library: Library, visited: Set<string>, ancestors: Set<string> = 
             if (!visited.has(sub.DependencyName)) {
                 visit(sub, visited, ancestors);
             }
-            plantumlString += `"${sub.DependencyName} ${sub.Version}" -> "${library.DependencyName} ${library.Version}"\n`;
+            plantumlString += `"${library.DependencyName} ${library.Version}" -> "${sub.DependencyName} ${sub.Version}"\n`;
         });
     } else {
         plantumlString += `"${library.DependencyName} ${library.Version}"\n`;

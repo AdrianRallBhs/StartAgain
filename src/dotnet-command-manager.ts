@@ -281,18 +281,18 @@ export class DotnetCommandManager {
 
 
 export class OutdatedPackage {
-    name: string
-    current: string
-    wanted: string
-    latest: string
-
+    name: string;
+    current: string;
+    wanted: string;
+    latest: string;
+  
     constructor(name: string, current: string, wanted: string, latest: string) {
-        this.name = name
-        this.current = current
-        this.wanted = wanted
-        this.latest = latest
+      this.name = name;
+      this.current = current;
+      this.wanted = wanted;
+      this.latest = latest;
     }
-}
+  }
 
 export class Package {
     name: string

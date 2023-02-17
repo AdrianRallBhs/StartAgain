@@ -104,7 +104,7 @@ async function execute(): Promise<void> {
                 core.startGroup('Whats inside outdatedPackages?')
 
                 const destinatedDep = outdatedPackages.filter(p => p.name === packageToUpdate)
-                const NameOfDependency = destinatedDep[0].name + destinatedDep[0].current
+                //const NameOfDependency = destinatedDep[0].name + destinatedDep[0].current
                 //const destinatedPackage = await getDestinatedDependency(packages, packageToUpdate)
                 // core.info(`Destinated Dep length: ` +destinatedDep.length)
                 // core.info(`outdatedPackages length: ` + outdatedPackages.length)
@@ -158,11 +158,11 @@ async function execute(): Promise<void> {
         graph.vertices.forEach(element => {
             core.info(element)
         });
-        core.info(`Topological Sort: ${graph.topoSort()}`)  
+        core.info(`Topological Sort: ${graph.topologicalSort()}`)  
         core.endGroup()
 
         core.startGroup('Write in Repo submarine')
-        writeInRepo(graph.topoSort())
+        writeInRepo(graph.topologicalSort())
         core.endGroup()
 
     } catch (e) {
