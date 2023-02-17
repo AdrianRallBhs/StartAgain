@@ -1,7 +1,7 @@
-import { Graph } from './topoSortDfs';
+import { Graph, processOutdatedPackages } from './topoSortDfs';
 import * as core from '@actions/core'
 import { statSync } from 'fs'
-import { DotnetCommandManager } from './dotnet-command-manager'
+import { DotnetCommandManager, OutdatedPackage } from './dotnet-command-manager'
 import { getAllProjects, getAllSources, findEvenSubmodules, } from './dotnet-project-locator'
 import { removeIgnoredDependencies, getDestinatedDependency } from './utils'
 import { updateReadme } from './updateReadme'
@@ -25,7 +25,9 @@ async function execute(): Promise<void> {
         const contents = core.getInput("contents", { required: true });
 
         const graph = new Graph()
+        const myMap =  new Map<string, string[]>();
 
+        let outdatedPackages: OutdatedPackage[] = [];
         core.startGroup("Find modules")
         const projects: string[] = await getAllProjects(rootFolder, recursive, projectIgnoreList)
         const submods: string[] = await findEvenSubmodules();
@@ -94,7 +96,7 @@ async function execute(): Promise<void> {
                 // core.endGroup()
 
                 core.startGroup(`dotnet list ${project}`)
-                const outdatedPackages = await dotnet.listOutdated(versionLimit)
+                outdatedPackages = await dotnet.listOutdated(versionLimit)
                 core.endGroup()
 
                 // core.startGroup(`dotnet list ${project} package`)
@@ -119,6 +121,10 @@ async function execute(): Promise<void> {
                 });
 
                 graph.addEdge(project, destinatedDep[0].current)
+                let packageInProject: string[] = [];
+                packageInProject.push(destinatedDep[0].name, destinatedDep[0].current);
+                packageInProject
+                myMap.set(project, packageInProject)
                 //graph.addEdge(project, NameOfDependency)
                 //core.info(`single dependency ${destinatedDep[0].name}`)
                 // packages.forEach(element =>  {
@@ -158,6 +164,9 @@ async function execute(): Promise<void> {
         graph.vertices.forEach(element => {
             core.info(element)
         });
+
+        const result = await processOutdatedPackages(outdatedPackages, myMap);
+        core.info(`Result: ${result}`)
         core.info(`Topological Sort: ${graph.topologicalSort()}`)  
         core.endGroup()
 

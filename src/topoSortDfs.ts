@@ -54,85 +54,103 @@
 
 
 import { info } from "@actions/core";
+import { OutdatedPackage } from "./dotnet-command-manager";
 
 export class Graph {
-    vertices: string[];
-    adjacent: { [key: string]: string[] };
+    vertices: any[];
+    adjacent: any[];
     edges: number;
-  
+
     constructor() {
-      this.vertices = [];
-      this.adjacent = {};
-      this.edges = 0;
+        this.vertices = [];
+        this.adjacent = [];
+        this.edges = 0;
     }
-  
-    addVertex(v: string) {
-      this.vertices.push(v);
-      this.adjacent[v] = [];
+
+    addVertex(v: any) {
+        this.vertices.push(v);
+        this.adjacent[v] = [];
     }
-  
-    addEdge(v: string, w: string) {
-      this.adjacent[v].push(w);
-      this.edges++;
+
+    addEdge(v: any, w: any) {
+        this.adjacent[v].push(w);
+        this.edges++;
     }
-  
+
     getVertices() {
-      return this.vertices;
+        return this.vertices;
     }
-  
-    getAdjacent() {
-      return this.adjacent;
-    }
-  
-    topologicalSort(): string[] {
-      const visited: { [key: string]: boolean } = {};
-      const stack: string[] = [];
-  
-      for (const vertex of this.vertices) {
-        if (!visited[vertex]) {
-          if (!this.dfs(vertex, visited, stack, [])) {
-            return [];
-          }
-        }
-      }
-  
-      return stack.reverse();
-    }
-  
-    dfs(vertex: string, visited: { [key: string]: boolean }, stack: string[], cycle: string[]): boolean {
-      visited[vertex] = true;
-      cycle.push(vertex);
-  
-      for (const neighbor of this.adjacent[vertex]) {
-        if (!visited[neighbor]) {
-          if (!this.dfs(neighbor, visited, stack, cycle)) {
-            return false;
-          }
-        } else if (cycle.includes(neighbor)) {
-          return false;
-        }
-      }
-  
-      cycle.pop();
-      stack.push(vertex);
-      return true;
-    }
-  }
-  
 
-export class OutdatedPackage {
-  name: string;
-  current: string;
-  wanted: string;
-  latest: string;
+    hasCycle() {
+        const visited = new Set<any>();
+        const recStack = new Set<any>();
 
-  constructor(name: string, current: string, wanted: string, latest: string) {
-    this.name = name;
-    this.current = current;
-    this.wanted = wanted;
-    this.latest = latest;
-  }
+        for (let i = 0; i < this.vertices.length; i++) {
+            if (this.hasCycleHelper(this.vertices[i], visited, recStack)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    hasCycleHelper(v: any, visited: Set<any>, recStack: Set<any>) {
+        if (!visited.has(v)) {
+            visited.add(v);
+            recStack.add(v);
+
+            for (let i = 0; i < this.adjacent[v].length; i++) {
+                const w = this.adjacent[v][i];
+
+                if (!visited.has(w) && this.hasCycleHelper(w, visited, recStack)) {
+                    return true;
+                } else if (recStack.has(w)) {
+                    return true;
+                }
+            }
+        }
+
+        recStack.delete(v);
+
+        return false;
+    }
+
+    topologicalSort(): any[] {
+        const stack: any[] = [];
+        const visited = new Set<any>();
+
+        for (let i = 0; i < this.vertices.length; i++) {
+            if (!visited.has(this.vertices[i])) {
+                this.topoSortHelper(this.vertices[i], visited, stack, new Set<any>());
+            }
+        }
+
+        return stack.reverse();
+    }
+
+    topoSortHelper(v: any, visited: Set<any>, stack: any[], recStack: Set<any>) {
+        visited.add(v);
+        recStack.add(v);
+
+        for (let i = 0; i < this.adjacent[v].length; i++) {
+            const w = this.adjacent[v][i];
+
+            if (!visited.has(w)) {
+                this.topoSortHelper(w, visited, stack, recStack);
+            } else if (recStack.has(w)) {
+                const cycleIndex = stack.indexOf(w);
+
+                if (cycleIndex !== -1) {
+                    stack.splice(cycleIndex, stack.length - cycleIndex);
+                }
+            }
+        }
+
+        recStack.delete(v);
+        stack.push(v);
+    }
 }
+  
 
 export async function processOutdatedPackages(
   outdatedPackages: OutdatedPackage[],
