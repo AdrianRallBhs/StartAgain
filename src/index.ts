@@ -197,7 +197,7 @@ async function execute(): Promise<void> {
             return result
           }
           
-          generatePlantUMLDigraph(outdatedPackages, projects)
+          core.info(generatePlantUMLDigraph(outdatedPackages, projects))
         core.endGroup()
 
         // core.startGroup('Write in Repo submarine')
