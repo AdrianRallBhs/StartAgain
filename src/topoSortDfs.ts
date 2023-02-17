@@ -25,7 +25,7 @@
 //     getVertices() {
 //         return this.vertices;
 //     }
-    
+
 //     getAdjazent() {
 //         return this.adjacent
 //     }
@@ -46,104 +46,136 @@
 //                     }
 //                 }
 //             }
-        
+
 //         stack.unshift(v);
 //         return stack || false;
 //     }
 // }
 
 
+import { info } from "@actions/core";
+import { OutdatedPackage } from './dotnet-command-manager'
+
 export class Graph {
-    vertices: any[];
-    adjacent: any[];
+    vertices: { [key: string]: any };
+    adjacent: { [key: string]: any[] };
     edges: number;
 
     constructor() {
-        this.vertices = [];
-        this.adjacent = [];
+        this.vertices = {};
+        this.adjacent = {};
         this.edges = 0;
     }
 
-    addVertex(v: any) {
-        this.vertices.push(v);
+    addVertex(v: string) {
+        this.vertices[v] = true;
         this.adjacent[v] = [];
     }
 
-    addEdge(v: any, w: any) {
+    addEdge(v: string, w: string) {
         this.adjacent[v].push(w);
         this.edges++;
     }
 
     getVertices() {
-        return this.vertices;
+        return Object.keys(this.vertices);
     }
 
-    hasCycle() {
-        const visited = new Set<any>();
-        const recStack = new Set<any>();
-
-        for (let i = 0; i < this.vertices.length; i++) {
-            if (this.hasCycleHelper(this.vertices[i], visited, recStack)) {
-                return true;
-            }
-        }
-
-        return false;
+    getAdjacent() {
+        return this.adjacent;
     }
 
-    hasCycleHelper(v: any, visited: Set<any>, recStack: Set<any>) {
-        if (!visited.has(v)) {
-            visited.add(v);
-            recStack.add(v);
+    topologicalSort(v: any = this.vertices, discovered?: boolean[], s?: any) {
+        const stack = s || [];
+        // v = this.vertices;
+        let adj = this.adjacent;
+        if (typeof discovered !== 'undefined') {
+            discovered[v] = true;
 
-            for (let i = 0; i < this.adjacent[v].length; i++) {
-                const w = this.adjacent[v][i];
+            for (let i = 0; i < adj[v].length; i++) {
+                let w = adj[v][i];
 
-                if (!visited.has(w) && this.hasCycleHelper(w, visited, recStack)) {
-                    return true;
-                } else if (recStack.has(w)) {
-                    return true;
+                if (!discovered[w]) {
+                    this.topologicalSort(w, discovered, stack);
                 }
             }
         }
 
-        recStack.delete(v);
-
-        return false;
+        stack.unshift(v);
+        return stack || false;
     }
+}
 
-    topologicalSort(): any[] {
-        const stack: any[] = [];
-        const visited = new Set<any>();
 
-        for (let i = 0; i < this.vertices.length; i++) {
-            if (!visited.has(this.vertices[i])) {
-                this.topoSortHelper(this.vertices[i], visited, stack, new Set<any>());
-            }
+
+
+type PackageVersionMap = { [packageName: string]: string[] };
+
+export function buildPackageVersionMap(dependencies: OutdatedPackage[]): PackageVersionMap {
+    const map: PackageVersionMap = {};
+
+    for (const dep of dependencies) {
+        if (!(dep.name in map)) {
+            map[dep.name] = [];
         }
-
-        return stack.reverse();
+        map[dep.name].push(dep.current);
     }
 
-    topoSortHelper(v: any, visited: Set<any>, stack: any[], recStack: Set<any>) {
-        visited.add(v);
-        recStack.add(v);
+    return map;
+}
 
-        for (let i = 0; i < this.adjacent[v].length; i++) {
-            const w = this.adjacent[v][i];
+export function createUniqueVertices(graph: Graph, project: string, packageVersions: string[]) {
+    for (const packageVersion of packageVersions) {
+        const vertexName = `${project} ${packageVersion}`;
+        graph.addVertex(vertexName);
+    }
+}
 
-            if (!visited.has(w)) {
-                this.topoSortHelper(w, visited, stack, recStack);
-            } else if (recStack.has(w)) {
-                const cycleIndex = stack.indexOf(w);
+export function addDependencyEdges(graph: Graph, project: string, packageVersions: string[], dependencies: PackageVersionMap) {
+    for (const [packageName, packageVersionsUsed] of Object.entries(dependencies)) {
+        for (const packageVersionUsed of packageVersionsUsed) {
+            const vertexNameUsed = `${project} ${packageVersionUsed}`;
+            graph.addEdge(vertexNameUsed, packageName);
 
-                if (cycleIndex !== -1) {
-                    stack.splice(cycleIndex, stack.length - cycleIndex);
+            for (const packageVersion of packageVersions) {
+                if (compareVersions(packageVersion, packageVersionUsed) >= 0) {
+                    const vertexName = `${project} ${packageVersion}`;
+                    graph.addEdge(vertexName, vertexNameUsed);
                 }
             }
         }
-
-        recStack.delete(v);
-        stack.push(v);
     }
+}
+
+export function buildModuleDependencyGraph(projects: string[], dependencies: OutdatedPackage[]): Graph {
+    const graph = new Graph();
+    const packageVersionMap = buildPackageVersionMap(dependencies);
+
+    for (const project of projects) {
+        const packageVersions = packageVersionMap[project];
+        if (packageVersions) {
+            createUniqueVertices(graph, project, packageVersions);
+            addDependencyEdges(graph, project, packageVersions, packageVersionMap);
+        } else {
+            graph.addVertex(project);
+        }
+    }
+
+    return graph;
+}
+
+// A simple implementation of version comparison without using semver
+export function compareVersions(v1: string, v2: string): number {
+    const parts1 = v1.split('.').map(p => parseInt(p, 10));
+    const parts2 = v2.split('.').map(p => parseInt(p, 10));
+
+    for (let i = 0; i < Math.max(parts1.length, parts2.length); i++) {
+        const part1 = parts1[i] || 0;
+        const part2 = parts2[i] || 0;
+        if (part1 !== part2) {
+            return part1 - part2;
+        }
+    }
+
+    return 0;
 }

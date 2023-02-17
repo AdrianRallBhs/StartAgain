@@ -1,4 +1,4 @@
-import {  Graph } from './topoSortDfs';
+import {  Graph, buildModuleDependencyGraph } from './topoSortDfs';
 import * as core from '@actions/core'
 import { statSync } from 'fs'
 import { DotnetCommandManager, OutdatedPackage } from './dotnet-command-manager'
@@ -24,8 +24,7 @@ async function execute(): Promise<void> {
         const projectIgnoreList = core.getMultilineInput("ignore-project").filter(s => s.trim() !== "")
         const contents = core.getInput("contents", { required: true });
 
-       const graph = new Graph()
-        const myMap =  new Map<string, string[]>();
+      
 
         let outdatedPackages: OutdatedPackage[] = [];
         core.startGroup("Find modules")
@@ -71,6 +70,8 @@ async function execute(): Promise<void> {
 
 
 
+        const graph: Graph = buildModuleDependencyGraph(projects, outdatedPackages);
+        const g = new Graph();
 
 
 
@@ -115,14 +116,11 @@ async function execute(): Promise<void> {
                 graph.addVertex(destinatedDep[0].current)
                 //graph.addVertex(DepWithVersion)
                 graph.addVertex(project)
-                graph.vertices.forEach(element => {
-                    core.info(element)
-                });
+                // graph.vertices.forEach(element => {
+                //     core.info(element)
+                // });
                 graph.addEdge(project, destinatedDep[0].current)
-                let packageInProject: string[] = [];
-                packageInProject.push(destinatedDep[0].name, destinatedDep[0].current);
-                packageInProject
-                myMap.set(project, packageInProject)
+
                 //graph.addEdge(project, NameOfDependency)
                 //core.info(`single dependency ${destinatedDep[0].name}`)
                 // packages.forEach(element =>  {
@@ -158,47 +156,22 @@ async function execute(): Promise<void> {
             }
         }
 
-        core.startGroup('Graph Edges')
-        graph.vertices.forEach(element => {
-            core.info(element)
-        });
+       
 
-        //const result = await processOutdatedPackages(outdatedPackages, myMap);
-        //core.info(`Result: ${result}`)
-        core.info(`Topological Sort: ${graph.topologicalSort()}`)  
-        core.endGroup()
-
-        core.startGroup("Nuget as PlantUML string")
-        function generatePlantUMLDigraph(outdatedPackages: OutdatedPackage[], projects: string[]): string {
-            let result = "@startuml\ndigraph {\n"
-          
-            // Add vertices for projects
-            for (const project of projects) {
-              result += `  "${project}"\n`
+        core.startGroup("For-loop")
+        for (const vertex of graph.getVertices()) {
+            const adjacent = graph.getAdjacent()[vertex];
+            g.addVertex(vertex);
+            for (const adj of adjacent) {
+              g.addEdge(vertex, adj);
             }
-          
-            // Add vertices for package versions
-            for (const outdatedPackage of outdatedPackages) {
-              result += `  "${outdatedPackage.current}"\n`
-            }
-          
-            // Add edges between projects and package versions
-            for (const outdatedPackage of outdatedPackages) {
-              const destProject = projects.find(project => project.includes(outdatedPackage.name))
-              if (destProject) {
-                result += `  "${destProject}" -> "${outdatedPackage.current}"\n`
-              }
-            }
-          
-            result += "}"
-          
-            result += "\n@enduml"
-          
-            return result
           }
-          
-          core.info(generatePlantUMLDigraph(outdatedPackages, projects))
+
+          const sortedModules = g.topologicalSort();
+          core.info(`${sortedModules}`)
         core.endGroup()
+
+
 
         // core.startGroup('Write in Repo submarine')
         // writeInRepo(graph.topologicalSort())
