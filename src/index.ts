@@ -113,13 +113,13 @@ async function execute(): Promise<void> {
                 core.info(`destinated Package: ` + destinatedDep[0].name + destinatedDep[0].current)
                 const DepWithVersion = destinatedDep[0].name + " " + destinatedDep[0].current
                 //graph.addVertex(destinatedDep[0].name)
-                graph.addVertex(destinatedDep[0].current)
+                g.addVertex(destinatedDep[0].current)
                 //graph.addVertex(DepWithVersion)
-                graph.addVertex(project)
+                g.addVertex(project)
                 // graph.vertices.forEach(element => {
                 //     core.info(element)
                 // });
-                graph.addEdge(project, destinatedDep[0].current)
+                g.addEdge(project, destinatedDep[0].current)
 
                 //graph.addEdge(project, NameOfDependency)
                 //core.info(`single dependency ${destinatedDep[0].name}`)
