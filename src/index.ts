@@ -167,7 +167,7 @@ async function execute(): Promise<void> {
             }
           }
 
-          const sortedModules = g.topologicalSort();
+          const sortedModules = g.topologicalSort().toString();
           core.info(`${sortedModules}`)
         core.endGroup()
 
