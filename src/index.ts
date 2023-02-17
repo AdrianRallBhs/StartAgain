@@ -1,4 +1,4 @@
-import { Graph, processOutdatedPackages } from './topoSortDfs';
+import {  Graph } from './topoSortDfs';
 import * as core from '@actions/core'
 import { statSync } from 'fs'
 import { DotnetCommandManager, OutdatedPackage } from './dotnet-command-manager'
@@ -24,7 +24,7 @@ async function execute(): Promise<void> {
         const projectIgnoreList = core.getMultilineInput("ignore-project").filter(s => s.trim() !== "")
         const contents = core.getInput("contents", { required: true });
 
-        const graph = new Graph()
+       const graph = new Graph()
         const myMap =  new Map<string, string[]>();
 
         let outdatedPackages: OutdatedPackage[] = [];
@@ -104,7 +104,6 @@ async function execute(): Promise<void> {
                 // core.endGroup()
 
                 core.startGroup('Whats inside outdatedPackages?')
-
                 const destinatedDep = outdatedPackages.filter(p => p.name === packageToUpdate)
                 //const NameOfDependency = destinatedDep[0].name + destinatedDep[0].current
                 //const destinatedPackage = await getDestinatedDependency(packages, packageToUpdate)
@@ -119,7 +118,6 @@ async function execute(): Promise<void> {
                 graph.vertices.forEach(element => {
                     core.info(element)
                 });
-
                 graph.addEdge(project, destinatedDep[0].current)
                 let packageInProject: string[] = [];
                 packageInProject.push(destinatedDep[0].name, destinatedDep[0].current);
@@ -165,14 +163,47 @@ async function execute(): Promise<void> {
             core.info(element)
         });
 
-        const result = await processOutdatedPackages(outdatedPackages, myMap);
-        core.info(`Result: ${result}`)
+        //const result = await processOutdatedPackages(outdatedPackages, myMap);
+        //core.info(`Result: ${result}`)
         core.info(`Topological Sort: ${graph.topologicalSort()}`)  
         core.endGroup()
 
-        core.startGroup('Write in Repo submarine')
-        writeInRepo(graph.topologicalSort())
+        core.startGroup("Nuget as PlantUML string")
+        function generatePlantUMLDigraph(outdatedPackages: OutdatedPackage[], projects: string[]): string {
+            let result = "@startuml\n\ndigraph {\n"
+          
+            // Add vertices for projects
+            for (const project of projects) {
+              result += `  "${project}"\n`
+            }
+          
+            // Add vertices for package versions
+            for (const outdatedPackage of outdatedPackages) {
+              result += `  "${outdatedPackage.current}"\n`
+            }
+          
+            // Add edges between projects and package versions
+            for (const outdatedPackage of outdatedPackages) {
+              const destProject = projects.find(project => project.includes(outdatedPackage.name))
+              if (destProject) {
+                result += `  "${destProject}" -> "${outdatedPackage.current}"\n`
+              }
+            }
+          
+            result += "}"
+          
+            result += "\n@enduml"
+          
+            return result
+          }
+          
+          generatePlantUMLDigraph(outdatedPackages, projects)
         core.endGroup()
+
+        // core.startGroup('Write in Repo submarine')
+        // writeInRepo(graph.topologicalSort())
+        // core.endGroup()
+
 
     } catch (e) {
         if (e instanceof Error) {
