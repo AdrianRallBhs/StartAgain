@@ -59,10 +59,10 @@ async function execute(): Promise<void> {
 
 
 
-        core.startGroup("SemVer")
-        core.info(`Update SemVer: `)
-        bumpVersion()
-        core.endGroup()
+        // core.startGroup("SemVer")
+        // core.info(`Update SemVer: `)
+        // bumpVersion()
+        // core.endGroup()
 
         core.startGroup("Sources")
         const sources: string[] = await getAllSources(rootFolder, recursive, projectIgnoreList)
@@ -113,9 +113,9 @@ async function execute(): Promise<void> {
                 //core.info(`destinated Package: ` + wantedPackage[0].name + wantedPackage[0].current)
                 const DepWithVersion = wantedPackage[0].name + " " + wantedPackage[0].current
                 //graph.addVertex(wantedPackage[0].name)
-                graph.addVertex(`${project} ${wantedPackage[0].current}`)
-                //graph.addVertex(DepWithVersion)
                 graph.addVertex(project)
+                graph.addVertex(DepWithVersion)
+                //graph.addVertex(project)
                
 
                 graph.addEdge(project, wantedPackage[0].current)
