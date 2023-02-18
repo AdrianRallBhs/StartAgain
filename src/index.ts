@@ -4,10 +4,7 @@ import { statSync } from 'fs'
 import { DotnetCommandManager, OutdatedPackage } from './dotnet-command-manager'
 import { getAllProjects, getAllSources, findEvenSubmodules, } from './dotnet-project-locator'
 import { removeIgnoredDependencies, getDestinatedDependency } from './utils'
-import { updateReadme } from './updateReadme'
 import {  libraries } from './list-npm-packages';
-import { bumpVersion } from './update-semver';
-import { writeInRepo } from './write-in-repo';
 import { plantumlString } from './write-in-plantuml'
 import fs from 'fs';
 import * as fsPromise from 'fs/promises';
@@ -30,10 +27,6 @@ async function execute(): Promise<void> {
         core.startGroup("Find modules")
         const projects: string[] = await getAllProjects(rootFolder, recursive, projectIgnoreList)
         const submods: string[] = await findEvenSubmodules();
-        //core.info(`Submodules: ${submods}`)
-        
-        //const projects = await getAllProjects("./", true)
-        //const projects: string[] = await findEvenSubmodules()
         core.endGroup()
 
         core.startGroup("Show Modules")
@@ -47,26 +40,14 @@ async function execute(): Promise<void> {
             core.info(`Dependencies: ${libraries[i].DependencyName.toString()} ${libraries[i].Version.toString()}`)
         }
         core.endGroup()
+
         core.startGroup("PlantUML")
         core.info(`Generated plantuml from npm packages: ${plantumlString}`)
-
-        //fs.writeFileSync("../dependencies.txt", plantumlString);
-        await fsPromise.writeFile('../dependencies.plantuml', plantumlString)
+        fs.writeFileSync("../dependencies.txt", plantumlString);
+        await fsPromise.writeFile('../dependencies.puml', plantumlString)
         await fsPromise.writeFile('../dependencies.txt', plantumlString)
         //core.info(`Dependencies: ${libraries[0].DependencyName.toString()}`)
         core.endGroup()
-        
-
-
-        // core.startGroup("SemVer")
-        // core.info(`Update SemVer: `)
-        // bumpVersion()
-        // core.endGroup()
-
-        // core.startGroup("Sources")
-        // const sources: string[] = await getAllSources(rootFolder, recursive, projectIgnoreList)
-        // core.endGroup()
-
 
 
 
@@ -83,76 +64,20 @@ async function execute(): Promise<void> {
                 await dotnet.restore()
                 core.endGroup()
 
-                // core.startGroup("Source -- nuget list source")
-                // const listOfSources = await dotnet.listSources()
-                // core.endGroup()
-
-                // core.startGroup("Sources")
-                // dotnet.filterSource(listOfSources)
-                // core.endGroup()
-
-
-                // core.startGroup('Source -- nuget list source --format')
-                // const filteredSources = await dotnet.listSource()
-                // core.endGroup()
 
                 core.startGroup(`dotnet list ${project}`)
                 outdatedPackages = await dotnet.listOutdated(versionLimit)
                 core.endGroup()
 
-                // core.startGroup(`dotnet list ${project} package`)
-                // const packages = await dotnet.listPackagesWithOutput()
-                // core.endGroup()
 
                 core.startGroup('Whats inside outdatedPackages?')
                 const destinatedDep = outdatedPackages.filter(p => p.name === packageToUpdate)
-                //const NameOfDependency = destinatedDep[0].name + destinatedDep[0].current
-                //const destinatedPackage = await getDestinatedDependency(packages, packageToUpdate)
-                // core.info(`Destinated Dep length: ` +destinatedDep.length)
-                // core.info(`outdatedPackages length: ` + outdatedPackages.length)
                 core.info(`destinated Package: ` + destinatedDep[0].name + destinatedDep[0].current)
                 const DepWithVersion = destinatedDep[0].name + " " + destinatedDep[0].current
-                //graph.addVertex(destinatedDep[0].name)
                 g.addVertex(destinatedDep[0].current)
-                //graph.addVertex(DepWithVersion)
                 g.addVertex(project)
-                // graph.vertices.forEach(element => {
-                //     core.info(element)
-                // });
                 g.addEdge(project, destinatedDep[0].current)
-
-                //graph.addEdge(project, NameOfDependency)
-                //core.info(`single dependency ${destinatedDep[0].name}`)
-                // packages.forEach(element =>  {
-                //     graph.addVertex(element)
-                //     core.info(graph.getAdjazent)
-                // })
-                // packages.forEach(element => {
-                //     graph.addEdge(project, element)
-                // });
                 core.endGroup()
-
-                // core.startGroup(`removing nugets present in ignore list ${project}`)
-                // //const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
-                // const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
-                // core.info(`list of dependencies that will be updated: ${filteredPackages}`)
-                // core.endGroup()
-
-                // core.startGroup(`dotnet install new version ${project}`)
-                // await dotnet.addUpdatedPackage(filteredPackages)
-                // core.endGroup()
-
-                // core.startGroup(`dotnet add ${project} package`)
-                // const filteredPackages = await removeIgnoredDependencies(outdatedPackages, ignoreList)
-                // await dotnet.addPackage(filteredPackages)
-                // core.endGroup()
-
-                // core.startGroup(`add to README`)
-                // // inhalt = await dotnet.listPackages()     
-                // for (const pack of outdatedPackages)
-                //     // await updateReadme(`\n \n ${project} \n - Name: ${pack.name} \n - Current: ${pack.current} \n - Latest: ${pack.latest}`)
-                //     await updateReadme(`\n \n Name: ${pack.name} : Current: ${pack.current} --> ${pack.latest} \n - ${project}`)
-                // core.endGroup()
             }
         }
 
@@ -170,12 +95,6 @@ async function execute(): Promise<void> {
           const sortedModules = g.topologicalSort();
           core.info(`"${sortedModules}\n ${typeof(sortedModules)}"`)
         core.endGroup()
-
-
-
-        // core.startGroup('Write in Repo submarine')
-        // writeInRepo(graph.topologicalSort())
-        // core.endGroup()
 
 
     } catch (e) {
