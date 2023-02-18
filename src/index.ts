@@ -161,7 +161,7 @@ async function execute(): Promise<void> {
         core.info(`Topological Sort: ${graph.topologicalSort()}`)  
         core.endGroup()
 
-
+    }
 
     } catch (e) {
         if (e instanceof Error) {
