@@ -3,7 +3,7 @@ import * as core from '@actions/core'
 import { statSync } from 'fs'
 import { DotnetCommandManager, OutdatedPackage } from './dotnet-command-manager'
 import { getAllProjects, getAllSources, findEvenSubmodules, } from './dotnet-project-locator'
-import { removeIgnoredDependencies, getwantedPackageendency } from './utils'
+import { removeIgnoredDependencies } from './utils'
 import { updateReadme } from './updateReadme'
 import {  libraries } from './list-npm-packages';
 import { bumpVersion } from './update-semver';
@@ -88,10 +88,18 @@ async function execute(): Promise<void> {
             }
         }
 
-          const sortedModules = g.topologicalSort();
-          core.info(`"${sortedModules}\n ${typeof(sortedModules)}"`)
-        core.endGroup()
+        //   const sortedModules = g.topologicalSort();
+        //   core.info(`"${sortedModules}\n ${typeof(sortedModules)}"`)
+        // core.endGroup()
 
+
+
+  // Sort modules topologically
+  const sortedModules = graph.topologicalSort();
+  //core.info(`Topologically sorted modules: ${sortedModules.join(", ")}`);
+  core.startGroup("Topological Sort")
+  core.info(g.topologicalSort())
+  core.endGroup()
 
     } catch (e) {
         if (e instanceof Error) {
