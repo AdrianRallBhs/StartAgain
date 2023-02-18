@@ -85,6 +85,7 @@ export class Graph {
         return this.adjacent;
     }
 
+    //Topological sorting with Depth-first search
     topologicalSort(v: any = this.vertices, discovered?: boolean[], s?: any) {
         const stack = s || [];
         // v = this.vertices;
@@ -108,9 +109,11 @@ export class Graph {
 
 
 
-
+// Type Map 
 type PackageVersionMap = { [packageName: string]: string[] };
 
+// [DependencyName: CurrentDependencyVersion]
+// Input parameter: Collection of the OutdatedPackages
 export function buildPackageVersionMap(dependencies: OutdatedPackage[]): PackageVersionMap {
     const map: PackageVersionMap = {};
 
@@ -124,12 +127,14 @@ export function buildPackageVersionMap(dependencies: OutdatedPackage[]): Package
     return map;
 }
 
+//Returns PorjectName with his packageversion
 export function createUniqueVertices(graph: Graph, project: string, packageVersions: string[]) {
     for (const packageVersion of packageVersions) {
         const vertexName = `${project} ${packageVersion}`;
         graph.addVertex(vertexName);
     }
 }
+
 
 export function addDependencyEdges(graph: Graph, project: string, packageVersions: string[], dependencies: PackageVersionMap) {
     for (const [packageName, packageVersionsUsed] of Object.entries(dependencies)) {
