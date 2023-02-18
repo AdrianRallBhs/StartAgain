@@ -110,7 +110,7 @@ async function execute(): Promise<void> {
                 //const destinatedPackage = await getDestinatedDependency(packages, packageToUpdate)
                 // core.info(`Destinated Dep length: ` +wantedPackage.length)
                 // core.info(`outdatedPackages length: ` + outdatedPackages.length)
-                core.info(`destinated Package: ` + wantedPackage[0].name + wantedPackage[0].current)
+                //core.info(`destinated Package: ` + wantedPackage[0].name + wantedPackage[0].current)
                 const DepWithVersion = wantedPackage[0].name + " " + wantedPackage[0].current
                 //graph.addVertex(wantedPackage[0].name)
                 graph.addVertex(`${project} ${wantedPackage[0].current}`)
