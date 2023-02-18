@@ -1,4 +1,4 @@
-import {  Graph, buildModuleDependencyGraph } from './topoSortDfs';
+import {  Graph } from './topoSortDfs';
 import * as core from '@actions/core'
 import { statSync } from 'fs'
 import { DotnetCommandManager, OutdatedPackage } from './dotnet-command-manager'
@@ -54,7 +54,7 @@ async function execute(): Promise<void> {
         });
         core.endGroup()
         
-        const Dependencygraph: Graph = buildModuleDependencyGraph(projects, outdatedPackages);
+        //const Dependencygraph: Graph = buildModuleDependencyGraph(projects, outdatedPackages);
         const graph = new Graph();
 
 
