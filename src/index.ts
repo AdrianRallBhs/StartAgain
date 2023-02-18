@@ -59,14 +59,14 @@ async function execute(): Promise<void> {
 
 
 
-        // core.startGroup("SemVer")
-        // core.info(`Update SemVer: `)
-        // bumpVersion()
-        // core.endGroup()
+        core.startGroup("SemVer")
+        core.info(`Update SemVer: `)
+        bumpVersion()
+        core.endGroup()
 
-        // core.startGroup("Sources")
-        // const sources: string[] = await getAllSources(rootFolder, recursive, projectIgnoreList)
-        // core.endGroup()
+        core.startGroup("Sources")
+        const sources: string[] = await getAllSources(rootFolder, recursive, projectIgnoreList)
+        core.endGroup()
 
 
 
@@ -105,22 +105,22 @@ async function execute(): Promise<void> {
 
                 core.startGroup('Whats inside outdatedPackages?')
 
-                const destinatedDep = outdatedPackages.filter(p => p.name === packageToUpdate)
-                const NameOfDependency = destinatedDep[0].name + destinatedDep[0].current
+                const wantedPackage = outdatedPackages.filter(p => p.name === packageToUpdate)
+                const NameOfDependency = wantedPackage[0].name + wantedPackage[0].current
                 //const destinatedPackage = await getDestinatedDependency(packages, packageToUpdate)
-                // core.info(`Destinated Dep length: ` +destinatedDep.length)
+                // core.info(`Destinated Dep length: ` +wantedPackage.length)
                 // core.info(`outdatedPackages length: ` + outdatedPackages.length)
-                core.info(`destinated Package: ` + destinatedDep[0].name + destinatedDep[0].current)
-                const DepWithVersion = destinatedDep[0].name + " " + destinatedDep[0].current
-                //graph.addVertex(destinatedDep[0].name)
-                graph.addVertex(destinatedDep[0].current)
+                core.info(`destinated Package: ` + wantedPackage[0].name + wantedPackage[0].current)
+                const DepWithVersion = wantedPackage[0].name + " " + wantedPackage[0].current
+                //graph.addVertex(wantedPackage[0].name)
+                graph.addVertex(`${project} ${wantedPackage[0].current}`)
                 //graph.addVertex(DepWithVersion)
                 graph.addVertex(project)
                
 
-                graph.addEdge(project, destinatedDep[0].current)
+                graph.addEdge(project, wantedPackage[0].current)
                 //graph.addEdge(project, NameOfDependency)
-                //core.info(`single dependency ${destinatedDep[0].name}`)
+                //core.info(`single dependency ${wantedPackage[0].name}`)
                 // packages.forEach(element =>  {
                 //     graph.addVertex(element)
                 //     core.info(graph.getAdjazent)
@@ -145,13 +145,13 @@ async function execute(): Promise<void> {
                 // await dotnet.addPackage(filteredPackages)
                 // core.endGroup()
 
-                // core.startGroup(`add to README`)
-                // // inhalt = await dotnet.listPackages()     
-                // for (const pack of outdatedPackages)
-                //     // await updateReadme(`\n \n ${project} \n - Name: ${pack.name} \n - Current: ${pack.current} \n - Latest: ${pack.latest}`)
-                //     await updateReadme(`\n \n Name: ${pack.name} : Current: ${pack.current} --> ${pack.latest} \n - ${project}`)
-                // core.endGroup()
-            }
+            //     core.startGroup(`add to README`)
+            //     inhalt = await dotnet.listPackages()     
+            //     for (const pack of outdatedPackages)
+            //         await updateReadme(`\n \n ${project} \n - Name: ${pack.name} \n - Current: ${pack.current} \n - Latest: ${pack.latest}`)
+            //         await updateReadme(`\n \n Name: ${pack.name} : Current: ${pack.current} --> ${pack.latest} \n - ${project}`)
+            //     core.endGroup()
+            // }
         }
 
         core.startGroup('Graph Edges')
